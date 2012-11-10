@@ -1,0 +1,9 @@
+---
+layout: default
+title: Apache Camel on OSGi
+tags: [Apache, Camel, OSGi]
+---
+
+h1. {{ page.title }}
+
+p. Show how to integrate Apache Camel with OSGi.
