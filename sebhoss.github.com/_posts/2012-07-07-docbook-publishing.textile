@@ -6,7 +6,7 @@ tags: [DocBook, Maven, Eclipse]
 
 h1. {{ page.title }}
 
-Explain how a DocBook content can be created & published with Maven and Eclipse.
+p. Explain how a DocBook content can be created & published with Maven and Eclipse.
 
 h2. Prerequisites
 
