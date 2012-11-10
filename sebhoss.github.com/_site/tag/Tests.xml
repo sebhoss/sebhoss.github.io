@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Tests</title>
+ <link href="http://seb.hoß.de//tag/Tests.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Tests.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Tests.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Writing testable GWT code</title>
+   <link href="http://seb.hoß.de//testable-gwt"/>
+   <updated>2012-07-11T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//testable-gwt</id>
+   <content type="html">&lt;h1&gt;Writing testable &lt;span class=&quot;caps&quot;&gt;GWT&lt;/span&gt; code&lt;/h1&gt;
+&lt;p&gt;Show how to write testable &lt;span class=&quot;caps&quot;&gt;GWT&lt;/span&gt; code. Use DI &amp;#8594; inject services into views. Test all services without &lt;span class=&quot;caps&quot;&gt;GWT&lt;/span&gt;. Test views with Selenium? Or GWTTest (whatever the name ist)&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Database Testing</title>
+   <link href="http://seb.hoß.de//database-testing"/>
+   <updated>2012-07-03T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//database-testing</id>
+   <content type="html">&lt;h1&gt;Database Testing&lt;/h1&gt;
+&lt;p&gt;Show how to test a database.&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

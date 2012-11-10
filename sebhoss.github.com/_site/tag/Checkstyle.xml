@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Checkstyle</title>
+ <link href="http://seb.hoß.de//tag/Checkstyle.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Checkstyle.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Checkstyle.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Managing Code Quality with Eclipse</title>
+   <link href="http://seb.hoß.de//managing-code-quality-with-eclipse"/>
+   <updated>2012-07-05T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//managing-code-quality-with-eclipse</id>
+   <content type="html">&lt;h1&gt;Managing Code Quality with Eclipse&lt;/h1&gt;
+&lt;p&gt;Manage code quality with Eclipse Java compiler settings. &amp;#8594; everything to &amp;#8216;error&amp;#8217;&lt;/p&gt;
+&lt;p&gt;Check code with &lt;span class=&quot;caps&quot;&gt;PMD&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Check code with FindBugs&lt;/p&gt;
+&lt;p&gt;Check code style with Checkstyle&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

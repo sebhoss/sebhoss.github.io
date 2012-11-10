@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Startups</title>
+ <link href="http://seb.hoß.de//tag/Startups.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Startups.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Startups.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Minimum Desirable Product</title>
+   <link href="http://seb.hoß.de//minimum-desirable-product"/>
+   <updated>2012-07-20T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//minimum-desirable-product</id>
+   <content type="html">&lt;h1&gt;Minimum Desirable Product&lt;/h1&gt;
+&lt;p&gt;Define &lt;span class=&quot;caps&quot;&gt;MDP&lt;/span&gt;, yadada&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;m going to give you a mission statement exercise that I stole from famed marketer/author Marty Neumeier (I had constructed a similar framework on my own, but his is way better and easier &amp;#8211; he&amp;#8217;s the best branding/messaging author nobody speaks about, steal all his books):&lt;/p&gt;
+&lt;p&gt;o &lt;span class=&quot;caps&quot;&gt;WHAT&lt;/span&gt;: Rocketr is the ONLY___________________&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;HOW&lt;/span&gt;: that _______________________________&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHO&lt;/span&gt;: for _________________________________&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;: in __________________________________&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHY&lt;/span&gt;: who ________________________________&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHEN&lt;/span&gt;: in an era of __________________________.&lt;/p&gt;
+&lt;p&gt;Find two examples from Marty below that reveal the format details:&lt;/p&gt;
+&lt;p&gt;Example #1:&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHAT&lt;/span&gt;: Harley Davidson is the &lt;span class=&quot;caps&quot;&gt;ONLY&lt;/span&gt; motorcycle manufacturer&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;HOW&lt;/span&gt;: that makes big, loud motorcycles&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHO&lt;/span&gt;: for macho guys (and macho &amp;#8220;wannabees&amp;#8221;)&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;: in the United States (mostly)&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHY&lt;/span&gt;: who want to join a gang of cowboys&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHEN&lt;/span&gt;: in an era of decreasing personal freedom.&lt;/p&gt;
+&lt;p&gt;Example #2:&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHAT&lt;/span&gt;: The White Stripes are the &lt;span class=&quot;caps&quot;&gt;ONLY&lt;/span&gt; pop music duo&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;HOW&lt;/span&gt;: that records crude yet hip rock songs&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHO&lt;/span&gt;: for young urbanites&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;: in the United States and other first-world countries&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHY&lt;/span&gt;: who long for authenticity&lt;br /&gt;
+o &lt;span class=&quot;caps&quot;&gt;WHEN&lt;/span&gt;: in an era of overproduced, me-too music.&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

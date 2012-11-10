@@ -1,0 +1,19 @@
+---
+layout: default
+title: Spring @Cacheable
+tags: [Java, Spring, Cache, XML]
+---
+
+h1. {{ page.title }}
+
+p. Spring 3.1 introduces a powerful caching abstraction.
+
+@Cacheable Annotation über Methode
+
+Benutzt Parameter der Methode
+
+Falls keine Parameter vorhanden sind, muss ein fixer String als Key gegeben werden.
+
+Konfiguration des Caches per XML/Java
+
+2 Caches: ConcurrentHashMap oder EhCache, gibt allerdings noch andere

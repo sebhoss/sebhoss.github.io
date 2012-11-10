@@ -1,0 +1,12 @@
+---
+layout: default
+title: Measure Your Project
+tags: [Metrics]
+---
+
+h1. {{ page.title }}
+
+Bubble Charts
+- http://jawspeak.com/2011/07/16/improving-developers-enthusiasm-for-unit-tests-using-bubble-charts/
+
+Sonar

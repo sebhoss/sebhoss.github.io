@@ -1,0 +1,15 @@
+---
+layout: default
+title: Measuring Build Time
+tags: [Statistics, Build, Time, Metrics]
+---
+
+h1. {{ page.title }}
+
+Build Time als Metrik benutzen, um Komplexität des Projekts zu bestimmen
+
+Zeitdauer möglichst gering halten. Nebenbedingung des Projekts.
+
+Techniken/Möglichkeiten zeigen, um Build Time zu reduzieren
+
+Build Time: Zeit für Compile + Tests

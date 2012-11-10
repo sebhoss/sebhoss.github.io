@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Performance</title>
+ <link href="http://seb.hoß.de//tag/Performance.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Performance.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Performance.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Performance Benchmarking of Java Code</title>
+   <link href="http://seb.hoß.de//benchmarking-java"/>
+   <updated>2012-07-27T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//benchmarking-java</id>
+   <content type="html">&lt;h1&gt;Performance Benchmarking of Java Code&lt;/h1&gt;
+&lt;p&gt;http://code.google.com/p/caliper/&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

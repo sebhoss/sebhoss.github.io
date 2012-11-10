@@ -1,0 +1,9 @@
+---
+layout: default
+title: Workitem Catalog
+tags: [Workitem, Project, Planning]
+---
+
+Katalog von Workitems erstellen, der "Standard"-Aufgaben auflistet, wie z. B. das Erstellen eines Domänenmodels. Alle Domänenmodelle müssen z. B. equals(), hashCode(), toString() implementieren.
+
+Für diesen Standard ein Muster suchen, bzw. eventuell erklären.

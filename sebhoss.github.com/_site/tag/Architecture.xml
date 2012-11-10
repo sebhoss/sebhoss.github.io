@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Architecture</title>
+ <link href="http://seb.hoß.de//tag/Architecture.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Architecture.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Architecture.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Structure of Event-based Systems</title>
+   <link href="http://seb.hoß.de//event-based-systems"/>
+   <updated>2012-07-21T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//event-based-systems</id>
+   <content type="html">&lt;h1&gt;Structure of Event-based Systems&lt;/h1&gt;
+&lt;p&gt;Zeigen wie Event-orientierte Systeme strukturiert werden können. Übersicht geben, wer welches Ereignis aufruft &amp;amp; verarbeitet.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>OSGi Application Architecture</title>
+   <link href="http://seb.hoß.de//osgi-application-architecture"/>
+   <updated>2012-07-14T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//osgi-application-architecture</id>
+   <content type="html">&lt;h1&gt;OSGi Application Architecture&lt;/h1&gt;
+&lt;p&gt;Show an OSGi project which can be run 24/7. The application auto-updates itself via staging/release repositories inside Nexus. Artifacts are published by Jenkins. Karaf monitors Nexus repository and updates OSGi-Bundles. Vortrag von W-&lt;span class=&quot;caps&quot;&gt;JAX&lt;/span&gt; 2011 nutzen (Kerl von Talend)&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Layout</title>
+ <link href="http://seb.hoß.de//tag/Layout.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Layout.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Layout.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Standard Project Layout</title>
+   <link href="http://seb.hoß.de//project-layout"/>
+   <updated>2012-07-26T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//project-layout</id>
+   <content type="html">&lt;h1&gt;Standard Project Layout&lt;/h1&gt;
+&lt;p&gt;http://www.hiltmon.com/blog/2012/06/30/project-folder-layout/&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

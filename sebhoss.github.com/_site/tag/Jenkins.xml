@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Jenkins</title>
+ <link href="http://seb.hoß.de//tag/Jenkins.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Jenkins.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Jenkins.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>OSGi Application Architecture</title>
+   <link href="http://seb.hoß.de//osgi-application-architecture"/>
+   <updated>2012-07-14T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//osgi-application-architecture</id>
+   <content type="html">&lt;h1&gt;OSGi Application Architecture&lt;/h1&gt;
+&lt;p&gt;Show an OSGi project which can be run 24/7. The application auto-updates itself via staging/release repositories inside Nexus. Artifacts are published by Jenkins. Karaf monitors Nexus repository and updates OSGi-Bundles. Vortrag von W-&lt;span class=&quot;caps&quot;&gt;JAX&lt;/span&gt; 2011 nutzen (Kerl von Talend)&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Development Environment</title>
+   <link href="http://seb.hoß.de//development-environment"/>
+   <updated>2012-07-13T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//development-environment</id>
+   <content type="html">&lt;h1&gt;Development Environment&lt;/h1&gt;
+&lt;p&gt;Setup an development environment with all specified components.&lt;/p&gt;
+&lt;p&gt;Explain workflows.&lt;/p&gt;
+&lt;p&gt;Create Puppet/Chef-templates.&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

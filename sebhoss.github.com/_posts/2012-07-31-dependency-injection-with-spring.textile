@@ -1,0 +1,7 @@
+---
+layout: default
+title: Dependency Injection with Spring
+tags: [Spring, Dependency Injection, Best Practice]
+---
+
+Best-Practices für DI mit Spring.

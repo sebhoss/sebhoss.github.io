@@ -1,0 +1,11 @@
+---
+layout: default
+title: Default SQL Schema
+tags: [SQL, Schema]
+---
+
+h1. {{ page.title }}
+
+SQL Beispielschema erstellen und als durchgängiges Beispiel für alle SQL-relevanten Themen verwenden!
+
+Ähnlich wie World-Datebase von MySQL oder Employees von Oracle, oder oder oder..

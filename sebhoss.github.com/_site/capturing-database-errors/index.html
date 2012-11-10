@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Capturing Database Errors</title>
+  <meta charset="utf-8" />
+<meta name="author" content="Sebastian Hoß" />
+
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed" />
+
+  <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen" />
+</head>
+<body>
+  <div class="site">
+    <div class="title">
+  <a href="/">seb.hoß.de</a>
+</div>
+
+    <h1>Capturing Database Errors</h1>
+<p>Error-Logging-Clause in Insert-/Update-Statements verwenden:<br />
+http://docs.oracle.com/cd/E11882_01/server.112/e26088/statements_10008.htm#<span class="caps">BCEFBFCD</span></p>
+<p>Error-Trigger:<br />
+create or replace<br />
+<span class="caps">TRIGGER</span> after_error<br />
+ <span class="caps">AFTER</span> <span class="caps">SERVERERROR</span> ON <span class="caps">DATABASE</span><br />
+ <span class="caps">DECLARE</span><br />
+ pragma autonomous_transaction;<br />
+ id <span class="caps">NUMBER</span>;<br />
+ sql_text ORA_NAME_LIST_T;<br />
+ v_stmt <span class="caps">CLOB</span>;<br />
+ n <span class="caps">NUMBER</span>;<br />
+<span class="caps">BEGIN</span><br />
+ <span class="caps">SELECT</span> errorlog_seq.nextval <span class="caps">INTO</span> id <span class="caps">FROM</span> dual;<br />
+  <del>-<br />
+ n := ora_sql_txt(sql_text);<br />
+ -</del><br />
+ IF n &gt;= 1<br />
+ <span class="caps">THEN</span><br />
+ <span class="caps">FOR</span> i IN 1..n <span class="caps">LOOP</span><br />
+ v_stmt := v_stmt || sql_text(i);<br />
+ <span class="caps">END</span> <span class="caps">LOOP</span>;<br />
+ <span class="caps">END</span> IF;<br />
+ <del>-<br />
+ <span class="caps">FOR</span> n IN 1..ora_server_error_depth <span class="caps">LOOP</span><br />
+ -</del> log only potential <span class="caps">SQL</span> Injection attempts<br />
+ <del>- alternatively it&#8217;s possible to log everything<br />
+-</del> IF ora_server_error(n) in (  &#8216;900&#8217;,&#8216;906&#8217;,&#8216;907&#8217;,&#8216;911&#8217;,&#8216;917&#8217;,&#8216;920&#8217;,&#8216;923&#8217;,&#8216;933&#8217;,&#8216;970&#8217;,&#8216;1031&#8217;,&#8216;1476&#8217;,&#8216;1719&#8217;,&#8216;1722&#8217;,&#8216;1742&#8217;,&#8216;1756&#8217;,&#8216;1789&#8217;,&#8216;1790&#8217;,&#8216;24247&#8217;,&#8216;29257&#8217;,&#8216;29540&#8217;) <br />
+<del>- <span class="caps">AND</span> ( (ora_server_error(n) = &#8216;1476&#8217; ) and (instr(v_stmt,&#8216;/* OracleOEM&#8217;) =0) ) -</del> execption bug in Oracle <span class="caps">OEM</span><br />
+<del>- <span class="caps">THEN</span><br />
+   if ora_login_user != &#8216;<span class="caps">DBSNMP</span>&#8217; then<br />
+   -</del> insert the attempt including the <span class="caps">SQL</span> statement into a table   <br />
+    <span class="caps">INSERT</span> <span class="caps">INTO</span> errorlog <span class="caps">VALUES</span> (id, sysdate, ora_login_user, ora_client_ip_address, ora_server_error(n), ora_server_error_msg(n), v_stmt);<br />
+   <span class="caps">END</span> IF;<br />
+   <span class="caps">COMMIT</span>;<br />
+<del>- <span class="caps">END</span> IF;<br />
+<span class="caps">END</span> <span class="caps">LOOP</span>;<br />
+ -</del><br />
+<span class="caps">END</span> after_error;</p>
+<p>Fehlerhafte Objekte finden (Systemweit):<br />
+<span class="caps">SELECT</span>  do.owner, do.object_name, do.object_type, do.status, de.line, de.position, de.text<br />
+<span class="caps">FROM</span>    dba_objects do<br />
+        <span class="caps">LEFT</span> <span class="caps">OUTER</span> <span class="caps">JOIN</span> dba_errors de<br />
+          ON  do.owner = de.owner<br />
+          <span class="caps">AND</span> do.object_name = de.<span class="caps">NAME</span><br />
+          <span class="caps">AND</span> do.object_type = de.<span class="caps">TYPE</span><br />
+<span class="caps">WHERE</span>   do.status = &#8216;<span class="caps">INVALID</span>&#8217;<br />
+<span class="caps">ORDER</span> BY do.object_type, do.object_name;</p>
+<p>Fehlerhafte Objekte finden (pro Nutzer):<br />
+<span class="caps">SELECT</span>  do.object_name, do.object_type, do.status, de.line, de.position, de.text<br />
+<span class="caps">FROM</span>    user_objects do<br />
+        <span class="caps">LEFT</span> <span class="caps">OUTER</span> <span class="caps">JOIN</span> user_errors de<br />
+          ON  do.object_name = de.<span class="caps">NAME</span><br />
+          <span class="caps">AND</span> do.object_type = de.<span class="caps">TYPE</span><br />
+<span class="caps">WHERE</span>   do.status = &#8216;<span class="caps">INVALID</span>&#8217;<br />
+<span class="caps">ORDER</span> BY do.object_type, do.object_name;</p>
+<p>Ungültige Trigger in einer Oracle-Datenbank erneut kompilieren:<br />
+begin <span class="caps">FOR</span> cur IN (<span class="caps">SELECT</span> OBJECT_NAME, OBJECT_TYPE, owner <span class="caps">FROM</span> all_objects <span class="caps">WHERE</span> object_type in (&#8216;<span class="caps">TRIGGER</span>&#8217;) and owner = :OBJECT_OWNER <span class="caps">AND</span> status = &#8216;<span class="caps">INVALID</span>&#8217; ) <span class="caps">LOOP</span><br />
+<span class="caps">BEGIN</span><br />
+    <span class="caps">EXECUTE</span> <span class="caps">IMMEDIATE</span> &#8216;alter &#8217; || cur.OBJECT_TYPE || &#8217; &quot;&#8217; ||  cur.owner || &#8216;&#8220;.&#8221;&#8217; || cur.OBJECT_NAME || &#8216;&quot; compile&#8217;;<br />
+<span class="caps">EXCEPTION</span><br />
+  <span class="caps">WHEN</span> <span class="caps">OTHERS</span> <span class="caps">THEN</span> <span class="caps">NULL</span>;<br />
+<span class="caps">END</span>;<br />
+end loop; end;</p>
+    <div class="footer">
+  <div class="contact vcard" itemscope itemtype="http://schema.org/Person">
+  <p>
+    <a class="url fn" href="http://seb.hoß.de" itemprop="name">Sebastian Hoß</a><br />
+    <span itemprop="contactPoint" itemscope itemtype="http://schema.org/ContactPoint">
+      <a class="email" href="mailto:seb@hoß.de" itemprop="email">seb@hoß.de</a>
+    </span><br />
+    <a href="https://github.com/sebhoss/">github.com/sebhoss</a>
+  </p>
+</div>
+
+  <div class="license">
+  <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+    <a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">
+      <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+    </a>
+
+    <br />
+
+    To the extent possible under law,
+    <a rel="dct:publisher" href="http://seb.hoß.de">
+      <span property="dct:title">Sebastian Hoß</span>
+    </a>
+    has waived all copyright and related or neighboring rights to
+    <span property="dct:title">seb.hoß.de</span>.
+    This work is published from:
+    <span property="vcard:Country" datatype="dct:ISO3166" content="EN" about="http://seb.hoß.de">
+      Germany
+    </span>.
+</p>
+
+</div>
+
+  </div>
+
+  <a href="http://github.com/sebhoss">
+  <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
+
+</body>
+</html>

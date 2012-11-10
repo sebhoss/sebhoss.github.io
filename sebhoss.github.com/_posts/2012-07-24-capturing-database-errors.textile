@@ -1,0 +1,80 @@
+---
+layout: default
+title: Capturing Database Errors
+tags: [SQL, Trigger]
+---
+
+h1. {{ page.title }}
+
+Error-Logging-Clause in Insert-/Update-Statements verwenden:
+http://docs.oracle.com/cd/E11882_01/server.112/e26088/statements_10008.htm#BCEFBFCD
+
+
+Error-Trigger:
+create or replace
+TRIGGER after_error
+ AFTER SERVERERROR ON DATABASE
+ DECLARE
+ pragma autonomous_transaction;
+ id NUMBER;
+ sql_text ORA_NAME_LIST_T;
+ v_stmt CLOB;
+ n NUMBER;
+BEGIN
+ SELECT errorlog_seq.nextval INTO id FROM dual;
+  --
+ n := ora_sql_txt(sql_text);
+ --
+ IF n >= 1
+ THEN
+ FOR i IN 1..n LOOP
+ v_stmt := v_stmt || sql_text(i);
+ END LOOP;
+ END IF;
+ --
+ FOR n IN 1..ora_server_error_depth LOOP
+ -- log only potential SQL Injection attempts
+ -- alternatively it's possible to log everything
+-- IF ora_server_error(n) in (  '900','906','907','911','917','920','923','933','970','1031','1476','1719','1722','1742','1756','1789','1790','24247','29257','29540') 
+-- AND ( (ora_server_error(n) = '1476' ) and (instr(v_stmt,'/* OracleOEM') =0) ) -- execption bug in Oracle OEM
+-- THEN
+   if ora_login_user != 'DBSNMP' then
+   -- insert the attempt including the SQL statement into a table   
+    INSERT INTO errorlog VALUES (id, sysdate, ora_login_user, ora_client_ip_address, ora_server_error(n), ora_server_error_msg(n), v_stmt);
+   END IF;
+   COMMIT;
+-- END IF;
+END LOOP;
+ --
+END after_error;
+
+
+
+Fehlerhafte Objekte finden (Systemweit):
+SELECT  do.owner, do.object_name, do.object_type, do.status, de.line, de.position, de.text
+FROM    dba_objects do
+        LEFT OUTER JOIN dba_errors de
+          ON  do.owner = de.owner
+          AND do.object_name = de.NAME
+          AND do.object_type = de.TYPE
+WHERE   do.status = 'INVALID'
+ORDER BY do.object_type, do.object_name;
+
+Fehlerhafte Objekte finden (pro Nutzer):
+SELECT  do.object_name, do.object_type, do.status, de.line, de.position, de.text
+FROM    user_objects do
+        LEFT OUTER JOIN user_errors de
+          ON  do.object_name = de.NAME
+          AND do.object_type = de.TYPE
+WHERE   do.status = 'INVALID'
+ORDER BY do.object_type, do.object_name;
+
+Ungültige Trigger in einer Oracle-Datenbank erneut kompilieren:
+begin FOR cur IN (SELECT OBJECT_NAME, OBJECT_TYPE, owner FROM all_objects WHERE object_type in ('TRIGGER') and owner = :OBJECT_OWNER AND status = 'INVALID' ) LOOP
+BEGIN
+    EXECUTE IMMEDIATE 'alter ' || cur.OBJECT_TYPE || ' "' ||  cur.owner || '"."' || cur.OBJECT_NAME || '" compile';
+EXCEPTION
+  WHEN OTHERS THEN NULL;
+END;
+end loop; end;
+

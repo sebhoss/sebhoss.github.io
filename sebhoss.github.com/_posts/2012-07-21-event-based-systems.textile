@@ -1,0 +1,9 @@
+---
+layout: default
+title: Structure of Event-based Systems
+tags: [Event, Architecture]
+---
+
+h1. {{ page.title }}
+
+Zeigen wie Event-orientierte Systeme strukturiert werden können. Übersicht geben, wer welches Ereignis aufruft & verarbeitet.

@@ -1,0 +1,11 @@
+---
+layout: default
+title: Multiplexed SQL Statements
+tags: [SQL]
+---
+
+h1. {{ page.title }}
+
+Show how to modularize(?)/multiplex(?) SQL statements.
+
+-> FragmentManager

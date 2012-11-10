@@ -1,0 +1,20 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ page.title }}</title>
+  {% include meta.html %}
+  {% include newsfeed.html %}
+  <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen" />
+</head>
+<body>
+  <div class="site">
+    {% include header.html %}
+    {{ content }}
+    {% include footer.html %}
+  </div>
+
+  {% include github_ribbon.html %}
+</body>
+</html>

@@ -1,0 +1,9 @@
+---
+layout: default
+title: Creating Spring Projects without XML
+tags: [Spring, Java, XML]
+---
+
+h1. {{ page.title }}
+
+Show to create Spring projects without XML.

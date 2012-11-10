@@ -1,0 +1,24 @@
+---
+layout: default
+title: Building a Logging Infrastructure
+tags: [Logging, Infrastructure, Java, Log4J, SLF4J, Logback, Metrics]
+---
+
+h1. {{ page.title }}
+
+Eigene Interfaces zum Logging benutzen
+
+Unterscheidung zw. Developer-Logging und Support-Logging aufzeigen.
+
+Metriken einführen
+
+Flame Graphs: http://dtrace.org/blogs/brendan/2011/12/16/flame-graphs/
+- Capture stacks
+- Fold stacks
+- flamegraph.pl
+
+
+Spring-Logging
+- Logger, der per Spring aufgebaut, konfiguriert, etc. werden kann.
+- Eventuell eigenes Interface für SupportLogger und DeveloperLogger? (SupportLog, DeveloperLog)
+

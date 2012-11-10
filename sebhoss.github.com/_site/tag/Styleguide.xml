@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Styleguide</title>
+ <link href="http://seb.hoß.de//tag/Styleguide.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Styleguide.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Styleguide.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>SQL Styleguide</title>
+   <link href="http://seb.hoß.de//sql-styleguide"/>
+   <updated>2012-07-15T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//sql-styleguide</id>
+   <content type="html">&lt;h1&gt;&lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; Styleguide&lt;/h1&gt;
+&lt;p&gt;Formatting rules for &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; statements.&lt;br /&gt;
+Show bad examples. Introduce a lot of whitespace, show smaller, consistent layout? Consistent is good because of pattern matching.&lt;/p&gt;
+&lt;h2&gt;General Rules&lt;/h2&gt;
+&lt;ol&gt;
+	&lt;li&gt;No implicit joins!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt;-Statements&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt;	column1,&lt;br /&gt;
+	column2,&lt;br /&gt;
+	column3&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;FROM&lt;/span&gt;	table1&lt;br /&gt;
+	&lt;span class=&quot;caps&quot;&gt;INNER&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;JOIN&lt;/span&gt; &lt;br /&gt;
+		table2&lt;br /&gt;
+			&lt;span class=&quot;caps&quot;&gt;USING&lt;/span&gt; 	(column1, column2)&lt;br /&gt;
+	&lt;span class=&quot;caps&quot;&gt;INNER&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;JOIN&lt;/span&gt;&lt;br /&gt;
+		table3&lt;br /&gt;
+			ON	table3.column3 = table1.column4&lt;br /&gt;
+			    &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; table3.column5 = table2.column6&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;	column5 &amp;lt; 0&lt;/p&gt;
+&lt;h2&gt;&lt;span class=&quot;caps&quot;&gt;INSERT&lt;/span&gt;-Statements&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&quot;caps&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;INTO&lt;/span&gt; table&lt;br /&gt;
+	(column1, column2, column3)&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;VALUES&lt;/span&gt; &lt;br /&gt;
+	(1, 	2, 	3)&lt;/p&gt;
+&lt;h2&gt;&lt;span class=&quot;caps&quot;&gt;UPDATE&lt;/span&gt;-Statements&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&quot;caps&quot;&gt;UPDATE&lt;/span&gt; table&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;SET&lt;/span&gt;	column1 = 1,&lt;br /&gt;
+	column2 = 2,&lt;br /&gt;
+	column3 = 3&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;	column4 &amp;gt; 0&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

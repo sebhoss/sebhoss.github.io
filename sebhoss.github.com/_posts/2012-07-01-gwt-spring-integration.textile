@@ -1,0 +1,24 @@
+---
+layout: default
+title: GWT-Spring Integration
+tags: [Java, GWT, RPC, Spring, Maven]
+date: 2012-07-01
+---
+
+h1. {{ page.title }}
+
+Explain how a Spring-backend can be build and how GWT clients can interact with it.
+
+http://code.google.com/p/google-web-toolkit-incubator/wiki/IntegratingWithSpring
+
+http://code.google.com/p/gwt-delegate/source/browse/#git%2Fgwt-delegate-parent%2Fgwt-delegate%2Fsrc%2Fmain%2Fjava%2Forg%2Fsgtools%2Fgwt%2Fdelegate%253Fstate%253Dclosed
+
+http://code.google.com/p/gwtrpc-spring/
+
+http://code.google.com/p/gwt-spring-starter-app/source/browse/#svn%2Ftrunk%2Fgreeting-spring-gwt%2Fsrc%2Fmain%2Fjava%2Fcom%2Fgreeting%2Fweb%2Fgwt%2Fserver
+
+http://krams915.blogspot.de/2012/02/spring-31-gwt-maven-plugin-and_05.html
+
+http://code.google.com/p/gwt-sl/
+
+http://krams915.blogspot.de/2012/02/spring-31-gwt-maven-plugin-and_4306.html

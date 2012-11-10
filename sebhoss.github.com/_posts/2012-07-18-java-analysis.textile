@@ -1,0 +1,9 @@
+---
+layout: default
+title: Analysis of Java Applications
+tags: [Java, JVM, Heap, Profiler, Debugger, Threads, Monitor]
+---
+
+h1. {{ page.title }}
+
+Show how to perform heap analysis/profile an application/etc.

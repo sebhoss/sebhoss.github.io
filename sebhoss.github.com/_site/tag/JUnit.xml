@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - JUnit</title>
+ <link href="http://seb.hoß.de//tag/JUnit.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/JUnit.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/JUnit.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Creating DSLs with Xtext</title>
+   <link href="http://seb.hoß.de//xtext-dsl"/>
+   <updated>2012-07-12T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//xtext-dsl</id>
+   <content type="html">&lt;h1&gt;Creating DSLs with Xtext&lt;/h1&gt;
+&lt;p&gt;Show how to develop DSLs with Xtext.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Database Testing</title>
+   <link href="http://seb.hoß.de//database-testing"/>
+   <updated>2012-07-03T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//database-testing</id>
+   <content type="html">&lt;h1&gt;Database Testing&lt;/h1&gt;
+&lt;p&gt;Show how to test a database.&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

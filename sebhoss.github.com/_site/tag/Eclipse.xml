@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Eclipse</title>
+ <link href="http://seb.hoß.de//tag/Eclipse.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Eclipse.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Eclipse.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Development Environment</title>
+   <link href="http://seb.hoß.de//development-environment"/>
+   <updated>2012-07-13T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//development-environment</id>
+   <content type="html">&lt;h1&gt;Development Environment&lt;/h1&gt;
+&lt;p&gt;Setup an development environment with all specified components.&lt;/p&gt;
+&lt;p&gt;Explain workflows.&lt;/p&gt;
+&lt;p&gt;Create Puppet/Chef-templates.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Creating DSLs with Xtext</title>
+   <link href="http://seb.hoß.de//xtext-dsl"/>
+   <updated>2012-07-12T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//xtext-dsl</id>
+   <content type="html">&lt;h1&gt;Creating DSLs with Xtext&lt;/h1&gt;
+&lt;p&gt;Show how to develop DSLs with Xtext.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Working with Jekyll and Eclipse</title>
+   <link href="http://seb.hoß.de//working-with-jekyll-and-eclipse"/>
+   <updated>2012-07-08T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//working-with-jekyll-and-eclipse</id>
+   <content type="html">&lt;h1&gt;Working with Jekyll and Eclipse&lt;/h1&gt;
+&lt;p&gt;Show how Jekyll can be used from within Eclipse.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>DocBook Publishing with Maven and Eclipse</title>
+   <link href="http://seb.hoß.de//docbook-publishing"/>
+   <updated>2012-07-07T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//docbook-publishing</id>
+   <content type="html">&lt;h1&gt;DocBook Publishing with Maven and Eclipse&lt;/h1&gt;
+&lt;p&gt;Explain how a DocBook content can be created &amp;amp; published with Maven and Eclipse.&lt;/p&gt;
+&lt;h2&gt;Prerequisites&lt;/h2&gt;
+&lt;ol&gt;
+	&lt;li&gt;Eclipse&lt;/li&gt;
+	&lt;li&gt;m2eclipse plugin&lt;/li&gt;
+	&lt;li&gt;DocBook &lt;span class=&quot;caps&quot;&gt;XML&lt;/span&gt;-Schema files&lt;/li&gt;
+	&lt;li&gt;Eclipse &lt;span class=&quot;caps&quot;&gt;XSL&lt;/span&gt; Tools (optional)&lt;/li&gt;
+	&lt;li&gt;docbkx-archetype (optional)&lt;/li&gt;
+&lt;/ol&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Managing multiple Eclipse workspaces.</title>
+   <link href="http://seb.hoß.de//managing-multiple-eclipse-workspaces"/>
+   <updated>2012-07-06T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//managing-multiple-eclipse-workspaces</id>
+   <content type="html">&lt;h1&gt;Managing multiple Eclipse workspaces.&lt;/h1&gt;
+&lt;p&gt;Show how to manage multiple Eclipse workspaces. Each with different plugins.&lt;/p&gt;
+&lt;p&gt;Maybe explain how to re-use configuration across several workspaces?&lt;/p&gt;
+&lt;p&gt;Configuration options to export:&lt;br /&gt;
+- Java Code Formatter&lt;br /&gt;
+- Java Code Templates&lt;br /&gt;
+- Java Save Actions&lt;br /&gt;
+- Java Compiler Warnings Settings&lt;br /&gt;
+-&lt;/p&gt;
+&lt;p&gt;Eclipse Content Assist Templates zeigen. Zusammmen mit JUnit-TestData kann man so einfach INSERTs/usw. für seine Tabellen erstellen&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Managing Code Quality with Eclipse</title>
+   <link href="http://seb.hoß.de//managing-code-quality-with-eclipse"/>
+   <updated>2012-07-05T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//managing-code-quality-with-eclipse</id>
+   <content type="html">&lt;h1&gt;Managing Code Quality with Eclipse&lt;/h1&gt;
+&lt;p&gt;Manage code quality with Eclipse Java compiler settings. &amp;#8594; everything to &amp;#8216;error&amp;#8217;&lt;/p&gt;
+&lt;p&gt;Check code with &lt;span class=&quot;caps&quot;&gt;PMD&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Check code with FindBugs&lt;/p&gt;
+&lt;p&gt;Check code style with Checkstyle&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Tips for Eclipse</title>
+   <link href="http://seb.hoß.de//eclipse-tips"/>
+   <updated>2012-07-04T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//eclipse-tips</id>
+   <content type="html">&lt;h1&gt;Tips for Eclipse&lt;/h1&gt;
+&lt;p&gt;Show tips for Eclipse.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Building OSGi Bundles</title>
+   <link href="http://seb.hoß.de//building-osgi-bundles"/>
+   <updated>2012-07-02T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//building-osgi-bundles</id>
+   <content type="html">&lt;h1&gt;Building OSGi Bundles&lt;/h1&gt;
+&lt;p&gt;Show how to build OSGi bundles.&lt;/p&gt;
+&lt;p&gt;Common Patterns: Interfaces and implementation in separate packages/bundles/projects&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

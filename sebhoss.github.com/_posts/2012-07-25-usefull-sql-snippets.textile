@@ -1,0 +1,15 @@
+---
+layout: default
+title: Usefull SQL Snippets
+tags: [SQL, Snippets]
+---
+
+h1. {{ page.title }}
+
+Informix DESC:
+SELECT TRIM(t.tabname) || '.' || TRIM(c.colname) AS table_dot_column
+  FROM "informix".systables AS t, "informix".syscolumns AS c
+ WHERE t.tabid = c.tabid
+   AND t.tabtype = 'T'
+   AND t.tabid >= 100
+ ORDER BY t.tabname, c.colno;

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - SQL</title>
+ <link href="http://seb.hoß.de//tag/SQL.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/SQL.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/SQL.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Usefull SQL Snippets</title>
+   <link href="http://seb.hoß.de//usefull-sql-snippets"/>
+   <updated>2012-07-25T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//usefull-sql-snippets</id>
+   <content type="html">&lt;h1&gt;Usefull &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; Snippets&lt;/h1&gt;
+&lt;p&gt;Informix &lt;span class=&quot;caps&quot;&gt;DESC&lt;/span&gt;:&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt; &lt;acronym title=&quot;t.tabname&quot;&gt;&lt;span class=&quot;caps&quot;&gt;TRIM&lt;/span&gt;&lt;/acronym&gt; || &amp;#8216;.&amp;#8217; || &lt;acronym title=&quot;c.colname&quot;&gt;&lt;span class=&quot;caps&quot;&gt;TRIM&lt;/span&gt;&lt;/acronym&gt; AS table_dot_column&lt;br /&gt;
+  &lt;span class=&quot;caps&quot;&gt;FROM&lt;/span&gt; &amp;#8220;informix&amp;#8221;.systables AS t, &amp;#8220;informix&amp;#8221;.syscolumns AS c&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt; t.tabid = c.tabid&lt;br /&gt;
+   &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; t.tabtype = &amp;#8216;T&amp;#8217;&lt;br /&gt;
+   &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; t.tabid &amp;gt;= 100&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;ORDER&lt;/span&gt; BY t.tabname, c.colno;&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Capturing Database Errors</title>
+   <link href="http://seb.hoß.de//capturing-database-errors"/>
+   <updated>2012-07-24T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//capturing-database-errors</id>
+   <content type="html">&lt;h1&gt;Capturing Database Errors&lt;/h1&gt;
+&lt;p&gt;Error-Logging-Clause in Insert-/Update-Statements verwenden:&lt;br /&gt;
+http://docs.oracle.com/cd/E11882_01/server.112/e26088/statements_10008.htm#&lt;span class=&quot;caps&quot;&gt;BCEFBFCD&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Error-Trigger:&lt;br /&gt;
+create or replace&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;TRIGGER&lt;/span&gt; after_error&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;AFTER&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;SERVERERROR&lt;/span&gt; ON &lt;span class=&quot;caps&quot;&gt;DATABASE&lt;/span&gt;&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;DECLARE&lt;/span&gt;&lt;br /&gt;
+ pragma autonomous_transaction;&lt;br /&gt;
+ id &lt;span class=&quot;caps&quot;&gt;NUMBER&lt;/span&gt;;&lt;br /&gt;
+ sql_text ORA_NAME_LIST_T;&lt;br /&gt;
+ v_stmt &lt;span class=&quot;caps&quot;&gt;CLOB&lt;/span&gt;;&lt;br /&gt;
+ n &lt;span class=&quot;caps&quot;&gt;NUMBER&lt;/span&gt;;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;BEGIN&lt;/span&gt;&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt; errorlog_seq.nextval &lt;span class=&quot;caps&quot;&gt;INTO&lt;/span&gt; id &lt;span class=&quot;caps&quot;&gt;FROM&lt;/span&gt; dual;&lt;br /&gt;
+  &lt;del&gt;-&lt;br /&gt;
+ n := ora_sql_txt(sql_text);&lt;br /&gt;
+ -&lt;/del&gt;&lt;br /&gt;
+ IF n &amp;gt;= 1&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;THEN&lt;/span&gt;&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;FOR&lt;/span&gt; i IN 1..n &lt;span class=&quot;caps&quot;&gt;LOOP&lt;/span&gt;&lt;br /&gt;
+ v_stmt := v_stmt || sql_text(i);&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;END&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;LOOP&lt;/span&gt;;&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;END&lt;/span&gt; IF;&lt;br /&gt;
+ &lt;del&gt;-&lt;br /&gt;
+ &lt;span class=&quot;caps&quot;&gt;FOR&lt;/span&gt; n IN 1..ora_server_error_depth &lt;span class=&quot;caps&quot;&gt;LOOP&lt;/span&gt;&lt;br /&gt;
+ -&lt;/del&gt; log only potential &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; Injection attempts&lt;br /&gt;
+ &lt;del&gt;- alternatively it&amp;#8217;s possible to log everything&lt;br /&gt;
+-&lt;/del&gt; IF ora_server_error(n) in (  &amp;#8216;900&amp;#8217;,&amp;#8216;906&amp;#8217;,&amp;#8216;907&amp;#8217;,&amp;#8216;911&amp;#8217;,&amp;#8216;917&amp;#8217;,&amp;#8216;920&amp;#8217;,&amp;#8216;923&amp;#8217;,&amp;#8216;933&amp;#8217;,&amp;#8216;970&amp;#8217;,&amp;#8216;1031&amp;#8217;,&amp;#8216;1476&amp;#8217;,&amp;#8216;1719&amp;#8217;,&amp;#8216;1722&amp;#8217;,&amp;#8216;1742&amp;#8217;,&amp;#8216;1756&amp;#8217;,&amp;#8216;1789&amp;#8217;,&amp;#8216;1790&amp;#8217;,&amp;#8216;24247&amp;#8217;,&amp;#8216;29257&amp;#8217;,&amp;#8216;29540&amp;#8217;) &lt;br /&gt;
+&lt;del&gt;- &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; ( (ora_server_error(n) = &amp;#8216;1476&amp;#8217; ) and (instr(v_stmt,&amp;#8216;/* OracleOEM&amp;#8217;) =0) ) -&lt;/del&gt; execption bug in Oracle &lt;span class=&quot;caps&quot;&gt;OEM&lt;/span&gt;&lt;br /&gt;
+&lt;del&gt;- &lt;span class=&quot;caps&quot;&gt;THEN&lt;/span&gt;&lt;br /&gt;
+   if ora_login_user != &amp;#8216;&lt;span class=&quot;caps&quot;&gt;DBSNMP&lt;/span&gt;&amp;#8217; then&lt;br /&gt;
+   -&lt;/del&gt; insert the attempt including the &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; statement into a table   &lt;br /&gt;
+    &lt;span class=&quot;caps&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;INTO&lt;/span&gt; errorlog &lt;span class=&quot;caps&quot;&gt;VALUES&lt;/span&gt; (id, sysdate, ora_login_user, ora_client_ip_address, ora_server_error(n), ora_server_error_msg(n), v_stmt);&lt;br /&gt;
+   &lt;span class=&quot;caps&quot;&gt;END&lt;/span&gt; IF;&lt;br /&gt;
+   &lt;span class=&quot;caps&quot;&gt;COMMIT&lt;/span&gt;;&lt;br /&gt;
+&lt;del&gt;- &lt;span class=&quot;caps&quot;&gt;END&lt;/span&gt; IF;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;END&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;LOOP&lt;/span&gt;;&lt;br /&gt;
+ -&lt;/del&gt;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;END&lt;/span&gt; after_error;&lt;/p&gt;
+&lt;p&gt;Fehlerhafte Objekte finden (Systemweit):&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt;  do.owner, do.object_name, do.object_type, do.status, de.line, de.position, de.text&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;FROM&lt;/span&gt;    dba_objects do&lt;br /&gt;
+        &lt;span class=&quot;caps&quot;&gt;LEFT&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;OUTER&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;JOIN&lt;/span&gt; dba_errors de&lt;br /&gt;
+          ON  do.owner = de.owner&lt;br /&gt;
+          &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; do.object_name = de.&lt;span class=&quot;caps&quot;&gt;NAME&lt;/span&gt;&lt;br /&gt;
+          &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; do.object_type = de.&lt;span class=&quot;caps&quot;&gt;TYPE&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;   do.status = &amp;#8216;&lt;span class=&quot;caps&quot;&gt;INVALID&lt;/span&gt;&amp;#8217;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;ORDER&lt;/span&gt; BY do.object_type, do.object_name;&lt;/p&gt;
+&lt;p&gt;Fehlerhafte Objekte finden (pro Nutzer):&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt;  do.object_name, do.object_type, do.status, de.line, de.position, de.text&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;FROM&lt;/span&gt;    user_objects do&lt;br /&gt;
+        &lt;span class=&quot;caps&quot;&gt;LEFT&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;OUTER&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;JOIN&lt;/span&gt; user_errors de&lt;br /&gt;
+          ON  do.object_name = de.&lt;span class=&quot;caps&quot;&gt;NAME&lt;/span&gt;&lt;br /&gt;
+          &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; do.object_type = de.&lt;span class=&quot;caps&quot;&gt;TYPE&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;   do.status = &amp;#8216;&lt;span class=&quot;caps&quot;&gt;INVALID&lt;/span&gt;&amp;#8217;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;ORDER&lt;/span&gt; BY do.object_type, do.object_name;&lt;/p&gt;
+&lt;p&gt;Ungültige Trigger in einer Oracle-Datenbank erneut kompilieren:&lt;br /&gt;
+begin &lt;span class=&quot;caps&quot;&gt;FOR&lt;/span&gt; cur IN (&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt; OBJECT_NAME, OBJECT_TYPE, owner &lt;span class=&quot;caps&quot;&gt;FROM&lt;/span&gt; all_objects &lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt; object_type in (&amp;#8216;&lt;span class=&quot;caps&quot;&gt;TRIGGER&lt;/span&gt;&amp;#8217;) and owner = :OBJECT_OWNER &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; status = &amp;#8216;&lt;span class=&quot;caps&quot;&gt;INVALID&lt;/span&gt;&amp;#8217; ) &lt;span class=&quot;caps&quot;&gt;LOOP&lt;/span&gt;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;BEGIN&lt;/span&gt;&lt;br /&gt;
+    &lt;span class=&quot;caps&quot;&gt;EXECUTE&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;IMMEDIATE&lt;/span&gt; &amp;#8216;alter &amp;#8217; || cur.OBJECT_TYPE || &amp;#8217; &amp;quot;&amp;#8217; ||  cur.owner || &amp;#8216;&amp;#8220;.&amp;#8221;&amp;#8217; || cur.OBJECT_NAME || &amp;#8216;&amp;quot; compile&amp;#8217;;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;EXCEPTION&lt;/span&gt;&lt;br /&gt;
+  &lt;span class=&quot;caps&quot;&gt;WHEN&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;OTHERS&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;THEN&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;NULL&lt;/span&gt;;&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;END&lt;/span&gt;;&lt;br /&gt;
+end loop; end;&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Default SQL Schema</title>
+   <link href="http://seb.hoß.de//default-sql-schema"/>
+   <updated>2012-07-22T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//default-sql-schema</id>
+   <content type="html">&lt;h1&gt;Default &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; Schema&lt;/h1&gt;
+&lt;p&gt;&lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; Beispielschema erstellen und als durchgängiges Beispiel für alle &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt;-relevanten Themen verwenden!&lt;/p&gt;
+&lt;p&gt;Ähnlich wie World-Datebase von MySQL oder Employees von Oracle, oder oder oder..&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Multiplexed SQL Statements</title>
+   <link href="http://seb.hoß.de//multiplexing-sql-statements"/>
+   <updated>2012-07-16T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//multiplexing-sql-statements</id>
+   <content type="html">&lt;h1&gt;Multiplexed &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; Statements&lt;/h1&gt;
+&lt;p&gt;Show how to modularize(?)/multiplex(?) &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; statements.&lt;/p&gt;
+&lt;p&gt;&amp;#8594; FragmentManager&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>SQL Styleguide</title>
+   <link href="http://seb.hoß.de//sql-styleguide"/>
+   <updated>2012-07-15T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//sql-styleguide</id>
+   <content type="html">&lt;h1&gt;&lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; Styleguide&lt;/h1&gt;
+&lt;p&gt;Formatting rules for &lt;span class=&quot;caps&quot;&gt;SQL&lt;/span&gt; statements.&lt;br /&gt;
+Show bad examples. Introduce a lot of whitespace, show smaller, consistent layout? Consistent is good because of pattern matching.&lt;/p&gt;
+&lt;h2&gt;General Rules&lt;/h2&gt;
+&lt;ol&gt;
+	&lt;li&gt;No implicit joins!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt;-Statements&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&quot;caps&quot;&gt;SELECT&lt;/span&gt;	column1,&lt;br /&gt;
+	column2,&lt;br /&gt;
+	column3&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;FROM&lt;/span&gt;	table1&lt;br /&gt;
+	&lt;span class=&quot;caps&quot;&gt;INNER&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;JOIN&lt;/span&gt; &lt;br /&gt;
+		table2&lt;br /&gt;
+			&lt;span class=&quot;caps&quot;&gt;USING&lt;/span&gt; 	(column1, column2)&lt;br /&gt;
+	&lt;span class=&quot;caps&quot;&gt;INNER&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;JOIN&lt;/span&gt;&lt;br /&gt;
+		table3&lt;br /&gt;
+			ON	table3.column3 = table1.column4&lt;br /&gt;
+			    &lt;span class=&quot;caps&quot;&gt;AND&lt;/span&gt; table3.column5 = table2.column6&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;	column5 &amp;lt; 0&lt;/p&gt;
+&lt;h2&gt;&lt;span class=&quot;caps&quot;&gt;INSERT&lt;/span&gt;-Statements&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&quot;caps&quot;&gt;INSERT&lt;/span&gt; &lt;span class=&quot;caps&quot;&gt;INTO&lt;/span&gt; table&lt;br /&gt;
+	(column1, column2, column3)&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;VALUES&lt;/span&gt; &lt;br /&gt;
+	(1, 	2, 	3)&lt;/p&gt;
+&lt;h2&gt;&lt;span class=&quot;caps&quot;&gt;UPDATE&lt;/span&gt;-Statements&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&quot;caps&quot;&gt;UPDATE&lt;/span&gt; table&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;SET&lt;/span&gt;	column1 = 1,&lt;br /&gt;
+	column2 = 2,&lt;br /&gt;
+	column3 = 3&lt;br /&gt;
+&lt;span class=&quot;caps&quot;&gt;WHERE&lt;/span&gt;	column4 &amp;gt; 0&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Creating DSLs with Xtext</title>
+   <link href="http://seb.hoß.de//xtext-dsl"/>
+   <updated>2012-07-12T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//xtext-dsl</id>
+   <content type="html">&lt;h1&gt;Creating DSLs with Xtext&lt;/h1&gt;
+&lt;p&gt;Show how to develop DSLs with Xtext.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Database Testing</title>
+   <link href="http://seb.hoß.de//database-testing"/>
+   <updated>2012-07-03T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//database-testing</id>
+   <content type="html">&lt;h1&gt;Database Testing&lt;/h1&gt;
+&lt;p&gt;Show how to test a database.&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

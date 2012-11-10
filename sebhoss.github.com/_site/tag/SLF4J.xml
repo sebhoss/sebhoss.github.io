@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - SLF4J</title>
+ <link href="http://seb.hoß.de//tag/SLF4J.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/SLF4J.html"/>
+ <updated>2012-11-10T19:58:09+01:00</updated>
+ <id>http://sebhoss.github.com/tag/SLF4J.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Building a Logging Infrastructure</title>
+   <link href="http://seb.hoß.de//logging"/>
+   <updated>2012-07-23T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//logging</id>
+   <content type="html">&lt;h1&gt;Building a Logging Infrastructure&lt;/h1&gt;
+&lt;p&gt;Eigene Interfaces zum Logging benutzen&lt;/p&gt;
+&lt;p&gt;Unterscheidung zw. Developer-Logging und Support-Logging aufzeigen.&lt;/p&gt;
+&lt;p&gt;Metriken einführen&lt;/p&gt;
+&lt;p&gt;Flame Graphs: http://dtrace.org/blogs/brendan/2011/12/16/flame-graphs/&lt;br /&gt;
+- Capture stacks&lt;br /&gt;
+- Fold stacks&lt;br /&gt;
+- flamegraph.pl&lt;/p&gt;
+&lt;p&gt;Spring-Logging&lt;br /&gt;
+- Logger, der per Spring aufgebaut, konfiguriert, etc. werden kann.&lt;br /&gt;
+- Eventuell eigenes Interface für SupportLogger und DeveloperLogger? (SupportLog, DeveloperLog)&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

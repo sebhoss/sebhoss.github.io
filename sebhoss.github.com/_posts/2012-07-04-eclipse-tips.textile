@@ -1,0 +1,9 @@
+---
+layout: default
+title: Tips for Eclipse
+tags: [Eclipse]
+---
+
+h1. {{ page.title }}
+
+Show tips for Eclipse.
