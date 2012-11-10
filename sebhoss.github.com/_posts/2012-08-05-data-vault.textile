@@ -1,0 +1,9 @@
+---
+layout: default
+title: Data Vault Modelling
+tags: [Data Vault]
+---
+
+h1. {{ page.title }}
+
+p. Show how to use the Data Vault methodology to model a data warehouse.
