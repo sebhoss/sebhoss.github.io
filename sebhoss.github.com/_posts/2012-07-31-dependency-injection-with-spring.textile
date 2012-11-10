@@ -4,4 +4,6 @@ title: Dependency Injection with Spring
 tags: [Spring, Dependency Injection, Best Practice]
 ---
 
-Best-Practices für DI mit Spring.
+h1. {{ page.title }}
+
+p. Best-Practices für DI mit Spring.

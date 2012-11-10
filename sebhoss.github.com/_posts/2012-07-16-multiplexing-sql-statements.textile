@@ -9,3 +9,4 @@ h1. {{ page.title }}
 Show how to modularize(?)/multiplex(?) SQL statements.
 
 -> FragmentManager
+-> JPA 2 like annotation processors. Hibernate has its own. QueryDSL too, guessing EclipseLink and similar as well.
