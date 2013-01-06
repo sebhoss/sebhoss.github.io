@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - Apache</title>
+ <link href="http://seb.hoß.de//tag/Apache.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/Apache.html"/>
+ <updated>2012-11-10T23:51:38+01:00</updated>
+ <id>http://sebhoss.github.com/tag/Apache.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Apache Camel on OSGi</title>
+   <link href="http://seb.hoß.de//camel-on-osgi"/>
+   <updated>2012-08-04T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//camel-on-osgi</id>
+   <content type="html">&lt;h1&gt;Apache Camel on OSGi&lt;/h1&gt;
+&lt;p&gt;Show how to integrate Apache Camel with OSGi.&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

@@ -4,7 +4,7 @@
  <title>Sebastian Hoß - Java</title>
  <link href="http://seb.hoß.de//tag/Java.xml" rel="self"/>
  <link href="http://seb.hoß.de/tag/Java.html"/>
- <updated>2012-11-10T19:58:09+01:00</updated>
+ <updated>2012-11-10T23:51:38+01:00</updated>
  <id>http://sebhoss.github.com/tag/Java.html</id>
  <author>
    <name>Sebastian Hoß</name>
@@ -77,7 +77,16 @@
    <updated>2012-07-14T00:00:00+02:00</updated>
    <id>http://seb.hoß.de//osgi-application-architecture</id>
    <content type="html">&lt;h1&gt;OSGi Application Architecture&lt;/h1&gt;
-&lt;p&gt;Show an OSGi project which can be run 24/7. The application auto-updates itself via staging/release repositories inside Nexus. Artifacts are published by Jenkins. Karaf monitors Nexus repository and updates OSGi-Bundles. Vortrag von W-&lt;span class=&quot;caps&quot;&gt;JAX&lt;/span&gt; 2011 nutzen (Kerl von Talend)&lt;/p&gt;</content>
+&lt;p&gt;Show an OSGi project which can be run 24/7. The application auto-updates itself via staging/release repositories inside Nexus. Artifacts are published by Jenkins. Karaf monitors Nexus repository and updates OSGi-Bundles. Vortrag von W-&lt;span class=&quot;caps&quot;&gt;JAX&lt;/span&gt; 2011 nutzen (Kerl von Talend)&lt;/p&gt;
+&lt;p&gt;http://www.ops4j.org/projects/pax/construct/maven-pax-plugin/index.html&lt;/p&gt;
+&lt;p&gt;http://karaf.apache.org/manual/2.2.7/quick-start.html&lt;br /&gt;
+http://karaf.apache.org/manual/2.2.7/users-guide/web-applications.html&lt;br /&gt;
+http://karaf.apache.org/manual/latest-2.2.x/developers-guide/archetypes.html&lt;/p&gt;
+&lt;p&gt;http://leshazlewood.com/2010/09/08/osgi-maven-pax-and-web-applications/&lt;/p&gt;
+&lt;p&gt;http://logician.free.fr/index.php/2010/12/15/deploying-a-gwt-applicatio-as-osgi-module-with-apache-karaf-and-maven/&lt;/p&gt;
+&lt;p&gt;https://github.com/cschneider/Karaf-Tutorial&lt;br /&gt;
+http://www.liquid-reality.de/display/liquid/2011/02/15/Karaf+Tutorial+Part+1+-+Installation+and+First+application&lt;br /&gt;
+http://www.liquid-reality.de/display/liquid/Karaf+Tutorials&lt;/p&gt;</content>
  </entry>
  
  <entry>

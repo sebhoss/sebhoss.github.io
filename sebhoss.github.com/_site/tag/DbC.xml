@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  
+ <title>Sebastian Hoß - DbC</title>
+ <link href="http://seb.hoß.de//tag/DbC.xml" rel="self"/>
+ <link href="http://seb.hoß.de/tag/DbC.html"/>
+ <updated>2012-11-10T23:51:38+01:00</updated>
+ <id>http://sebhoss.github.com/tag/DbC.html</id>
+ <author>
+   <name>Sebastian Hoß</name>
+   <email>seb@hoß.de</email>
+ </author>
+
+ 
+ <entry>
+   <title>Design by Contract</title>
+   <link href="http://seb.hoß.de//design-by-contract"/>
+   <updated>2012-08-06T00:00:00+02:00</updated>
+   <id>http://seb.hoß.de//design-by-contract</id>
+   <content type="html">&lt;h1&gt;Design by Contract&lt;/h1&gt;
+&lt;p&gt;Show how to use DbC inside Java or on the &lt;span class=&quot;caps&quot;&gt;JVM&lt;/span&gt;.&lt;/p&gt;</content>
+ </entry>
+ 
+</feed>

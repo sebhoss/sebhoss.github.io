@@ -4,7 +4,7 @@
  <title>Sebastian Hoß - Best Practice</title>
  <link href="http://seb.hoß.de//tag/Best Practice.xml" rel="self"/>
  <link href="http://seb.hoß.de/tag/Best Practice.html"/>
- <updated>2012-11-10T19:58:09+01:00</updated>
+ <updated>2012-11-10T23:51:38+01:00</updated>
  <id>http://sebhoss.github.com/tag/Best Practice.html</id>
  <author>
    <name>Sebastian Hoß</name>
@@ -17,7 +17,8 @@
    <link href="http://seb.hoß.de//dependency-injection-with-spring"/>
    <updated>2012-07-31T00:00:00+02:00</updated>
    <id>http://seb.hoß.de//dependency-injection-with-spring</id>
-   <content type="html">&lt;p&gt;Best-Practices für DI mit Spring.&lt;/p&gt;</content>
+   <content type="html">&lt;h1&gt;Dependency Injection with Spring&lt;/h1&gt;
+&lt;p&gt;Best-Practices für DI mit Spring.&lt;/p&gt;</content>
  </entry>
  
 </feed>
