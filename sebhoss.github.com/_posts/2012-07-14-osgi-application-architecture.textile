@@ -7,3 +7,17 @@ tags: [OSGi, Architecture, Java, Karaf, Maven, Tycho, Nexus, Jenkins]
 h1. {{ page.title }}
 
 Show an OSGi project which can be run 24/7. The application auto-updates itself via staging/release repositories inside Nexus. Artifacts are published by Jenkins. Karaf monitors Nexus repository and updates OSGi-Bundles. Vortrag von W-JAX 2011 nutzen (Kerl von Talend)
+
+http://www.ops4j.org/projects/pax/construct/maven-pax-plugin/index.html
+
+http://karaf.apache.org/manual/2.2.7/quick-start.html
+http://karaf.apache.org/manual/2.2.7/users-guide/web-applications.html
+http://karaf.apache.org/manual/latest-2.2.x/developers-guide/archetypes.html
+
+http://leshazlewood.com/2010/09/08/osgi-maven-pax-and-web-applications/
+
+http://logician.free.fr/index.php/2010/12/15/deploying-a-gwt-applicatio-as-osgi-module-with-apache-karaf-and-maven/
+
+https://github.com/cschneider/Karaf-Tutorial
+http://www.liquid-reality.de/display/liquid/2011/02/15/Karaf+Tutorial+Part+1+-+Installation+and+First+application
+http://www.liquid-reality.de/display/liquid/Karaf+Tutorials
