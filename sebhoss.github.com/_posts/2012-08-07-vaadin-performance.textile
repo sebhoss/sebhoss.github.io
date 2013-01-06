@@ -1,0 +1,9 @@
+---
+layout: default
+title: Vaadin Performance Tricks & Tips
+tags: [Vaadin, Performance]
+---
+
+h1. {{ page.title }}
+
+p. List known performance tricks for vaadin.
