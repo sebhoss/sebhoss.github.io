@@ -21,3 +21,5 @@ http://logician.free.fr/index.php/2010/12/15/deploying-a-gwt-applicatio-as-osgi-
 https://github.com/cschneider/Karaf-Tutorial
 http://www.liquid-reality.de/display/liquid/2011/02/15/Karaf+Tutorial+Part+1+-+Installation+and+First+application
 http://www.liquid-reality.de/display/liquid/Karaf+Tutorials
+
+https://github.com/remast/GeminiSample
