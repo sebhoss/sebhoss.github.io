@@ -20,3 +20,7 @@ Write your own APT Processor which checks code: http://stackoverflow.com/questio
 Licenses check with http://mojo.codehaus.org/license-maven-plugin/
 
 Tattletale check http://docs.jboss.org/tattletale/userguide/1.2/en-US/html_single/#maven
+
+JUnit tests parametrisieren mit https://github.com/schauder/parameterizedTestsWithRules
+
+http://dev.choonkeat.com/branchesapp/
