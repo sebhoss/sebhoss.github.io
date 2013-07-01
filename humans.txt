@@ -1,3 +1,6 @@
-Sebastian Hoß
-Site: http://seb.hoß.de/
-Location: Münster/Germany
+---
+layout: nil
+---
+{{ site.author.name }}
+Site: {{ site.url }}
+Location: {{ site.author.location }}

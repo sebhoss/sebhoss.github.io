@@ -1,0 +1,17 @@
+---
+layout: default
+---
+<article>
+  <header>
+    <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
+    <span class="post_tags" rel="tag"> talks about: {{ page.tags | sort |array_to_sentence_string }}</span>
+  </header>
+
+  {{ content }}
+
+  <footer>
+    {% include license.html %}
+    <time pubdate datetime="{{ page.date }}">Published: {{ page.date | date_to_string }}</time>
+  </footer>
+
+</article>
