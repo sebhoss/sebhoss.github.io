@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: DocBook Publishing with Maven and Eclipse
 tags: [DocBook, Maven, Eclipse]
 ---
-
-h1. {{ page.title }}
 
 p. Explain how a DocBook content can be created & published with Maven and Eclipse.
 

@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Development Environment
 tags: [Continuous Integration, Hudson, Jenkins, Sonar, Maven, Java, Eclipse, Mylyn, Bugzilla, Gerrit, Git]
 ---
-
-h1. {{ page.title }}
 
 Setup an development environment with all specified components.
 

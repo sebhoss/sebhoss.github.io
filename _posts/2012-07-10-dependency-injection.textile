@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Dependency Injection
 tags: [Dependency Injection, Java, Guice, Spring]
 ---
-
-h1. {{ page.title }}
 
 Explain dependency injection. Provide examples for Spring/Guice.

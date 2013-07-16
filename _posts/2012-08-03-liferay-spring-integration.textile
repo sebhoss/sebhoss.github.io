@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Liferay Spring Integration
 tags: [Liferay, Spring, Integration]
 ---
-
-h1. {{ page.title }}
 
 p. Show how to integrate Liferay and Spring.

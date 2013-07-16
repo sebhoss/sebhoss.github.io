@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Working with Jekyll and Eclipse
 tags: [Eclipse, Jekyll]
 ---
-
-h1. {{ page.title }}
 
 Show how Jekyll can be used from within Eclipse.

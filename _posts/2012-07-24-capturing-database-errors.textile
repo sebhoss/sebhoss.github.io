@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Capturing Database Errors
 tags: [SQL, Trigger]
 ---
-
-h1. {{ page.title }}
 
 Error-Logging-Clause in Insert-/Update-Statements verwenden:
 http://docs.oracle.com/cd/E11882_01/server.112/e26088/statements_10008.htm#BCEFBFCD

@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Workitem Catalog
 tags: [Workitem, Project, Planning]
 ---
-
-h1. {{ page.title }}
 
 Katalog von Workitems erstellen, der "Standard"-Aufgaben auflistet, wie z. B. das Erstellen eines Domänenmodels. Alle Domänenmodelle müssen z. B. equals(), hashCode(), toString() implementieren.
 

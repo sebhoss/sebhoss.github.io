@@ -7,23 +7,21 @@
   <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Latest Posts & Updates" />
   <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen" />
 </head>
-<body>
-  <header id="mastHead">
-    <span id="headTitle">
-      <h1><a href="{{ site.url }}">{{ site.author.name }}</a></h1>
-    </span>
+<body class="flex-container">
 
-    <span id="headActions">
-      <input type="search" placeholder="Search" />
-      <a href="https://github.com/{{ site.author.github }}/">github.com/{{ site.author.github }}</a>
-      <a href="https://plus.google.com/107983296375963613158/">G+</a>
-      <a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">
-        <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
-      </a>
-    </span>
+  <header id="siteHeader" class="flex-container">
+    <h1 id="siteTitle"><a href="{{ site.url }}">{{ site.author.name }}</a></h1>
+
+    <input id="searchbar" type="search" placeholder="Search" />
+    <a href="https://github.com/{{ site.author.github }}/" id="githubProfile">
+      <img src="images/GitHub-Mark-32px.png" alt="GitHub" style="border:0;width:32px;height:32px;" />
+    </a>
+    <a href="//plus.google.com/107983296375963613158?prsrc=3" rel="publisher" id="googleProfile" style="text-decoration:none;">
+      <img src="//ssl.gstatic.com/images/icons/gplus-32.png" alt="Google+" style="border:0;width:32px;height:32px;" />
+    </a>
   </header>
 
-  <section class="content">
+  <section class="content flex-content">
     {{ content }}
   </section>
 

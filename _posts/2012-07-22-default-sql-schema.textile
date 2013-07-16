@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Default SQL Schema
 tags: [SQL, Schema]
 ---
-
-h1. {{ page.title }}
 
 SQL Beispielschema erstellen und als durchgängiges Beispiel für alle SQL-relevanten Themen verwenden!
 

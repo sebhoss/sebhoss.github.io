@@ -1,11 +1,9 @@
 ---
-layout: default
+layout: post
 title: GWT-Spring Integration
 tags: [Java, GWT, RPC, Spring, Maven]
 date: 2012-07-01
 ---
-
-h1. {{ page.title }}
 
 Explain how a Spring-backend can be build and how GWT clients can interact with it.
 

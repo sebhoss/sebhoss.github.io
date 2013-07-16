@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Multi-Channel Spring
 tags: [Spring, Java, GWT, JSON, XML, Maven]
 ---
-
-h1. {{ page.title }}
 
 Build a Spring-based web services which inputs/outputs to different formats. JSON/XML/GWT RPC/GWT Request Factory/...

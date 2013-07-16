@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Building a Logging Infrastructure
 tags: [Logging, Infrastructure, Java, Log4J, SLF4J, Logback, Metrics]
 ---
-
-h1. {{ page.title }}
 
 Eigene Interfaces zum Logging benutzen
 

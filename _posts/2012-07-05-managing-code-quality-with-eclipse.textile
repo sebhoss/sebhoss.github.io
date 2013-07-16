@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Managing Code Quality with Eclipse
 tags: [Eclipse, Code Quality, PMD, FindBugs, Checkstyle]
 ---
-
-h1. {{ page.title }}
 
 Manage code quality with Eclipse Java compiler settings. -> everything to 'error'
 

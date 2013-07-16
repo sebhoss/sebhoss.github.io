@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: OSGi Application Architecture
 tags: [OSGi, Architecture, Java, Karaf, Maven, Tycho, Nexus, Jenkins]
 ---
-
-h1. {{ page.title }}
 
 Show an OSGi project which can be run 24/7. The application auto-updates itself via staging/release repositories inside Nexus. Artifacts are published by Jenkins. Karaf monitors Nexus repository and updates OSGi-Bundles. Vortrag von W-JAX 2011 nutzen (Kerl von Talend)
 

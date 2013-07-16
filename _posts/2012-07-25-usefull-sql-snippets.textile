@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Usefull SQL Snippets
 tags: [SQL, Snippets]
 ---
-
-h1. {{ page.title }}
 
 Informix DESC:
 SELECT TRIM(t.tabname) || '.' || TRIM(c.colname) AS table_dot_column

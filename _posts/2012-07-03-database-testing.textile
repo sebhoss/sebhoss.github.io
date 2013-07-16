@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Database Testing
 tags: [Database, Tests, SQL, JUnit]
 ---
-
-h1. {{ page.title }}
 
 Show how to test a database.

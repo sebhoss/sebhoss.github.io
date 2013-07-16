@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Tips for Eclipse
 tags: [Eclipse]
 ---
-
-h1. {{ page.title }}
 
 Show tips for Eclipse.

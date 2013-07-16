@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Spring-Data-JPA
 tags: [Spring, Spring-Data, JPA, QueryDSL]
 ---
-
-h1. {{ page.title }}
 
 p. Auflisten was Spring-Data zusammen mit JPA so alles kann.
 

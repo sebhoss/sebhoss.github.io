@@ -1,52 +1,172 @@
-body, html {
+   /* ----------- base styles ----------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: helvetica;
+  font-size: 1em;
   margin: 0;
   padding: 0;
 }
 
-#mastHead {
-  display: -moz-box;
-  display: -webkit-box;
-  display: box;
-  box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  -webkit-box-orient: horizontal;
-  -webkit-box-align: center;
-  -webkit-box-pack: center;
-  background-color: black;
-  min-height: 67px;
+p {
+  margin: 0;
+  padding: 1em 5%;
 }
 
-#headTitle {
-  box-flex: 5;
-  -webkit-box-flex: 5;
-  margin-left: 10px;
+time {
+  margin: 0;
+  padding: 1em 5%;
+}
+
+ul {
+  margin: 1em 5%;
+  padding: 0;
+}
+
+.flex-container {
+  margin: 0 auto;
+}
+
+#siteHeader {
+  width: 100%;
+  background: #555;
+  color: #eee;
+  padding: 0 1em;
+}
+
+#searchbar {
+  font-size: 32px;
+}
+
+#siteHeader > h1 > a {
+  text-decoration: none;
+  color: white;
+}
+
+#postHeader {
+  margin: 0;
+  padding: 1em 5%;
+}
+
+.post_tags {
+  color: gray;
   font-size: small;
 }
 
-#headActions {
-  box-flex: 1;
-  -webkit-box-flex: 1;
-  margin-right: 10px;
-  margin-top: 20px;
+.content {
+  width: 100%;
+  padding: 1em 0;
 }
 
 nav {
-  background-color: blue;
-  width: 20%;
-  float: left;
-  border: 2px black;
+  width: 100%;
+  padding: 1em 0;
 }
 
-section {
-  position: relative;
-  float: right;
-  width: 80%;
+/* ----------- base styles part 2----------- */
+.flex-content {
+  padding: 0;
+}
+
+#post {
 }
 
 footer {
-  background-color: yellow;
+  padding: 1em 0;
 }
 
-article {
-  background-color: gray;
+/* Anordnung Gesamtseite */
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
 }
+
+#siteHeader {
+  -webkit-order: 1;
+  order: 1;
+}
+
+.content {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column wrap;
+  flex-flow: column wrap;
+  -webkit-order: 2;
+  order: 2;
+}
+
+#post {
+  -webkit-flex-grow: 8;
+  flex-grow: 8;
+  overflow: scroll;
+}
+
+footer {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+}
+
+nav {
+  -webkit-order: 3;
+  order: 3;
+}
+
+/* Anordnung Header */
+#siteHeader {
+  -webkit-align-items: center;
+  align-items: center;
+}
+#siteTitle {
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+#searchbar {
+  margin-right: 10px;
+}
+#githubProfile {
+  text-decoration: none;
+  margin-right: 10px;
+}
+#googleProfile {
+  text-decoration: none;
+}
+
+/* ----------- media queries --------------------- */
+@media screen and (min-width: 48em) {
+  .content {
+    width: 75%;
+    -webkit-order: 3;
+    order: 3;
+  }
+
+  nav {
+    width: 25%;
+    padding: 1em 3.333%;
+    -webkit-order: 2;
+    order: 2;
+    border-style: dotted;
+    border-width: 0 2px 0 0;
+    border-color: gray;
+  }
+
+  #post {
+    -webkit-flex-grow: 6;
+    flex-grow: 6;
+    -webkit-order: 1;
+    order: 1;
+  }
+
+  footer {
+    -webkit-order: 3;
+    order: 3;
+    border-style: dotted;
+    border-width: 2px 0 0 0;
+    border-color: gray;
+  }
+}
+    
+ 

@@ -1,17 +1,19 @@
 ---
 layout: default
 ---
-<article>
-  <header>
+<article id="post">
+  <header id="postHeader">
     <h1><a href="{{ site.posts.first.url }}">{{ site.posts.first.title }}</a></h1>
     <span class="post_tags" rel="tag"> talks about: {{ site.posts.first.tags | sort |array_to_sentence_string }}</span>
   </header>
 
+  <div>
   {{ site.posts.first.content }}
+  </div>
 
   <footer>
-    {% include license.html %}
     <time pubdate datetime="{{ site.posts.first.date }}">Published: {{ site.posts.first.date | date_to_string }}</time>
+    {% include license.html %}
   </footer>
 
 </article>

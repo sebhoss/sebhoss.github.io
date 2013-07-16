@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Dependency Injection with Spring
 tags: [Spring, Dependency Injection, Best Practice]
 ---
-
-h1. {{ page.title }}
 
 p. Best-Practices für DI mit Spring.

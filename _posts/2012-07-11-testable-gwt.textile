@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Writing testable GWT code
 tags: [GWT, Tests]
 ---
-
-h1. {{ page.title }}
 
 Show how to write testable GWT code. Use DI -> inject services into views. Test all services without GWT. Test views with Selenium? Or GWTTest (whatever the name ist)

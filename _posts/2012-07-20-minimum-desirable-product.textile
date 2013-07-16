@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: Minimum Desirable Product
 tags: [Startups, MDP]
 ---
-
-h1. {{ page.title }}
 
 Define MDP, yadada
 

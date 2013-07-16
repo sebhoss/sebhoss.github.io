@@ -1,9 +1,7 @@
 ---
-layout: default
+layout: post
 title: Standard Project Layout
 tags: [Project, Organization, Layout]
 ---
-
-h1. {{ page.title }}
 
 http://www.hiltmon.com/blog/2012/06/30/project-folder-layout/

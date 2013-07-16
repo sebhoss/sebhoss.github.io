@@ -1,10 +1,8 @@
 ---
-layout: default
+layout: post
 title: SQL Styleguide
 tags: [SQL, Styleguide]
 ---
-
-h1. {{ page.title }}
 
 Formatting rules for SQL statements.
 Show bad examples. Introduce a lot of whitespace, show smaller, consistent layout? Consistent is good because of pattern matching.
