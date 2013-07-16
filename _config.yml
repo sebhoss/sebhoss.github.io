@@ -3,7 +3,7 @@ permalink: /:title
 pygments: true
 
 title: nil
-url: https://sebhoss.github.io/
+url: http://sebhoss.github.io/
 author:
   name: Sebastian Hoß
   email: seb@hoß.de
