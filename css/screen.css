@@ -140,6 +140,10 @@ nav {
 }
 #googleProfile {
   text-decoration: none;
+  margin-right: 10px;
+}
+#newsfeed {
+  text-decoration: none;
 }
 
 /* ----------- media queries --------------------- */
