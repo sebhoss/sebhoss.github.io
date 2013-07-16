@@ -2,7 +2,7 @@ auto: true
 permalink: /:title
 pygments: true
 
-title: nil
+title: sebhoss.github.io
 url: http://sebhoss.github.io/
 author:
   name: Sebastian Hoß
