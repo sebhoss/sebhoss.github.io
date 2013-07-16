@@ -44,6 +44,10 @@ ul {
   color: white;
 }
 
+a[rel=license] {
+  text-decoration: none;
+}
+
 #postHeader {
   margin: 0;
   padding: 1em 5%;
