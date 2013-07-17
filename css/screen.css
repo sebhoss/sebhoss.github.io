@@ -77,9 +77,6 @@ nav {
   padding: 0;
 }
 
-#post {
-  overflow: hidden;
-}
 
 footer {
   padding: 1em 0;
@@ -110,7 +107,6 @@ footer {
 #post {
   -webkit-flex-grow: 8;
   flex-grow: 8;
-  overflow: scroll;
 }
 
 footer {
