@@ -1,0 +1,84 @@
+---
+layout: post
+title: Clojure Java Interoperability
+tags: [Clojure, Java, Interoperability]
+---
+
+p. Clojure has several "forms and macros":http://clojure.org/java_interop call Java code. However Clojure code from Java is not always so straight forward. The following post shows the different options currently available.
+
+h2. Using @gen-class@
+
+p. Clojure code can be "compiled":http://clojure.org/compilation to standard JVM bytecode.
+
+p. "Examples":http://kotka.de/blog/2010/02/gen-class_how_it_works_and_how_to_use_it.html for @gen-class@.
+
+h3. Adding static modifiers
+
+p. Clojure imposes the notion of immutability. As such Clojure functions are/should be void of any state or side-effects and only operate and the given input. Therefore exporting Clojure functions as static Java methods makes sense.
+
+p. Example from "DZone":http://java.dzone.com/articles/java-clojure-interop-calling
+
+{% highlight clojure %}
+(ns com.domain.tiny
+  (:gen-class
+    :name com.domain.tiny
+    :methods [#^{:static true} [binomial [int int] double]]))
+
+(defn binomial
+  "Calculate the binomial coefficient."
+  [n k]
+  (let [a (inc n)]
+    (loop [b 1
+           c 1]
+      (if (> b k)
+        c
+        (recur (inc b) (* (/ (- a b) b) c))))))
+
+(defn -binomial
+  "A Java-callable wrapper around the 'binomial' function."
+  [n k]
+  (binomial n k))
+{% endhighlight %}
+
+p. Instead of defining every Clojure function which should be exported twice (the real function + the Java wrapper), it is possible to use a macro to do that extra work automatically.
+
+[*TODO: Add require to clojure.string/..*]
+
+{% highlight clojure %}
+(defn camel-case [input] 
+  (let [words (clojure.string/split input #"[\s_-]+")] 
+    (clojure.string/join (cons (clojure.string/lower-case (first words)) (map clojure.string/capitalize (rest words))))))
+
+(defn java-name [clojure-name]
+  (symbol (str "-" (camel-case (str clojure-name)))))
+
+(defmacro defn* [name & decls]
+  (let [java-name (java-name name)]
+    `(do (defn ~name ~decls)
+       (defn ~java-name ~decls))))
+{% endhighlight %}
+
+p. The macro @defn*@ replaces @defn@ and automatically creates a second function with a valid camel-cased Java method name. The macro is available as a "small library":https://github.com/sebhoss/def-clj at "Maven Central":http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.sebhoss%22%20a%3A%22def-clj%22 .
+
+h2. Using the Clojure Runtime
+
+p. Using @gen-class@ imposes certain limitations on calling Clojure code from Java. One of those are functions which make use of Clojure parameter destructuring [*TODO: add link*].
+
+{% highlight java %}
+Var require = RT.var("clojure.core", "require");
+Symbol namespace = Symbol.intern("DESIRED.NAMESPACE.HERE");
+Var function = RT.var("DESIRED.NAMESPACE.HERE", "DESIRED-FUNCTION");
+Keyword keyword = Keyword.intern("REQUIRED-KEYWORD");
+
+require.invoke(namespace);
+Object result = function.invoke(keyword, VALUE);
+{% endhighlight %}
+
+p. The desired namespace has to be on the classpath for this to work. Alternativly it is possible to load an entire Clojure script, as shown in the following example:
+
+{% highlight java %}
+RT.loadResourceScript("interop/core.clj");
+RT.var("interop.core", "print-string").invoke("hello world");
+{% endhighlight %}
+
+p. "Java helper":https://github.com/mikera/clojure-utils/blob/master/src/main/java/mikera/cljutils/Clojure.java to work with Clojure code.
