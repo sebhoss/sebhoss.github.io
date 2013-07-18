@@ -1,0 +1,1 @@
+p. Macro to create a function with mutiple arities:
