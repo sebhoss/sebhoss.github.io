@@ -1,0 +1,21 @@
+---
+layout: nil
+---
+<rdf:RDF
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"">
+  <foaf:PersonalProfileDocument rdf:about="">
+    <foaf:maker rdf:resource="#me"/>
+    <foaf:primaryTopic rdf:resource="#me"/>
+  </foaf:PersonalProfileDocument>
+  
+  <foaf:Person rdf:ID="me">
+    <foaf:name>{{ site.author.name }}</foaf:name>
+    <foaf:title>Mr</foaf:title>
+    <foaf:givenname>Sebastian</foaf:givenname>
+    <foaf:family_name>Hoß</foaf:family_name>
+    <foaf:mbox rdf:resource="mailto:{{ site.author.email }}"/>
+    <foaf:homepage rdf:resource="{{ site.url }}"/>
+  </foaf:Person>
+</rdf:RDF>
