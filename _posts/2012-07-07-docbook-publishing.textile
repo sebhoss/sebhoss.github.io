@@ -28,6 +28,7 @@ h2. Install docbkx-archetype (Optional)
 
 p. Maven allows one to use predefined archetype as a template for new projects. The docbkx-tools project defines one for DocBook publishing using Maven and their own plugin. Archetypes are not really needed as you can always write everything yourself but most of the time they offer a quickstart to whatever you are going to do. The following files are all derived from the docbkx archetype.
 
+!/images/docbook-publishing/sample-docbook-project-layout.png(Project Layout)!
 
 
 h2. Creating a project
