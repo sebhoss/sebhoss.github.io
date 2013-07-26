@@ -4,24 +4,21 @@ title: DocBook Publishing with Maven and Eclipse
 tags: [DocBook, Maven, Eclipse]
 ---
 
-p. Writing DocBook documents always requires one to configure a suitable build system which generates the desired output formats. This post shows how to do that with Maven all from within Eclipse.
+p. Writing DocBook documents always requires one to configure a suitable build system which generates the desired output formats. This post shows how to do that with "Maven":http://maven.apache.org/ all from within "Eclipse":http://eclipse.org/.
 
 h2. Download & Install Eclipse
 
-p. If you have Eclipse not already up and running download it at http://eclipse.org/downloads/- it does not really matter which version you get or have as we are going to add missing plugins anyway.
+p. If you have Eclipse not already up and running download it at "http://eclipse.org/downloads/":http://eclipse.org/downloads/ - it does not really matter which version you get or have as we are going to add missing plugins anyway.
 
 h2. Install m2e Plugin
 
-p. The m2e plugin embedds a complete Maven 3 runtime inside Eclipse and thus lets us use all of Mavens features. Since we want to use Maven to generate our documents this plugin comes in handy because we won’t have to switch between Eclipse and a Maven shell all the time.
-
-h2. Download DocBook W3C XML-Schema files
-
-p. To enable validation of your DocBook sources inside of Eclipse you’ll need the DocBook XSD files. Download all three (docbook.xsd, xlink.xsd and xml.xsd) and put them somewhere safe.
+p. The m2e plugin embedds a complete Maven 3 runtime inside Eclipse and thus lets us use all of Mavens features. Since we want to use Maven to generate our documents this plugin comes in handy because we won’t have to switch between Eclipse and a Maven shell all the time. Most Eclipse variants already include this plugin. Check your installation details whether it is already installed.
 
 h2. Install Eclipse XSL Tools (Optional)
 
-p. When you plan on splitting your DocBook files into multiple parts you want to enable XSL support in Eclipse so that it won’t give you any validation errors. To do so install the Eclipse XSL Developer Tools from the main Eclipse repository for your release. I’m currently on the Helios (3.6) release and therefore it got the XSL tools from the Helios repository as shown in the following picture:
+p. When you plan on splitting your DocBook files into multiple parts you want to enable XSL support in Eclipse so that it won’t give you any validation errors. To do so install the Eclipse XSL Developer Tools from the main Eclipse repository for your release. I’m currently on the Kepler (4.3) release and therefore it got the XSL tools from the Kepler repository as shown in the following picture:
 
+!/images/docbook-publishing/install-xsl-plugin.png(XSL Plugin Installation)!
 
 
 h2. Install docbkx-archetype (Optional)
