@@ -23,7 +23,7 @@ p. When you plan on splitting your DocBook files into multiple parts you want to
 
 h2. Creating a project
 
-p. At this point we have all necessary tools for DocBook editing and publishing using Maven and Eclipse. To start writing you can now either create a new Maven project inside your Eclipse workspace using the "docbkx":https://code.google.com/p/docbkx-tools/ "archetype":https://code.google.com/p/docbkx-tools/wiki/UsingArchetypeTemplate or just a simple Maven project without the use of any archetype. Both ways will result in a _pom.xml_ file which is the main configuration file for your project and the place to configure PDF output, etc. For this post I’ve started with the archetype project layout but modified it to better reflect the standard Maven layout. Use _Eclipse > New > Other > New Maven Project_. Then select the docbkx archetype and set your groupId and artifactId as shown below:
+p. At this point we have all necessary tools for DocBook editing and publishing using Maven and Eclipse. To start writing you can now either create a new Maven project inside your Eclipse workspace using the "docbkx":https://code.google.com/p/docbkx-tools/ "archetype":https://code.google.com/p/docbkx-tools/wiki/UsingArchetypeTemplate or just a simple Maven project without the use of any archetype. Both ways will result in a _pom.xml_ file which is the main configuration file for your project and the place to configure PDF output, etc. For this post I’ve started with the archetype project layout but modified it to better reflect the standard Maven layout. Use _New > Other > New Maven Project_. Then select the docbkx archetype and set your groupId and artifactId as shown below:
 
 !/images/docbook-publishing/archetype-selection.png(New Maven project inside Eclipse using the archetype selection wizard)!
 
@@ -39,32 +39,37 @@ p. Have a look at the finished "pom.xml":https://github.com/sebhoss/maven-docboo
 
 h2. Enabling Validation
 
-p. As you can see, all DocBook sources are inside the _src/main/docbkx_ folder and will get automatically picked-up by the docbkx-plugin. Also note that I’ve changed the file extension of all the DocBook files to .dbk which is the default file extension of DocBook files. The files under src/main/resources/xsd (these are the files from step 3) will now be used to validation your sources and provide you with content assist. For that open the Eclipse preferences via Window > Preferences and switch to the XML > XML Catalog category as shown in the following picture.
+p. As you can see, all DocBook sources are inside the _src/main/docbkx_ folder and will get automatically picked-up by the docbkx-plugin. Also note that I’ve changed the file extension of all the DocBook files to _.dbk_ which is the default file extension of DocBook files. The files inside the docbook-xml dependency will now be used to validate your sources and provide you with content assist. For that open the Eclipse preferences via _Preferences > XML > XML Catalog_ category as shown in the following picture.
 
+!/images/docbook-publishing/editing-xml-catalog.png(Adding DocBook to the XML Catalog)!
 
+p. The location points to the local Maven repository at _~/.m2/_ but *you have to URI escape to dot to _%2E_ for this to work*. The complete location link is as follows:
 
+_jar:file:~/%2Em2/repository/net/sf/docbook/docbook-xml/5.0-all/docbook-xml-5.0-all-resources.zip!/docbook/xsd/docbook.xsd_
 
+p. or specifically in my case (on OSX):
 
-p. There add a new catalog entry by clicking on the Add button. The final result should look like in the pictures. If you want to use XIncludes as well you have to enable the “Process XML Inclusions” checkbox inside the XML > XML Files > Validation category as shown below.
+_jar:file:/Users/seb/%2Em2/repository/net/sf/docbook/docbook-xml/5.0-all/docbook-xml-5.0-all-resources.zip!/docbook/xsd/docbook.xsd_
 
+p. If you want to use "XIncludes":http://www.w3.org/TR/xinclude/ (useful if you want to split content across several files) as well you have to enable the “Process XML Inclusions” checkbox inside the _XML > XML Files > Validation_ category as shown below.
 
+!/images/docbook-publishing/enabling-xinclude.png(Enable XInclude processing)!
 
+p. At this point we are almost there but we still need to enable the actual validation. For this right-click on your project, select _Properties_ and switch to the _Validation_ category. There add a validation builder to your project and click on the XML validator settings as shown in the following picture.
 
-p. At this point we are almost there but we still need to enable the actual validation. For this right-click on your project, select Properties and switch to the Validation category. There add a validation builder to your project and click on the XML validator settings as shown in the following picture.
-
-
+!/images/docbook-publishing/enabling-validation.png(Enable XML validation)!
 
 p. Inside the XML validator settings click on the first include group (or create your own) and add a single rule to include files with a DocBook content-type. The DocBook content-type is already configured in the latest versions of Eclipse so no additional work needed. The result should look like the following:
 
 
 h2. Generating Output
 
-p. At this point all validation of DocBook sources works and you have content assist inside those sources. To finally generate some output we are going to create a simple launch configuration with Eclipse which will call Maven to build your project. For that just right-click on your project, select Run As > Maven build… and set the goal to clean pre-site as shown in the following picture.
+p. At this point all validation of DocBook sources works and you have content assist inside those sources. To finally generate some output we are going to create a simple launch configuration with Eclipse which will call Maven to build your project. For that just right-click on your project, select _Run As > Maven build…_ and set the goal to _clean pre-site_ as shown in the following picture.
 
 
 
 p. Now hit Run, wait for the process to finish and look into the target folder of your project for final outputs.
 
-p. The nice thing about this setup is that it can be easily shared via SCM-systems. It only includes source files with the exception of those XSD files from step 3 and the FO stylesheet. But those could be easily moved into seperate projects, modules, plugins or just a network drive to make them accessible for all writers within a team.
+p. The nice thing about this setup is that it can be easily shared via SCM-systems. It only includes source files with the exception of the FO stylesheet. But those could be easily moved into seperate projects, modules, plugins or just a network drive to make them accessible for all writers within a team.
 
-p. (For the impatient I’ve created a sample project at github which includes all necessary files)
+p. (For the impatient I’ve created a "sample project on github":https://github.com/sebhoss/maven-docbook-sample which includes all necessary files)
