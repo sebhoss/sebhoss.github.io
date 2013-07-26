@@ -21,25 +21,25 @@ p. When you plan on splitting your DocBook files into multiple parts you want to
 !/images/docbook-publishing/install-xsl-plugin.png(XSL Plugin Installation)!
 
 
-h2. Install docbkx-archetype (Optional)
-
-p. Maven allows one to use predefined archetype as a template for new projects. The "docbkx-tools":https://code.google.com/p/docbkx-tools/ project "defines one":https://code.google.com/p/docbkx-tools/wiki/UsingArchetypeTemplate for DocBook publishing using Maven and their own plugin. Archetypes are not really needed as you can always write everything yourself but most of the time they offer a quickstart to whatever you are going to do. The following files are all derived from the docbkx archetype.
-
-
 h2. Creating a project
 
-p. At this point we have all necessary tools and files for DocBook editing and publishing using Maven and Eclipse. To start writing you can now either create a new Maven project inside your Eclipse workspace using the docbkx archetype from step 5 or just a simple Maven project without the use of any archetype. Both ways will result in a pom.xml file which is the main configuration file for your project and the place to configure PDF output, etc. For this post I’ve started with the archetype project layout but modified it to better reflect the standard Maven layout. It looks as follows:
+p. At this point we have all necessary tools for DocBook editing and publishing using Maven and Eclipse. To start writing you can now either create a new Maven project inside your Eclipse workspace using the "docbkx":https://code.google.com/p/docbkx-tools/ "archetype":https://code.google.com/p/docbkx-tools/wiki/UsingArchetypeTemplate or just a simple Maven project without the use of any archetype. Both ways will result in a _pom.xml_ file which is the main configuration file for your project and the place to configure PDF output, etc. For this post I’ve started with the archetype project layout but modified it to better reflect the standard Maven layout. Use _Eclipse > New > Other > New Maven Project_. Then select the docbkx archetype and set your groupId and artifactId as shown below:
+
+!/images/docbook-publishing/archetype-selection.png(New Maven project inside Eclipse using the archetype selection wizard)!
+
+!/images/docbook-publishing/archetype-parameters.png(Setting archetype parameters)!
+
+The end result looks as follows:
 
 !/images/docbook-publishing/sample-docbook-project-layout.png(Project Layout)!
 
 
-
-p. The pom.xml (link) looks like this:
+p. Have a look at the finished "pom.xml":https://github.com/sebhoss/maven-docbook-sample/blob/master/pom.xml. It includes a dependency to _net.sf.docbook:docbook-xml:5.0-all_ which contains the XML Schema files for DocBook.
 
 
 h2. Enabling Validation
 
-p. As you can see, all DocBook sources are inside the src/main/docbkx folder and will get automatically picked-up by the docbkx-plugin. Also note that I’ve changed the file extension of all the DocBook files to .dbk which is the default file extension of DocBook files. The files under src/main/resources/xsd (these are the files from step 3) will now be used to validation your sources and provide you with content assist. For that open the Eclipse preferences via Window > Preferences and switch to the XML > XML Catalog category as shown in the following picture.
+p. As you can see, all DocBook sources are inside the _src/main/docbkx_ folder and will get automatically picked-up by the docbkx-plugin. Also note that I’ve changed the file extension of all the DocBook files to .dbk which is the default file extension of DocBook files. The files under src/main/resources/xsd (these are the files from step 3) will now be used to validation your sources and provide you with content assist. For that open the Eclipse preferences via Window > Preferences and switch to the XML > XML Catalog category as shown in the following picture.
 
 
 
