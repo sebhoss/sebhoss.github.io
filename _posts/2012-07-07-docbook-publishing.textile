@@ -4,7 +4,7 @@ title: DocBook Publishing with Maven and Eclipse
 tags: [DocBook, Maven, Eclipse]
 ---
 
-p. Writing DocBook documents always requires one to configure a suitable build system which generates the desired output formats. This post shows how to do that with "Maven":http://maven.apache.org/ all from within "Eclipse":http://eclipse.org/.
+p. Writing "DocBook":http://www.docbook.org/ documents always requires one to configure a suitable build system which generates the desired output formats. This post shows how to do that with "Maven":http://maven.apache.org/ all from within "Eclipse":http://eclipse.org/.
 
 h2. Download & Install Eclipse
 
@@ -23,15 +23,14 @@ p. When you plan on splitting your DocBook files into multiple parts you want to
 
 h2. Install docbkx-archetype (Optional)
 
-p. Maven allows one to use predefined archetype as a template for new projects. The docbkx-tools project defines one for DocBook publishing using Maven and their own plugin. Archetypes are not really needed as you can always write everything yourself but most of the time they offer a quickstart to whatever you are going to do. The following files are all derived from the docbkx archetype.
-
-!/images/docbook-publishing/sample-docbook-project-layout.png(Project Layout)!
+p. Maven allows one to use predefined archetype as a template for new projects. The "docbkx-tools":https://code.google.com/p/docbkx-tools/ project "defines one":https://code.google.com/p/docbkx-tools/wiki/UsingArchetypeTemplate for DocBook publishing using Maven and their own plugin. Archetypes are not really needed as you can always write everything yourself but most of the time they offer a quickstart to whatever you are going to do. The following files are all derived from the docbkx archetype.
 
 
 h2. Creating a project
 
 p. At this point we have all necessary tools and files for DocBook editing and publishing using Maven and Eclipse. To start writing you can now either create a new Maven project inside your Eclipse workspace using the docbkx archetype from step 5 or just a simple Maven project without the use of any archetype. Both ways will result in a pom.xml file which is the main configuration file for your project and the place to configure PDF output, etc. For this post I’ve started with the archetype project layout but modified it to better reflect the standard Maven layout. It looks as follows:
 
+!/images/docbook-publishing/sample-docbook-project-layout.png(Project Layout)!
 
 
 
