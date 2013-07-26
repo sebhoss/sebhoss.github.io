@@ -12,7 +12,7 @@ p. If you have Eclipse not already up and running download it at "http://eclipse
 
 h2. Install m2e Plugin
 
-p. The m2e plugin embedds a complete Maven 3 runtime inside Eclipse and thus lets us use all of Mavens features. Since we want to use Maven to generate our documents this plugin comes in handy because we won’t have to switch between Eclipse and a Maven shell all the time. Most Eclipse variants already include this plugin. Check your installation details whether it is already installed.
+p. The m2e plugin embeds a complete Maven 3 runtime inside Eclipse and thus lets us use all of Mavens features. Since we want to use Maven to generate our documents this plugin comes in handy because we won’t have to switch between Eclipse and a Maven shell all the time. Most Eclipse variants already include this plugin. Check your installation details whether it is already installed.
 
 h2. Install Eclipse XSL Tools (Optional)
 
@@ -70,6 +70,6 @@ p. At this point all validation of DocBook sources works and you have content as
 
 p. Now hit Run, wait for the process to finish and look into the target folder of your project for final outputs.
 
-p. The nice thing about this setup is that it can be easily shared via SCM-systems. It only includes source files with the exception of the FO stylesheet. But those could be easily moved into seperate projects, modules, plugins or just a network drive to make them accessible for all writers within a team.
+p. The nice thing about this setup is that it can be easily shared via SCM-systems. It only includes source files with the exception of the FO stylesheet. But those could be easily moved into separate projects, modules, plugins or just a network drive to make them accessible for all writers within a team.
 
 p. (For the impatient I’ve created a "sample project on github":https://github.com/sebhoss/maven-docbook-sample which includes all necessary files)
