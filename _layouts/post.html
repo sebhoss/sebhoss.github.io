@@ -1,18 +1,18 @@
 ---
 layout: default
 ---
-<article id="post">
+<article id="post" class="h-entry">
   <header id="postHeader">
-    <h1><a href="{{ page.url }}">{{ page.title }}</a></h1>
+    <h1 class="p-name"><a href="{{ page.url }}" class="u-url">{{ page.title }}</a></h1>
     <span class="post_tags" rel="tag"> talks about: {{ page.tags | sort | array_to_sentence_string }}</span>
   </header>
 
-  <div>
+  <div class="e-content">
   {{ content }}
   </div>
 
   <footer>
-    <time pubdate datetime="{{ page.date }}">Published: {{ page.date | date_to_string }}</time>
+    <time pubdate datetime="{{ page.date }}" class="dt-published">Published: {{ page.date | date_to_string }}</time>
     {% include license.html %}
   </footer>
 
