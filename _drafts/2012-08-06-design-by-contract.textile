@@ -4,4 +4,29 @@ title: Design by Contract
 tags: [Design by Contract, DbC]
 ---
 
-p. Show how to use DbC inside Java or on the JVM.
+p. "Design by contract":http://en.wikipedia.org/wiki/Design_by_contract (DbC) is a technique to enforce certain rules on how programmers can interact with code. There exist several languages with built-in support for it like "Clojure":http://clojure.org, for others like "Java":http://java.com there are frameworks which support DbC style programming.
+
+h2. Frameworks using an Java agent
+
+* https://code.google.com/p/cofoja/
+* http://c4j.sourceforge.net/ (Java 1.5)
+* http://c4j-team.github.io/C4J/ (Java 1.6)
+* http://modernjass.sourceforge.net/
+* https://code.google.com/p/java-on-contracts/
+* http://chex4j.sourceforge.net/
+
+h2. Frameworks using a special compiler
+
+* http://jcontracts.sourceforge.net/ (uses JContractS's compiler tool)
+* http://www.polyglotprogramming.com/contract4j (uses AspectJ's ajc compiler)
+* http://jcontractor.sourceforge.net/ (uses jInstrument to instrument Java code with contracts)
+
+h2. Frameworks using aspects
+
+* http://springcontracts.sourceforge.net/ (uses Spring's AspectJ support)
+* https://code.google.com/p/javadbc/
+
+h2. Frameworks for modeling of contracts
+
+* http://www.jmlspecs.org/ (JML can be used/parsed by several different tools, see  http://en.wikipedia.org/wiki/Java_Modeling_Language )
+
