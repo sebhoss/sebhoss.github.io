@@ -15,7 +15,7 @@ Checkstyle tricks: http://stackoverflow.com/questions/4023185/how-to-disable-a-p
 
 Write your own APT Processor which checks code: http://stackoverflow.com/questions/1752607/how-to-intentionally-cause-a-custom-java-compiler-warning-message
 
-Licenses check with http://mojo.codehaus.org/license-maven-plugin/
+Licenses check with http://mojo.codehaus.org/license-maven-plugin/ or http://mycila.github.io/license-maven-plugin/
 
 Tattletale check http://docs.jboss.org/tattletale/userguide/1.2/en-US/html_single/#maven
 
