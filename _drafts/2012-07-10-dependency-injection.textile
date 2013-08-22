@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Dependency Injection
-tags: [Dependency Injection, Java, Guice, Spring]
+tags: [Dependency Injection, Java, CDI, Guice, Spring]
 ---
 
-Explain dependency injection. Provide examples for Spring/Guice.
+Explain dependency injection. Provide examples for Spring/Guice/CDI.
