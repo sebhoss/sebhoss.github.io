@@ -37,7 +37,7 @@ p. The Java wrapper has to follow the "standard rules":http://docs.oracle.com/ja
 
 p. Trying out this code you may notice that the returned list is raw, e.g. the method definition doesn't use generics. To solve this problem declare that the generated class @:implements@ a certain interface that exposes the desired method definition(s). You won't be able to declare your methods as static anymore, but get a generified method for all your Java needs.
 
-p. Returning an array of something is also possible with the following construct @"[Ljava.lang.Object;"@. Need a 2-dim array? Just use @"[[Ljava.lang.Object;"@ (notice the extra @[@).
+p. Returning an array of something is also possible with the following construct @"[Ljava.lang.Object;"@. Need a 2-dim array? Just use @"[[Ljava.lang.Object;"@ (notice the extra @[@) and so on.
 
 p. Instead of defining every Clojure function which should be exported twice (the real function + the Java wrapper), it is possible to use a macro to do that extra work automatically.
 
