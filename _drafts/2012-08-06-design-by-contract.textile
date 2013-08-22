@@ -25,6 +25,7 @@ h2. Frameworks using aspects
 
 * http://springcontracts.sourceforge.net/ (uses Spring's AspectJ support)
 * https://code.google.com/p/javadbc/
+* https://github.com/sebhoss/annotated-contracts
 
 h2. Frameworks for modeling of contracts
 
