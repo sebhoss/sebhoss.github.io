@@ -85,7 +85,7 @@ public class ClojureJavaInterop {
 
 p. Couple of notes for this as well: First the generated class still only returns the raw type (@List@ instead of @List<Integer>@). So instead of using the class, use the interface for the variable declaration (@RangeIncrementer incrementer = ..@ instead of @Computation comp = ..@). The interface will return the non-raw @List@. Second the function definition for @-incrementRange@ is now slightly different. It needs an additional parameter (@this@) which exposes the current instance to the generated class/method.
 
-p. Returning an array of something is also possible with the following construct @"[Ljava.lang.Object;"@. Need a 2-dim array? Just use @"[[Ljava.lang.Object;"@ (notice the extra @[@) and so on. However be aware that the method return types have to match, e. g. you can't specify a return type of array if your Clojure function doesn't return an array. The example above the call to @map@ returns @LazySeq@ which itself is a @java.util.List@. Therefore the method declaration is valid and you won't get any @ClassCastException@ when calling @incrementRange@ from Java.
+p. Returning an array of something is also possible with the following construct @"[Ljava.lang.Object;"@. Need a 2-dim array? Just use @"[[Ljava.lang.Object;"@ (notice the extra @[@) and so on. However be aware that the method return types have to match, e. g. you can't specify a return type of array if your Clojure function doesn't return an array. In the example above the call to @map@ returns @LazySeq@ which itself is a @java.util.List@. Therefore the method declaration is valid and you won't get any @ClassCastException@ when calling @incrementRange@ from Java.
 
 h3. Make your life easier with macros
 
