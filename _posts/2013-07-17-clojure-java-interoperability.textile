@@ -12,7 +12,7 @@ p. Clojure code can be "compiled":http://clojure.org/compilation to standard JVM
 
 h3. Adding static modifiers
 
-p. Clojure imposes the notion of immutability. As such Clojure functions are/should be void of any state or side-effects and only operate and the given input. Therefore exporting Clojure functions as static Java methods makes sense. The following example defines a Clojure function, a corresponding Java-callable function and exports the Java function as a static Method in the class @com.example.Computation@.
+p. Clojure imposes the notion of immutability. As such Clojure functions are/should be void of any state or side-effects and only operate on the given input. Therefore exporting Clojure functions as static Java methods makes sense. The following example defines a Clojure function, a corresponding Java-callable function and exports the Java function as a static Method in the class @com.example.Computation@.
 
 {% highlight clojure %}
 (ns com.example.computation
