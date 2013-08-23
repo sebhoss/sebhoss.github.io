@@ -55,7 +55,7 @@ p. The changed Clojure namespace:
 (ns com.example.computation
   (:gen-class
     :name com.example.Computation
-    :implements com.example.RangeIncrementer))
+    :implements [com.example.RangeIncrementer]))
 
 (defn increment-range
   "Creates a sequence of numbers up to max and then increments them."
