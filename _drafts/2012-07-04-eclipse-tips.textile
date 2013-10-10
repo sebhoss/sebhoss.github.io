@@ -5,3 +5,5 @@ tags: [Eclipse]
 ---
 
 Show tips for Eclipse.
+
+* Most of the time views such as _Console_ or _Problems_ are not actively used. Therefore minimize those and regain more free space for code.
