@@ -9,7 +9,7 @@ layout: nil
     <foaf:maker rdf:resource="#me"/>
     <foaf:primaryTopic rdf:resource="#me"/>
   </foaf:PersonalProfileDocument>
-  
+
   <foaf:Person rdf:ID="me">
     <foaf:name>{{ site.author.name }}</foaf:name>
     <foaf:title>Mr</foaf:title>
