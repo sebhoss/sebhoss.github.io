@@ -36,8 +36,8 @@ VALUES
 h2. UPDATE-Statements
 
 bc. 
-UPDATE  table
-SET     column1 = 1,
-        column2 = 2,
-        column3 = 3
-WHERE   column4 > 0
+UPDATE table
+SET column1 = 1,
+    column2 = 2,
+    column3 = 3
+WHERE column4 > 0
