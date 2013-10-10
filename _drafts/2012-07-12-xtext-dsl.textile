@@ -5,3 +5,5 @@ tags: [Eclipse, DSL, Xtext, SQL, Java, JUnit]
 ---
 
 Show how to develop DSLs with Xtext.
+
+It is currently not possible to write a DSL with Xtext and publish it in Maven central, since a required Maven plugin is not available in central.
