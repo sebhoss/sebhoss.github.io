@@ -6,4 +6,4 @@ tags: [Eclipse]
 
 Show tips for Eclipse.
 
-* Most of the time views such as _Console_ or _Problems_ are not actively used. Therefore minimize those and regain more free space for code.
+* Most of the time views such as _Console_ or _Problems_ are not actively used. Therefore minimize those and regain more free space for code. After minimizing they are still available with a single click on their specific icon. Clicking outside of the then opened popup closes the dialog (quick peek).
