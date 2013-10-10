@@ -9,22 +9,21 @@ Show bad examples. Introduce a lot of whitespace, show smaller, consistent layou
 
 h2. General Rules
 # No implicit joins!
-# SELECTed columns appear after 8 spaces
 # Columns are aligned
 
 h2. SELECT-Statements
 
 bc. 
-SELECT  column1,
-        column2,
-        column3
-FROM    table1
-        INNER JOIN table2
-          USING (column1, column2)
-        INNER JOIN table3
-          ON  table3.column3 = table1.column4
-          AND table3.column5 = table2.column6
-WHERE   column5 < 0
+SELECT column1,
+       column2,
+       column3
+FROM table1
+     INNER JOIN table2
+       USING (column1, column2)
+     INNER JOIN table3
+       ON  table3.column3 = table1.column4
+       AND table3.column5 = table2.column6
+WHERE column5 < 0
 
 h2. INSERT-Statements
 
