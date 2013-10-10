@@ -121,7 +121,7 @@ require.invoke(namespace);
 Object result = function.invoke(keyword, VALUE);
 {% endhighlight %}
 
-p. The desired namespace has to be on the classpath for this to work. Alternativly it is possible to load an entire Clojure script, as shown in the following example:
+p. The desired namespace has to be on the classpath for this to work. Alternatively it is possible to load an entire Clojure script, as shown in the following example:
 
 {% highlight java %}
 RT.loadResourceScript("interop/custom.clj");
