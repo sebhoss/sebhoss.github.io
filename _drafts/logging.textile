@@ -15,7 +15,6 @@ Flame Graphs: http://dtrace.org/blogs/brendan/2011/12/16/flame-graphs/
 * Fold stacks
 * flamegraph.pl
 
-
 Spring-Logging
 * Logger, der per Spring aufgebaut, konfiguriert, etc. werden kann.
 * Eventuell eigenes Interface für SupportLogger und DeveloperLogger? (SupportLog, DeveloperLog)
