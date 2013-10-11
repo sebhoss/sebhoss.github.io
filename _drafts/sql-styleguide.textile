@@ -8,6 +8,7 @@ Formatting rules for SQL statements.
 Show bad examples. Introduce a lot of whitespace, show smaller, consistent layout? Consistent is good because of pattern matching.
 
 h2. General Rules
+
 # No implicit joins!
 # Columns are aligned
 
