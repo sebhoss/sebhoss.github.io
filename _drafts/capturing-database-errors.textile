@@ -9,6 +9,7 @@ http://docs.oracle.com/cd/E11882_01/server.112/e26088/statements_10008.htm#BCEFB
 
 
 Error-Trigger:
+{% highlight sql %}
 create or replace
 TRIGGER after_error
  AFTER SERVERERROR ON DATABASE
@@ -45,10 +46,11 @@ BEGIN
 END LOOP;
  --
 END after_error;
-
+{% endhighlight %}
 
 
 Fehlerhafte Objekte finden (Systemweit):
+{% highlight sql %}
 SELECT  do.owner, do.object_name, do.object_type, do.status, de.line, de.position, de.text
 FROM    dba_objects do
         LEFT OUTER JOIN dba_errors de
@@ -75,4 +77,4 @@ EXCEPTION
   WHEN OTHERS THEN NULL;
 END;
 end loop; end;
-
+{% endhighlight %}
