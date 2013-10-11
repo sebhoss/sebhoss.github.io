@@ -6,16 +6,14 @@ tags: [Startups, MDP]
 
 Define MDP, yadada
 
-I'm going to give you a mission statement exercise that I stole from famed marketer/author Marty Neumeier (I had constructed a similar framework on my own, but his is way better and easier - he's the best branding/messaging author nobody speaks about, steal all his books):
-
-o WHAT: Rocketr is the ONLY___________________
+o WHAT: yadada is the ONLY___________________
 o HOW: that _______________________________
 o WHO: for _________________________________
 o WHERE: in __________________________________
 o WHY: who ________________________________
 o WHEN: in an era of __________________________.
 
-Find two examples from Marty below that reveal the format details:
+Format details:
 
 Example #1:
 o WHAT: Harley Davidson is the ONLY motorcycle manufacturer
