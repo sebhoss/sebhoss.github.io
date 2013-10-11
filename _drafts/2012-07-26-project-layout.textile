@@ -11,4 +11,7 @@ Required:
 * *README* contains the projects introduction (aka read me)
 * *CONTRIBUTING* contains information for future committers on how to contribute.
 
+SCM specific:
+* *.gitignore* lists files ignored by git. This list should include all source files that are generated/derived from checked-in source files. Rule of thumb is: Can it be generated? If yes, then include in .gitignore.
+
 http://www.hiltmon.com/blog/2012/06/30/project-folder-layout/
