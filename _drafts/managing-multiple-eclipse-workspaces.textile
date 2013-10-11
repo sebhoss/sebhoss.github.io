@@ -9,11 +9,9 @@ Show how to manage multiple Eclipse workspaces. Each with different plugins.
 Maybe explain how to re-use configuration across several workspaces?
 
 Configuration options to export:
-- Java Code Formatter
-- Java Code Templates
-- Java Save Actions
-- Java Compiler Warnings Settings
-- 
-
+* Java Code Formatter
+* Java Code Templates
+* Java Save Actions
+* Java Compiler Warnings Settings
 
 Eclipse Content Assist Templates zeigen. Zusammmen mit JUnit-TestData kann man so einfach INSERTs/usw. für seine Tabellen erstellen
