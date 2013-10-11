@@ -11,3 +11,9 @@ SQL Beispielschema erstellen und als durchgängiges Beispiel für alle SQL-relev
 Table customers:
 * customer_id NUMBER, UNIQUE, PK
 * customer_name VARCHAR, NOT NULL
+
+Table address:
+* address_id NUMBER, UNIQUE, PK
+* customer_id NUMBER, FK
+* address_street VARCHAR
+
