@@ -7,3 +7,7 @@ tags: [SQL, Schema]
 SQL Beispielschema erstellen und als durchgängiges Beispiel für alle SQL-relevanten Themen verwenden!
 
 Ähnlich wie World-Datebase von MySQL oder Employees von Oracle, oder oder oder..
+
+Table customers:
+* customer_id NUMBER, UNIQUE, PK
+* customer_name VARCHAR, NOT NULL
