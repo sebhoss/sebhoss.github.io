@@ -4,4 +4,11 @@ title: Standard Project Layout
 tags: [Project, Organization, Layout]
 ---
 
+Required:
+
+* */src* contains the projects source code
+* *LICENSE* contains the projects license
+* *README* contains the projects introduction (aka read me)
+* *CONTRIBUTING* contains information for future committers on how to contribute.
+
 http://www.hiltmon.com/blog/2012/06/30/project-folder-layout/
