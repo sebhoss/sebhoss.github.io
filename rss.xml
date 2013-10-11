@@ -19,6 +19,5 @@ layout: nil
       <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
     </item>
     {% endfor %}
-
   </channel>
 </rss>
