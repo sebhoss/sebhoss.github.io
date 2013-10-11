@@ -6,7 +6,7 @@ tags: [Workitem, Project, Planning]
 
 Nebenbedingungen von Projekten und Fragestellungen, die man in diesem Zusammenhang lösen muss.
 
-- Wo und wie definiert man Testdaten
-- Wie werden Testdaten eingespielt & verifiziert
-- Zugangsberechtigungen für DEV/TEST/PROD-Umgebungen
-- Wer deployed & wie
+* Wo und wie definiert man Testdaten
+* Wie werden Testdaten eingespielt & verifiziert
+* Zugangsberechtigungen für DEV/TEST/PROD-Umgebungen
+* Wer deployed & wie
