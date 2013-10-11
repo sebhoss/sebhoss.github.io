@@ -14,7 +14,7 @@ Top level is the name of the project. Underneath are the following folders:
 * *documentation* contains the end user documentation of the project.
 http://www.hiltmon.com/blog/2012/06/30/project-folder-layout/
 
-Inside a workspace/module folder: 
+Inside a workspace/module folder:
 Required:
 
 * */src* contains the projects source code
