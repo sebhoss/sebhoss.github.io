@@ -4,6 +4,17 @@ title: Standard Project Layout
 tags: [Project, Organization, Layout]
 ---
 
+Top level is the name of the project. Underneath are the following folders:
+
+* *software* software required by this project. Either in installed form or as the to-be-installed binary.
+* *design* contains all design related files. Design includes not only UI design, but more importantly inner software design (some may call that architecture). This folder should also include collected use cases and requirements.
+* *workspace* contains the source code of the project.
+* *media* contains all audios/videos/presentations/etc. related to the project.
+* *management* contains files related to the management of the project, e.g. scheduling, resource planning, contracts, approvals, etc.
+* *documentation* contains the end user documentation of the project.
+http://www.hiltmon.com/blog/2012/06/30/project-folder-layout/
+
+Inside a workspace/module folder: 
 Required:
 
 * */src* contains the projects source code
@@ -14,4 +25,3 @@ Required:
 SCM specific:
 * *.gitignore* lists files ignored by git. This list should include all source files that are generated/derived from checked-in source files. Rule of thumb is: Can it be generated? If yes, then include in .gitignore.
 
-http://www.hiltmon.com/blog/2012/06/30/project-folder-layout/
