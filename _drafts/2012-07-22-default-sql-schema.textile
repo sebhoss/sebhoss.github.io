@@ -12,6 +12,14 @@ Table customers:
 * customer_id NUMBER, UNIQUE, PK
 * customer_name VARCHAR, NOT NULL
 
+{% highlight sql }
+CREATE TABLE CUSTOMER (
+  CUSTOMER_ID   NUMBER NOT NULL ENABLE,
+  CUSTOMER_NAME VARCHAR2(50 BYTE) NOT NULL ENABLE,
+  CONSTRAINT CUSTOMER_PK PRIMARY KEY(CUSTOMER_ID) ENABLE
+)
+{% endhighlight }
+
 Table address:
 * address_id NUMBER, UNIQUE, PK
 * customer_id NUMBER, FK
