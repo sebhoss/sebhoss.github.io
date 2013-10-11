@@ -59,8 +59,10 @@ FROM    dba_objects do
           AND do.object_type = de.TYPE
 WHERE   do.status = 'INVALID'
 ORDER BY do.object_type, do.object_name;
+{% endhighlight %}
 
 Fehlerhafte Objekte finden (pro Nutzer):
+{% highlight sql %}
 SELECT  do.object_name, do.object_type, do.status, de.line, de.position, de.text
 FROM    user_objects do
         LEFT OUTER JOIN user_errors de
@@ -68,8 +70,10 @@ FROM    user_objects do
           AND do.object_type = de.TYPE
 WHERE   do.status = 'INVALID'
 ORDER BY do.object_type, do.object_name;
+{% endhighlight %}
 
 Ungültige Trigger in einer Oracle-Datenbank erneut kompilieren:
+{% highlight sql %}
 begin FOR cur IN (SELECT OBJECT_NAME, OBJECT_TYPE, owner FROM all_objects WHERE object_type in ('TRIGGER') and owner = :OBJECT_OWNER AND status = 'INVALID' ) LOOP
 BEGIN
     EXECUTE IMMEDIATE 'alter ' || cur.OBJECT_TYPE || ' "' ||  cur.owner || '"."' || cur.OBJECT_NAME || '" compile';
