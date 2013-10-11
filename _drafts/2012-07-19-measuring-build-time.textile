@@ -11,3 +11,5 @@ Zeitdauer möglichst gering halten. Nebenbedingung des Projekts.
 Techniken/Möglichkeiten zeigen, um Build Time zu reduzieren
 
 Build Time: Zeit für Compile + Tests
+
+Wenn die selbe Menge an Quellcode in mehrere Maven Module aufgeteilt wird, steigt die Build Time an, da Plugins wie z. B. FindBugs u.U. die gerade laufende VM forken. Die Startzeiten der VM kann bei sehr kleinen Modulen entscheidend sein. Eine mögliche Lösung ist, nicht ein Aggregator für alle Module zu verwenden, sondern neben unterschiedlichen Modulen auch mehrere Aggregatoren einsetzen, die dann nur jeweils eine kleine Anzahl an Modulen aufbaut (diejenigen, die geändert wurden).
