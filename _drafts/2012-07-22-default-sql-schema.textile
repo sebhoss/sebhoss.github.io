@@ -16,4 +16,3 @@ Table address:
 * address_id NUMBER, UNIQUE, PK
 * customer_id NUMBER, FK
 * address_street VARCHAR
-
