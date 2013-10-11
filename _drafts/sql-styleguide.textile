@@ -14,7 +14,7 @@ h2. General Rules
 
 h2. SELECT-Statements
 
-bc. 
+{% highlight sql %}
 SELECT column1,
        column2,
        column3
@@ -25,20 +25,23 @@ FROM table1
        ON  table3.column3 = table1.column4
        AND table3.column5 = table2.column6
 WHERE column5 < 0
+{% endhighlight %}
 
 h2. INSERT-Statements
 
-bc. 
+{% highlight sql %}
 INSERT INTO table
     (column1, column2, column3)
 VALUES
     (1, 2, 3)
+{% endhighlight %}
 
 h2. UPDATE-Statements
 
-bc. 
+{% highlight sql %}
 UPDATE table
 SET column1 = 1,
     column2 = 2,
     column3 = 3
 WHERE column4 > 0
+{% endhighlight %}
