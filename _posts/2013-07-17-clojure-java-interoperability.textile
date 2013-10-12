@@ -115,12 +115,22 @@ h2. Using the Clojure Runtime
 p. Using @gen-class@ imposes certain limitations on calling Clojure code from Java. One of those are functions which make use of Clojure "parameter destructuring":http://clojure.org/special_forms#Special%20Forms--Binding%20Forms%20(Destructuring). To invoke those functions you have to use the Clojure runtime.
 
 {% highlight java %}
+// The Clojure 'require' function from the 'clojure.core' namespace.
 Var require = RT.var("clojure.core", "require");
+
+// Your namespace
 Symbol namespace = Symbol.intern("DESIRED.NAMESPACE.HERE");
+
+// Your function
 Var function = RT.var("DESIRED.NAMESPACE.HERE", "DESIRED-FUNCTION");
+
+// The required keyword for the above function
 Keyword keyword = Keyword.intern("REQUIRED-KEYWORD");
 
+// Require/Import your namespace
 require.invoke(namespace);
+
+// Invoke your function with the given keyword and its value
 Object result = function.invoke(keyword, VALUE);
 {% endhighlight %}
 
