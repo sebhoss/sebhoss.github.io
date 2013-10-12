@@ -9,3 +9,5 @@ Setup an development environment with all specified components.
 Explain workflows.
 
 Create Puppet/Chef-templates.
+
+Docker scripts
