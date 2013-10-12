@@ -112,7 +112,7 @@ p. The macro @defn*@ replaces @defn@ and automatically creates a second function
 
 h2. Using the Clojure Runtime
 
-p. Using @gen-class@ imposes certain limitations on calling Clojure code from Java. One of those are functions which make use of Clojure "parameter destructuring":http://clojure.org/special_forms#Special%20Forms--Binding%20Forms%20(Destructuring).
+p. Using @gen-class@ imposes certain limitations on calling Clojure code from Java. One of those are functions which make use of Clojure "parameter destructuring":http://clojure.org/special_forms#Special%20Forms--Binding%20Forms%20(Destructuring). To invoke those functions you have to use the Clojure runtime.
 
 {% highlight java %}
 Var require = RT.var("clojure.core", "require");
