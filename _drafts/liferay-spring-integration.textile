@@ -5,3 +5,5 @@ tags: [Liferay, Spring, Integration]
 ---
 
 p. Show how to integrate Liferay and Spring.
+
+p. Use ContextLoadListener defined either in web.xml to define an Spring ApplicationContext which can be used across all portlets inside the deployment unit or defined in portlet.xml for each individual portlet.
