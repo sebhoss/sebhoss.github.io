@@ -34,7 +34,7 @@ p. Clojure imposes the notion of immutability. As such Clojure functions are/sho
 
 p. Note that the above definition could be replaced by @(range start end)@. The example is just used to show some more Clojure functions.
 
-p. The Java wrapper has to follow the "standard rules":http://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8 for method names. Therefore @increment-range@ has to be renamed to @incrementRange@ (or some similar name without the *-*).
+p. The Java wrapper has to follow the "standard rules":http://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8 for method names. Therefore @increment-range@ has to be renamed to @incrementRange@ (or some similar name without the *-* in it). The *-* prefix for the Java wrapper can be configured inside the @:gen-class@ form and will be removed once @gen-class@ runs.
 
 h3. Adding generics
 
