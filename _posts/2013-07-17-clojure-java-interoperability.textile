@@ -102,10 +102,10 @@ p. Instead of defining every Clojure function which should be exported twice (th
 (defn java-name [clojure-name]
   (symbol (str "-" (camel-case (str clojure-name)))))
 
-(defmacro defn* [name & decls]
+(defmacro defn* [name & declarations]
   (let [java-name (java-name name)]
-    `(do (defn ~name ~decls)
-       (defn ~java-name ~decls))))
+    `(do (defn ~name ~declarations)
+       (defn ~java-name ~declarations))))
 {% endhighlight %}
 
 p. The macro @defn*@ replaces @defn@ and automatically creates a second function with a valid camel-cased Java method name. The macro is available as a "small library":https://github.com/sebhoss/def-clj at "Maven Central":http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.sebhoss%22%20a%3A%22def-clj%22 . The macro won't add the extra parameter mentioned above to Java wrapper, so it is only useful for declaring static methods.
