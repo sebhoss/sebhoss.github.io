@@ -50,7 +50,7 @@ public class ClojureJavaInteropStatic {
 
 h3. Adding generics
 
-p. Trying out the above code you may notice that the returned list is raw, e.g. the method definition doesn't use generics. To solve this problem declare that the generated class @:implements@ a certain interface that exposes the desired method definition(s). You won't be able to declare your methods as static anymore, but get a generified method for all your Java needs.
+p. You may notice that the returned list in the above code is raw, because. the method definition doesn't use generics. To solve this problem declare that the generated class @:implements@ a certain interface that exposes the desired method definition(s). You won't be able to declare your methods as static anymore, but get a generified method for all your Java needs.
 
 p. The Java interface:
 
