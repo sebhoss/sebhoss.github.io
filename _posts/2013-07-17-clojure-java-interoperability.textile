@@ -2,7 +2,7 @@
 layout: post
 title: Clojure Java Interoperability
 tags: [Clojure, Java, Interoperability]
-date: 2013-10-10
+date: 2013-10-12
 ---
 
 p. Clojure has several "forms and macros":http://clojure.org/java_interop to call Java code. However calling Clojure code from Java is not always so straight forward. The following post shows the different options currently available.
