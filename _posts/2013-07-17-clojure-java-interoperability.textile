@@ -86,7 +86,7 @@ p. Finally the generified usage from Java:
 {% highlight java %}
 package com.example
 
-public class ClojureJavaInterop {
+public class ClojureJavaInteropGenerics {
 
     public static void main(String[] args) {
         RangeIncrementer incrementer = new Computation();
