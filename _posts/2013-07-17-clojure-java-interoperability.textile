@@ -75,12 +75,12 @@ p. Finally the generified usage from Java:
 package com.example
 
 public class ClojureJavaInterop {
-  
+
     public static void main(String[] args) {
         RangeIncrementer incrementer = new Computation();
         List<Long> incrementedRange = incrementer.incrementRange(10);
     }
-  
+
 }
 {% endhighlight %}
 
