@@ -93,9 +93,11 @@ h3. Make your life easier with macros
 p. Instead of defining every Clojure function which should be exported twice (the real function + the Java wrapper), it is possible to use a macro to do that extra work automatically.
 
 {% highlight clojure %}
+(require '[clojure.string :as string)
+
 (defn camel-case [input]
-  (let [words (clojure.string/split input #"[\s_-]+")]
-    (clojure.string/join (cons (clojure.string/lower-case (first words)) (map clojure.string/capitalize (rest words))))))
+  (let [words (string/split input #"[\s_-]+")]
+    (string/join (cons (string/lower-case (first words)) (map string/capitalize (rest words))))))
 
 (defn java-name [clojure-name]
   (symbol (str "-" (camel-case (str clojure-name)))))
