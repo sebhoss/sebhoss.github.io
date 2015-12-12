@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: flexpost
 title: Clojure Java Interoperability
 tags: [Clojure, Java, Interoperability]
 date: 2013-10-12

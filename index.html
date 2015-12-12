@@ -1,10 +1,14 @@
 ---
-layout: default
-title: Sebastian Hoß
+layout: flexbox
+title: Welcome!
 ---
 <article id="post" class="h-entry">
   <header id="postHeader">
-    <h1 class="p-name"><a href="{{ site.posts.first.url }}" class="u-url">{{ site.posts.first.title }}</a></h1>
+    <h1 class="p-name">
+      <a href="{{ site.posts.first.url }}" class="u-url">{{ site.posts.first.title }}</a>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.title }}/edit/master/{{ site.posts.first.path }}" class="octicon octicon-pencil"></a>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.title }}/commits/master/{{ site.posts.first.path }}" class="octicon octicon-history"></a>
+    </h1>
     <span class="post_tags" rel="tag"> talks about: {{ site.posts.first.tags | sort | array_to_sentence_string }}</span>
   </header>
 

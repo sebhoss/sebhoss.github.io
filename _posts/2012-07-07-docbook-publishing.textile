@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: flexpost
 title: DocBook Publishing with Maven and Eclipse
 tags: [DocBook, Maven, Eclipse]
 ---

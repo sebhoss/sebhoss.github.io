@@ -1,5 +1,5 @@
 permalink: /:title
-pygments: true
+highlighter: pygments
 
 title: sebhoss.github.io
 url: http://sebhoss.github.io/
@@ -8,3 +8,6 @@ author:
   email: mail@shoss.de
   github: sebhoss
   location: München/Germany
+
+gems:
+  - jekyll-asciidoc

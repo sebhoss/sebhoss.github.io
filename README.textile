@@ -1,3 +1,0 @@
-h1. sebhoss.github.io
-
-p. My personal homepage. Updates automatically whenever I push to GitHub.

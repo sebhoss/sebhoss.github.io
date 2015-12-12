@@ -2,6 +2,7 @@ body {
   font-family: 'DejaVu Sans', Georgia;
 }
 
+/* centers images */
 article#post img {
   display: block;
   margin-left: auto;
