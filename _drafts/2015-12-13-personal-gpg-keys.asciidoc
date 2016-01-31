@@ -217,6 +217,8 @@ sub   4096R/0x52F8589B2C942E45 2015-12-13 [expires: 2016-12-31]
 
 $ gpg --send-keys 0x41BEDE98620510C8
 gpg: sending key 0x41BEDE98620510C8 to hkp server pool.sks-keyservers.net
+
+$ gpg2 --export --armor 0x52F8589B2C942E45 > 0x52F8589B2C942E45.pub.asc
 ----
 
 == Delete keys
