@@ -2,7 +2,8 @@ permalink: /:title
 highlighter: pygments
 
 title: seb.hoß.de
-url: https://sebhoss.github.io/
+url: https://seb.xn--ho-hia.de/
+github: sebhoss.github.io
 author:
   name: Sebastian Hoß
   email: mail@shoss.de
