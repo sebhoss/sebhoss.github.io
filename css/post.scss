@@ -28,3 +28,17 @@
 .bibliography {
   font-size: small;
 }
+
+#footnotes {
+  margin-bottom: 15px;
+}
+#footnotes hr {
+  margin-left: 15px;
+  margin-right: 50px;
+  max-width: 550px;
+  margin-bottom: 15px;
+}
+#footnotes hr:after {
+  content: 'Footnotes:';
+  font-weight: bold;
+}

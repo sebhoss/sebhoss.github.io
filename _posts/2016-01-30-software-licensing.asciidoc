@@ -13,8 +13,41 @@ SFLC explains that no copyright information does not yield copyright. Thus no co
 
 FSF suggest to use CC0footnote:[http://www.gnu.org/licenses/license-list.en.html#CC0]footnote:[http://creativecommons.org/publicdomain/zero/1.0/]
 
-== Conclusion
+CC tells something about license headers for files.footnote:[https://wiki.creativecommons.org/wiki/CC0_FAQ#May_I_apply_CC0_to_computer_software.3F_If_so.2C_is_there_a_recommended_implementation.3F]
+
+== Recommendation
+
+Use the Creative Commons Zero license.
 
 Use the following header for all source files, and create a single LICENSE file in the root of the project containing the license information.
 
-> This file is part of Foo Project. It is subject to the license terms in the LICENSE file found in the top-level directory of this distribution and at http://creativecommons.org/publicdomain/zero/1.0/. No part of Foo Project, including this file, may be copied, modified, propagated, or distributed except according to the terms contained in the LICENSE file.
+[source]
+----
+This file is part of Foo Project. It is subject to the license terms in the LICENSE file found in the top-level
+directory of this distribution and at http://creativecommons.org/publicdomain/zero/1.0/. No part of Foo Project, including
+this file, may be copied, modified, propagated, or distributed except according to the terms contained in the
+LICENSE file.
+----
+
+Place the following link:http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt[legal code] in a file called `LICENSE` in the root of your project:
+
+[source]
+----
+include::/assets/cc-zero-legalcode.txt[]
+----
+
+Use the following link:https://shields.io[shields.io] badge for your project:
+
+image:https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square["CC Zero", link="http://creativecommons.org/publicdomain/zero/1.0/"]
+
+Place the following text at the bottom of your `README`:
+
+[source]
+----
+To the extent possible under law, the author(s) have dedicated all copyright
+and related and neighboring rights to this software to the public domain
+worldwide. This software is distributed without any warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication along
+with this software. If not, see http://creativecommons.org/publicdomain/zero/1.0/.
+----
