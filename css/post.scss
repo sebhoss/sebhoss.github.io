@@ -31,6 +31,7 @@
 
 #footnotes {
   margin-bottom: 15px;
+  margin-right: 15px;
 }
 #footnotes hr {
   margin-left: 15px;
@@ -41,4 +42,7 @@
 #footnotes hr:after {
   content: 'Footnotes:';
   font-weight: bold;
+}
+#footnotes :target  {
+   font-weight: bold;
 }

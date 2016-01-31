@@ -11,20 +11,22 @@ The Software Freedom Law Centerfootnote:[https://www.softwarefreedom.org/] defin
 
 SFLC explains that no copyright information does not yield copyright. Thus no copyright header is preferred way to go since it minimizes maintenance work. No yearly updates have to be performed. Future contributors do not have to be added manually, your link:/git-cheat-sheet[version control system] handles that way better than you anyway.
 
-FSF suggest to use CC0footnote:[http://www.gnu.org/licenses/license-list.en.html#CC0]footnote:[http://creativecommons.org/publicdomain/zero/1.0/]
+FSF suggest to use CC0footnote:[http://www.gnu.org/licenses/license-list.en.html#CC0]footnoteref:[cc0, http://creativecommons.org/publicdomain/zero/1.0/]
 
 CC tells something about license headers for files.footnote:[https://wiki.creativecommons.org/wiki/CC0_FAQ#May_I_apply_CC0_to_computer_software.3F_If_so.2C_is_there_a_recommended_implementation.3F]
 
 == Recommendation
 
-Use the Creative Commons Zero license.
+Follow the suggesting of the FSF and pick the Creative Commons Zero license.footnoteref:[cc0]. Compares to similar licenses like the WTFPLfootnoteref:[wtfpl, http://www.wtfpl.net/] or UNLICENSEfootnoteref:[unlicense, http://unlicense.org/], the CC0 only downside seems to be a missing OSIfootnoteref:[osi, http://opensource.org/] stamp of approvalfootnote:[http://opensource.org/faq#cc-zero]. The problem here is that the CC0 does not grant any trademark or patent rights, thus placing users of your software in a position where they can legally use your software but are forced to pay royalties for using your patent implemented by that software.footnote:[http://opensource.stackexchange.com/questions/133/how-could-using-code-released-under-cc0-infringe-on-the-authors-patents] In order to solve that problem, place all your trademarks and patent rights under the same CC0 license.
 
-Use the following header for all source files, and create a single LICENSE file in the root of the project containing the license information.
+On the plus side, you have no ongoing maintenance work to do because of your favorite license, like updating copyright headers.
+
+In order to apply the CC0 license to your project, use the following header for all source files, and create a single LICENSE file in the root of the project containing the license information. Replace `$MY_PROJECT` with the name of your project.
 
 [source]
 ----
-This file is part of Foo Project. It is subject to the license terms in the LICENSE file found in the top-level
-directory of this distribution and at http://creativecommons.org/publicdomain/zero/1.0/. No part of Foo Project, including
+This file is part of $MY_PROJECT. It is subject to the license terms in the LICENSE file found in the top-level
+directory of this distribution and at http://creativecommons.org/publicdomain/zero/1.0/. No part of $MY_PROJECT, including
 this file, may be copied, modified, propagated, or distributed except according to the terms contained in the
 LICENSE file.
 ----
