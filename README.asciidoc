@@ -1,6 +1,6 @@
 = sebhoss.github.io
 
-My personal homepage. Updates automatically whenever I push to GitHub.
+My personal homepage. Updates by calling `make release`.
 
 Uses:
 
