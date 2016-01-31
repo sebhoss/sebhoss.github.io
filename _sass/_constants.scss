@@ -1,0 +1,19 @@
+$secondary-color: gray;
+$separator-margin: 15px;
+$separator-width: 2px;
+$separator-style: dotted;
+$separator-color: gray;
+
+$header-heigth: 100px;
+$license-heigth: 100px;
+$navigation-width: 250px;
+
+@mixin border-style {
+  border-style: dotted;
+  border-color: $secondary-color;
+}
+
+@mixin disable-links {
+  text-decoration: none;
+  color: black;
+}

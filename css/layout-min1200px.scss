@@ -1,0 +1,13 @@
+---
+---
+
+@import 'constants';
+
+#site {
+  grid-template-rows: $header-heigth auto $license-heigth;
+  grid-template-columns: $navigation-width 1fr;
+  grid-template-areas:
+    "header     header"
+    "navigation content"
+    "navigation license";
+}

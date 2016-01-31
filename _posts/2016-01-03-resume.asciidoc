@@ -1,0 +1,5 @@
+---
+layout: post
+title: Resumé
+tags: [curriculum vitae, resumé]
+---

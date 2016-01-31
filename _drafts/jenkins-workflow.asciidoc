@@ -1,0 +1,27 @@
+node {
+   stage 'git checkout'
+   git url: 'http://git.int.ysura.com/msd/sip.git'
+
+
+   stage 'mvn version number'
+   def mvnHome = tool 'Jenkins Maven'
+   sh "${mvnHome}/bin/mvn versions:set -DnewVersion=2.4.${env.BUILD_NUMBER}"
+
+
+   stage 'docker host set up'
+   env.DOCKER_HOST = "tcp://127.0.0.1:4243"
+
+
+   stage 'docker postgres set up'
+   sh "/usr/local/bin/docker-compose -f build/build-environment.yml up -d postgres"
+
+
+   stage 'docker based build'
+   sh "/usr/local/bin/docker-compose -f build/build-environment.yml run --rm build"
+
+
+   stage 'cleanup'
+   sh "/usr/local/bin/docker-compose -f build/build-environment.yml run --rm clean"
+   sh "/usr/local/bin/docker-compose -f build/build-environment.yml stop postgres"
+   sh "/usr/local/bin/docker-compose -f build/build-environment.yml rm --force postgres"
+}​

@@ -1,15 +1,20 @@
 ---
 layout: post
-title: Capturing Database Errors
-tags: [SQL, Trigger]
+title: Oracle Error Capturing
+tags: [Oracle, SQL, Trigger, Errors]
 ---
 
 Error-Logging-Clause in Insert-/Update-Statements verwenden:
 http://docs.oracle.com/cd/E11882_01/server.112/e26088/statements_10008.htm#BCEFBFCD
 
+<<insert-error>>
+<<update-error>>
+<<dml-error-logging>>
 
 Error-Trigger:
-{% highlight sql %}
+
+[source, sql]
+----
 create or replace
 TRIGGER after_error
  AFTER SERVERERROR ON DATABASE
@@ -34,11 +39,11 @@ BEGIN
  FOR n IN 1..ora_server_error_depth LOOP
  -- log only potential SQL Injection attempts
  -- alternatively it's possible to log everything
--- IF ora_server_error(n) in (  '900','906','907','911','917','920','923','933','970','1031','1476','1719','1722','1742','1756','1789','1790','24247','29257','29540') 
+-- IF ora_server_error(n) in (  '900','906','907','911','917','920','923','933','970','1031','1476','1719','1722','1742','1756','1789','1790','24247','29257','29540')
 -- AND ( (ora_server_error(n) = '1476' ) and (instr(v_stmt,'/* OracleOEM') =0) ) -- execption bug in Oracle OEM
 -- THEN
    if ora_login_user != 'DBSNMP' then
-   -- insert the attempt including the SQL statement into a table   
+   -- insert the attempt including the SQL statement into a table
     INSERT INTO errorlog VALUES (id, sysdate, ora_login_user, ora_client_ip_address, ora_server_error(n), ora_server_error_msg(n), v_stmt);
    END IF;
    COMMIT;
@@ -46,11 +51,13 @@ BEGIN
 END LOOP;
  --
 END after_error;
-{% endhighlight %}
+----
 
 
 Fehlerhafte Objekte finden (Systemweit):
-{% highlight sql %}
+
+[source, sql]
+----
 SELECT  do.owner, do.object_name, do.object_type, do.status, de.line, de.position, de.text
 FROM    dba_objects do
         LEFT OUTER JOIN dba_errors de
@@ -59,10 +66,12 @@ FROM    dba_objects do
           AND do.object_type = de.TYPE
 WHERE   do.status = 'INVALID'
 ORDER BY do.object_type, do.object_name;
-{% endhighlight %}
+----
 
 Fehlerhafte Objekte finden (pro Nutzer):
-{% highlight sql %}
+
+[source, sql]
+----
 SELECT  do.object_name, do.object_type, do.status, de.line, de.position, de.text
 FROM    user_objects do
         LEFT OUTER JOIN user_errors de
@@ -70,10 +79,12 @@ FROM    user_objects do
           AND do.object_type = de.TYPE
 WHERE   do.status = 'INVALID'
 ORDER BY do.object_type, do.object_name;
-{% endhighlight %}
+----
 
 Ungültige Trigger in einer Oracle-Datenbank erneut kompilieren:
-{% highlight sql %}
+
+[source, sql]
+----
 begin FOR cur IN (SELECT OBJECT_NAME, OBJECT_TYPE, owner FROM all_objects WHERE object_type in ('TRIGGER') and owner = :OBJECT_OWNER AND status = 'INVALID' ) LOOP
 BEGIN
     EXECUTE IMMEDIATE 'alter ' || cur.OBJECT_TYPE || ' "' ||  cur.owner || '"."' || cur.OBJECT_NAME || '" compile';
@@ -81,4 +92,10 @@ EXCEPTION
   WHEN OTHERS THEN NULL;
 END;
 end loop; end;
-{% endhighlight %}
+----
+
+=== References
+[bibliography]
+* [[[insert-error]]] link:http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9014.htm#BGBDIGAH[INSERT error logging clause]
+* [[[update-error]]] link:http://docs.oracle.com/cd/B28359_01/server.111/b28286/statements_10008.htm#BCEEAAGC[UPDATE error logging clause]
+* [[[dml-error-logging]]] link:https://docs.oracle.com/cd/B28359_01/server.111/b28310/tables004.htm#InsertDMLErrorLogging[Inserting Data with DML Error Logging]

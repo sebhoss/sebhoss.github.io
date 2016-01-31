@@ -1,0 +1,11 @@
+---
+---
+
+@import 'constants';
+
+#navigation {
+  @include border-style;
+  border-width: $separator-width 0 0 0;
+  margin-right: $separator-margin;
+  margin-left: $separator-margin;
+}

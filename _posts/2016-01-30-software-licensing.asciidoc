@@ -1,0 +1,20 @@
+---
+layout: post
+title: Software Licensing
+tags: [Software, License]
+---
+
+The Software Freedom Law Centerfootnote:[https://www.softwarefreedom.org/] defines the following common approaches to copyright handling in software projects:footnote:[https://www.softwarefreedom.org/resources/2012/ManagingCopyrightInformation.html]
+
+1. per file handling
+2. centralized
+
+SFLC explains that no copyright information does not yield copyright. Thus no copyright header is preferred way to go since it minimizes maintenance work. No yearly updates have to be performed. Future contributors do not have to be added manually, your link:/git-cheat-sheet[version control system] handles that way better than you anyway.
+
+FSF suggest to use CC0footnote:[http://www.gnu.org/licenses/license-list.en.html#CC0]footnote:[http://creativecommons.org/publicdomain/zero/1.0/]
+
+== Conclusion
+
+Use the following header for all source files, and create a single LICENSE file in the root of the project containing the license information.
+
+> This file is part of Foo Project. It is subject to the license terms in the LICENSE file found in the top-level directory of this distribution and at http://creativecommons.org/publicdomain/zero/1.0/. No part of Foo Project, including this file, may be copied, modified, propagated, or distributed except according to the terms contained in the LICENSE file.

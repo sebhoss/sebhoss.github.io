@@ -1,0 +1,98 @@
+---
+layout: post
+title: Spring-Boot & .deb packages
+tags: [Spring-Boot, Ubuntu, .deb packages]
+---
+
+Package & deploy Spring-Boot apps using Debian packages <<gh-jdeb>> <<deb-packaging>> <<wiki-deb>>. Required files are described in <<deb-required-files>>.
+
+`conffile` <<deb-faq-conf-file>>
+
+`maintenance scripts` <<deb-faq-maintenance-scripts>>
+
+install with <<dpkg>> <<wiki-dpkg>>
+
+=== Control file
+
+`src/main/deb/control`
+
+The control file describes the source and binary package, and gives some information about them, such as their names, who the package maintainer is, and so on. Below an example of what it might look like.
+
+See <<deb-control-file>> or <<deb-faq-control-file>> for details.
+
+[source, shell]
+----
+Source: hithere
+Maintainer: Lars Wirzenius <liw@liw.fi>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9)
+
+Package: hithere
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: greet user
+ hithere greets the user, or the world.
+----
+
+=== changelog
+
+`src/main/deb/changelog`
+
+Contains list of changes to the debian package (not source code).
+
+=== compat
+
+`src/main/deb/compat`
+
+Contains the number 9 - nothing else (specifies the "compatibility level" for the debhelper tool)
+
+=== copyright
+
+`src/main/deb/copyright`
+
+Copyright-related information about a package.
+
+=== rules
+
+`src/main/deb/rules`
+
+Contains rules the source/package must comply with.
+
+== Ideas
+
+* Startup w/ host system (e.g. system service) <<spring-boot-system-v>> <<spring-boot-systemd>> <<so-spring-boot-app-as-service>>
+* Monitoring w/ `monit` <<monit>> <<wiki-monit>>
+* Deployment w/ Jenkins or go.cd <<go.cd>> <<jenkins>>
+* Setup w/ Ansible (system specific app.conf file in same directory as app.jar) <<ansible>>
+** user setup (one user for each app.jar, limit access to the system)
+* PID listener (systemd doesn't need PID?!) <<systemd>> <<wiki-systemd>> <<systemd-docs>> <<fedora-systemd>>
+* <<gh-spring-boot-issue-714>>
+* ???
+
+== References
+[bibliography]
+* [[[deb-packaging]]] https://wiki.debian.org/IntroDebianPackaging
+* [[[deb-control-file]]] https://www.debian.org/doc/debian-policy/ch-controlfields.html
+* [[[deb-required-files]]] https://www.debian.org/doc/manuals/maint-guide/dreq.en.html
+* [[[deb-faq-control-file]]] https://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html#s-controlfile
+* [[[deb-faq-conf-file]]] https://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html#s-conffile
+* [[[deb-faq-maintenance-scripts]]] https://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html#s-maintscripts
+* [[[wiki-deb]]] link:https://en.wikipedia.org/wiki/Deb_(file_format)[https://en.wikipedia.org/wiki/Deb_(file_format)]
+* [[[dpkg]]] https://wiki.debian.org/Teams/Dpkg
+* [[[wiki-dpkg]]] https://en.wikipedia.org/wiki/Dpkg
+* [[[spring-boot-system-v]]] https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html#deployment-initd-service
+* [[[spring-boot-systemd]]] https://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html#deployment-systemd-service
+* [[[so-spring-boot-app-as-service]]] http://stackoverflow.com/a/30497095/2014864
+* [[[gh-jdeb]]] https://github.com/tcurdt/jdeb
+* [[[gh-spring-boot-issue-714]]] https://github.com/spring-projects/spring-boot/issues/714
+* [[[wiki-monit]]] https://en.wikipedia.org/wiki/Monit
+* [[[monit]]] https://mmonit.com/monit/
+* [[[ansible]]] http://www.ansible.com/
+* [[[systemd]]] http://www.freedesktop.org/wiki/Software/systemd/
+* [[[wiki-systemd]]] https://en.wikipedia.org/wiki/Systemd
+* [[[systemd-docs]]] http://0pointer.de/blog/projects/systemd-docs.html
+* [[[fedora-systemd]]] https://fedoraproject.org/wiki/Systemd
+* [[[go.cd]]] https://www.go.cd/
+* [[[jenkins]]] https://jenkins-ci.org/

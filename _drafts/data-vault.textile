@@ -1,7 +1,0 @@
----
-layout: post
-title: Data Vault Modelling
-tags: [Data Vault]
----
-
-p. Show how to use the Data Vault methodology to model a data warehouse.

@@ -1,0 +1,53 @@
+---
+layout: post
+title: Data Vault Modelling
+tags: [Data Vault]
+---
+
+Data Vault modelling. Does not touch physical layouts.
+
+- Data/Metric/Meta Vault
+
+- Metric Vault as view-based overlay over native database capabilities
+- Could be used to move more easily between databases/projects
+
+- Staging Area
+- "old" mode; Use streaming loads instead
+
+- Data Marts
+- Aggregate/cleanse data and persist
+
+
+== Hubs
+
+List of unique business keys.
+
+- HUB_
+
+== Links
+
+List of unique relations between keys.
+
+- LINK_
+- HIERARCHICAL_LINK_
+- SAME_AS_LINK_
+- TRANSACTIONAL_LINK_
+
+== Satellites
+
+Actual data.
+
+- SATELLITE_
+- HUB_SATELLITE_
+- LINK_SATELLITE_
+- POINT_IN_TIME_
+- BRIDGE_
+- REFERENCE_
+
+== Columns
+
+- LOAD_START_DATE
+- LOAD_END_DATE
+- SEQUENCE
+- RECORD_SOURCE
+-

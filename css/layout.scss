@@ -1,0 +1,30 @@
+---
+---
+
+@import 'constants';
+
+#site {
+  display: grid;
+  grid-template-rows: $header-heigth auto auto $license-heigth;
+  grid-template-columns: auto;
+  grid-template-areas:
+    "header"
+    "content"
+    "navigation"
+    "license";
+}
+
+#header {
+  grid-area: header;
+}
+#navigation {
+  grid-area: navigation;
+}
+#content {
+  grid-area: content;
+  padding-left: 15px;
+
+}
+#license {
+  grid-area: license;
+}

@@ -1,0 +1,246 @@
+---
+layout: post
+title: GPG & Managing keys
+tags: [GPG]
+---
+
+== TODO
+
+* explain process for key refresh
+* key distribution
+* key revocation
+* key verification
+* key signing
+
+== Master key generation
+
+[source]
+----
+$ $ gpg2 --full-gen-key
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 0
+Key does not expire at all
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Sebastian Hoß
+Email address: seb@hoß.de
+Comment: Master Key
+You are using the 'utf-8' character set.
+You selected this USER-ID:
+    "Sebastian Hoß (Master Key) <seb@hoß.de>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+
+gpg: key 0xD9E06C4C870FD47E marked as ultimately trusted
+public and secret key created and signed.
+
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   8  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 8u
+gpg: next trustdb check due at 2015-12-31
+pub   rsa4096/0xD9E06C4C870FD47E 2015-12-27
+      Key fingerprint = 3A8E 73E3 1E35 CA8B 24B6  9253 D9E0 6C4C 870F D47E
+uid                   [ultimate] Sebastian Hoß (Master Key) <seb@hoß.de>
+sub   rsa4096/0xC92E025EB94DABC0 2015-12-27
+
+$ $ gpg2 --list-secret-keys
+/home/sebhoss/.gnupg/pubring.gpg
+--------------------------------
+sec   rsa4096/0xD9E06C4C870FD47E 2015-12-27
+uid                   [ultimate] Sebastian Hoß (Master Key) <seb@hoß.de>
+ssb   rsa4096/0xC92E025EB94DABC0 2015-12-27
+----
+
+== Signing sub key
+
+[source]
+----
+$ gpg2 --edit-key 0xD9E06C4C870FD47E
+Secret key is available.
+
+sec  rsa4096/0xD9E06C4C870FD47E
+     created: 2015-12-27  expires: never       usage: SC
+     trust: ultimate      validity: ultimate
+ssb  rsa4096/0xC92E025EB94DABC0
+     created: 2015-12-27  expires: never       usage: E
+[ultimate] (1). Sebastian Hoß (Master Key) <seb@hoß.de>
+
+gpg> addkey
+Please select what kind of key you want:
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+   (5) Elgamal (encrypt only)
+   (6) RSA (encrypt only)
+Your selection? 4
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 370
+Key expires at Sa 31 Dez 2016 22:22:39 CET
+Is this correct? (y/N) y
+Really create? (y/N) y
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+
+sec  rsa4096/0xD9E06C4C870FD47E
+     created: 2015-12-27  expires: never       usage: SC
+     trust: ultimate      validity: ultimate
+ssb  rsa4096/0xC92E025EB94DABC0
+     created: 2015-12-27  expires: never       usage: E
+ssb  rsa4096/0xB8319BD98B858C82
+     created: 2015-12-27  expires: 2016-12-31  usage: S
+[ultimate] (1). Sebastian Hoß (Master Key) <seb@hoß.de>
+
+gpg> save
+----
+
+== Revocation certificates
+
+[source]
+----
+$ gpg2 --output 0xD9E06C4C870FD47E-compromised.gpg-revocation-certificate --armor --gen-revoke 0xD9E06C4C870FD47E
+
+sec  rsa4096/0xD9E06C4C870FD47E 2015-12-27 Sebastian Hoß (Master Key) <seb@hoß.de>
+
+Create a revocation certificate for this key? (y/N) y
+Please select the reason for the revocation:
+  0 = No reason specified
+  1 = Key has been compromised
+  2 = Key is superseded
+  3 = Key is no longer used
+  Q = Cancel
+(Probably you want to select 1 here)
+Your decision? 1
+Enter an optional description; end it with an empty line:
+>
+Reason for revocation: Key has been compromised
+(No description given)
+Is this okay? (y/N) y
+Revocation certificate created.
+
+Please move it to a medium which you can hide away; if Mallory gets
+access to this certificate he can use it to make your key unusable.
+It is smart to print this certificate and store it away, just in case
+your media become unreadable.  But have some caution:  The print system of
+your machine might store the data and make it available to others!
+
+$ gpg2 --output 0xD9E06C4C870FD47E-superseded.gpg-revocation-certificate --armor --gen-revoke 0xD9E06C4C870FD47E
+
+sec  rsa4096/0xD9E06C4C870FD47E 2015-12-27 Sebastian Hoß (Master Key) <seb@hoß.de>
+
+Create a revocation certificate for this key? (y/N) y
+Please select the reason for the revocation:
+  0 = No reason specified
+  1 = Key has been compromised
+  2 = Key is superseded
+  3 = Key is no longer used
+  Q = Cancel
+(Probably you want to select 1 here)
+Your decision? 2
+Enter an optional description; end it with an empty line:
+>
+Reason for revocation: Key is superseded
+(No description given)
+Is this okay? (y/N) y
+Revocation certificate created.
+
+Please move it to a medium which you can hide away; if Mallory gets
+access to this certificate he can use it to make your key unusable.
+It is smart to print this certificate and store it away, just in case
+your media become unreadable.  But have some caution:  The print system of
+your machine might store the data and make it available to others!
+
+$ gpg2 --output 0xD9E06C4C870FD47E-no-longer-used.gpg-revocation-certificate --armor --gen-revoke 0xD9E06C4C870FD47E
+
+sec  rsa4096/0xD9E06C4C870FD47E 2015-12-27 Sebastian Hoß (Master Key) <seb@hoß.de>
+
+Create a revocation certificate for this key? (y/N) y
+Please select the reason for the revocation:
+  0 = No reason specified
+  1 = Key has been compromised
+  2 = Key is superseded
+  3 = Key is no longer used
+  Q = Cancel
+(Probably you want to select 1 here)
+Your decision? 3
+Enter an optional description; end it with an empty line:
+>
+Reason for revocation: Key is no longer used
+(No description given)
+Is this okay? (y/N) y
+Revocation certificate created.
+
+Please move it to a medium which you can hide away; if Mallory gets
+access to this certificate he can use it to make your key unusable.
+It is smart to print this certificate and store it away, just in case
+your media become unreadable.  But have some caution:  The print system of
+your machine might store the data and make it available to others!
+----
+
+== Publish keys
+
+[source]
+----
+$ gpg2 --list-keys
+pub   4096R/0x41BEDE98620510C8 2015-12-13
+uid                            Sebastian Hoß (Desktop Master Key) <seb@hoß.de>
+sub   4096R/0x369B669266029CB0 2015-12-13
+sub   4096R/0x52F8589B2C942E45 2015-12-13 [expires: 2016-12-31]
+
+$ gpg --send-keys 0x41BEDE98620510C8
+gpg: sending key 0x41BEDE98620510C8 to hkp server pool.sks-keyservers.net
+----
+
+== Delete keys
+
+[source]
+----
+$ gpg2 --delete-secret-key 0x41BEDE98620510C8
+
+sec  4096R/0x06980CA68997EF14 2015-12-13 Sebastian Hoß <mail@shoss.de>
+
+Delete this key from the keyring? (y/N) y
+This is a secret key! - really delete? (y/N) y
+----
+
+== Error Treatment
+
+- No key
+- Multiple keys
+- gpg-agent not running
+- gpg-agent does not have passphrase
+
+
+links:
+- https://we.riseup.net/riseuplabs+paow/openpgp-best-practices#dont-rely-on-the-keyid
+- https://www.void.gr/kargig/blog/2013/12/02/creating-a-new-gpg-key-with-subkeys/
+- https://alexcabal.com/creating-the-perfect-gpg-keypair/
+- http://www.biglumber.com/

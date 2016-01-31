@@ -1,0 +1,4 @@
+
+https://www.reddit.com/r/PostgreSQL/comments/40h40x/help_me_understand_if_this_snippet_will_actually/
+https://github.com/grayhemp/pgcookbook
+http://blog.postgresql-consulting.com/2016/01/postgresql-sreaming-replication.html

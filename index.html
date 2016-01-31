@@ -1,5 +1,5 @@
 ---
-layout: flexbox
+layout: grid
 title: Welcome!
 ---
 <article id="post" class="h-entry">
@@ -8,16 +8,12 @@ title: Welcome!
       <a href="{{ site.posts.first.url }}" class="u-url">{{ site.posts.first.title }}</a>
       <a href="https://github.com/{{ site.author.github }}/{{ site.title }}/edit/master/{{ site.posts.first.path }}" class="octicon octicon-pencil"></a>
       <a href="https://github.com/{{ site.author.github }}/{{ site.title }}/commits/master/{{ site.posts.first.path }}" class="octicon octicon-history"></a>
+      <time pubdate datetime="{{ site.posts.first.date }}" id="pubdate" class="dt-published">(published: {{ site.posts.first.date | date_to_string }})</time>
     </h1>
-    <span class="post_tags" rel="tag"> talks about: {{ site.posts.first.tags | sort | array_to_sentence_string }}</span>
+    <span class="tag" rel="tag">talks about: {{ site.posts.first.tags | sort | array_to_sentence_string }}</span>
   </header>
 
   <div class="e-content">
     {{ site.posts.first.content }}
   </div>
-
-  <footer>
-    <time pubdate datetime="{{ site.posts.first.date }}" class="dt-published">Published: {{ site.posts.first.date | date_to_string }}</time>
-    {% include license.html %}
-  </footer>
 </article>

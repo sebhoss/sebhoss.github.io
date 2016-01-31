@@ -1,0 +1,79 @@
+---
+layout: post
+title: SQL Styleguide
+tags: [SQL, Styleguide]
+---
+
+Formatting rules for SQL statements.
+Show bad examples. Introduce a lot of whitespace, show smaller, consistent layout? Consistent is good because of pattern matching.
+
+== General Rules
+
+1. No implicit joins!
+2. Columns are aligned
+3. SQL keywords are upper case
+4. everything else is lower case
+5. Indent each "level" in a statement
+
+== SELECT-Statements
+
+SELECT, FROM, WHERE, etc. are all siblings, therefore indent them in the same way.
+Every level beneah those keywords should be aligned within itself beneath its parent.
+
+[source, sql]
+----
+-- columns are aligned. use comma-first
+SELECT column1
+      ,column2
+      ,column3
+-- joining tables are aligned
+FROM table1
+     INNER JOIN table2
+       -- conditions are aligned (see below)
+       USING (column1, column2)
+     INNER JOIN table3
+       -- conditionals are aligned
+       ON  table3.column3 = table1.column4
+       AND table3.column5 = table2.column6
+-- columns are aligned, AND aligned with end of WHERE
+WHERE column5 < 0
+  AND column6 > 8
+----
+
+== INSERT-Statements
+
+[source, sql]
+----
+INSERT INTO table
+    (column1, column2, column3)
+VALUES
+    (1, 2, 3)
+----
+
+== UPDATE-Statements
+
+[source, sql]
+----
+UPDATE table
+-- columns are aligned, use comma-first
+SET column1 = 1
+   ,column2 = 2
+   ,column3 = 3
+-- conditions are aligned
+WHERE column4 > 0
+  AND column5 < 8
+----
+
+== Naming rules
+
+Column names use the formula
+
+----
+source_identifier[_classifier]
+----
+
+`source` is the name of the "single source of truth" for this information.
+
+`identifier` is the name of whatever the field is about.
+
+`classifier` is an optional suffix that can be used to distinguish otherwise similar data.

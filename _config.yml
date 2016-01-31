@@ -1,8 +1,8 @@
 permalink: /:title
 highlighter: pygments
 
-title: sebhoss.github.io
-url: http://sebhoss.github.io/
+title: seb.hoß.de
+url: https://sebhoss.github.io/
 author:
   name: Sebastian Hoß
   email: mail@shoss.de
@@ -11,3 +11,14 @@ author:
 
 gems:
   - jekyll-asciidoc
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+asciidoc: asciidoctor
+asciidoc_ext: asciidoc,adoc,ad
+asciidoctor:
+  attributes:
+    - source-highlighter=pygments
+    - pygments-css=style

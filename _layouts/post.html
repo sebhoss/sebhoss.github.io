@@ -1,0 +1,18 @@
+---
+layout: grid
+---
+<article id="post" class="h-entry">
+  <header id="postHeader">
+    <h1 class="p-name">
+      <a href="{{ page.url }}" class="u-url">{{ page.title }}</a>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.title }}/edit/master/{{ page.path }}" class="octicon octicon-pencil" title="edit this page"></a>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.title }}/commits/master/{{ page.path }}" class="octicon octicon-history" title="show history"></a>
+      <time pubdate datetime="{{ page.date }}" id="pubdate" class="dt-published">(published: {{ page.date | date_to_string }})</time>
+    </h1>
+    <span class="tag" rel="tag"> talks about: {{ page.tags | sort | array_to_sentence_string }}</span>
+  </header>
+
+  <div class="e-content">
+    {{ content }}
+  </div>
+</article>

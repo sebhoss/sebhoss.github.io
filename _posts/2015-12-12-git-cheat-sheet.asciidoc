@@ -1,0 +1,107 @@
+---
+layout: post
+title: Git Cheat Sheet
+tags: [Git]
+---
+
+// see http://luisbg.blogalia.com//historias/76017
+
+The following is a reference of Git commands that I'm using every now and then. For a complete guide take a look at the link:https://git-scm.com/doc[online documentation]. Official cheat sheets can be found link:https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf[here] and link:http://ndpsoftware.com/git-cheatsheet.html[here] in a more visual form.
+
+
+== Configure
+
+These are the more common git configuration settings link:https://github.com/sebhoss/playbooks/tree/master/roles/git[I'm using]. Replace my values with your preferred settings.
+
+`git config –global user.name "Sebastian Hoß"` footnote:[http://git-scm.com/docs/git-config]::
+Your full name to be recorded in any newly created commits. Can be overridden by the `GIT_AUTHOR_NAME` and `GIT_COMMITTER_NAME` environment variables.
+`git config –global user.email mail@shoss.de`::
+Your email address to be recorded in any newly created commits. Can be overridden by the `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_EMAIL`, and `EMAIL` environment variables.
+`git config –global color.ui auto`::
+This variable determines the default value for variables such as `color.diff` and `color.grep` that control the use of color per command family. Its scope will expand as more commands learn configuration to set a default for the `--color` option. Set it to `false` or `never` if you prefer Git commands not to use color unless enabled explicitly with some other configuration or the `--color` option. Set it to `always` if you want all output not intended for machine consumption to use color, to `true` or `auto` (this is the default since Git 1.8.4) if you want such output to use color when written to the terminal.
+`git config –global push.default simple`::
+Defines the action git push should take if no refspec is explicitly given. Different values are well-suited for specific workflows; for instance, in a purely central workflow (i.e. the fetch source is equal to the push destination), upstream is probably what you want.
+`simple` is for centralized workflows and works like `upstream` with an added safety to refuse to push if the upstream branch’s name is different from the local one.
+`git config –global core.editor vim`::
+Commands such as commit and tag that lets you edit messages by launching an editor uses the value of this variable when it is set, and the environment variable GIT_EDITOR is not set. See git-var[1].
+`git config –global commit.gpgSign true`::
+A boolean to specify whether all commits should be GPG signed. Use of this option when doing operations such as rebase can result in a large number of commits being signed. It may be convenient to use an agent to avoid typing your GPG passphrase several times.
+`git config --global gpg.program gpg2`::
+Use this custom program instead of `gpg` found on $PATH when making or verifying a PGP signature. The program must support the same command-line interface as GPG, namely, to verify a detached signature, `gpg --verify $file - <$signature` is run, and the program is expected to signal a good signature by exiting with code 0, and to generate an ASCII-armored detached signature, the standard input of `gpg -bsau $key` is fed with the contents to be signed, and the program is expected to send the result to its standard output.
+
+
+== Create repositories
+`git init` footnote:[https://git-scm.com/docs/git-init]::
+Create an empty Git repository or reinitialize an existing one
+`git clone` footnote:[https://git-scm.com/docs/git-clone]::
+Clone a repository into a new directory
+
+
+== Make changes
+`git status` footnote:[https://git-scm.com/docs/git-status]::
+Show the working tree status
+`git diff` footnote:[https://git-scm.com/docs/git-diff]::
+Show changes between commits, commit and working tree, etc
+`git add` footnote:[https://git-scm.com/docs/git-add]::
+Add file contents to the index
+`git rm` footnote:[https://git-scm.com/docs/git-rm]::
+Remove files from the working tree and from the index
+`git reset [file]` footnote:[https://git-scm.com/docs/git-reset]::
+Reset current HEAD to the specified state
+`git commit` footnote:[https://git-scm.com/docs/git-commit]::
+Record changes to the repository
+
+
+== Group changes
+`git branch` footnote:[https://git-scm.com/docs/git-branch]::
+List, create, or delete branches
+`git checkout` footnote:[https://git-scm.com/docs/git-checkout]::
+Switch branches or restore working tree files
+`git merge` footnote:[https://git-scm.com/docs/git-merge]::
+Join two or more development histories together
+
+== Suppress tracking
+
+A text file named .gitignore suppresses accidental versioning of files and paths matching the specified patterns. GitHub can link:https://help.github.com/articles/ignoring-files/[help you] set up your `.gitignore` files.
+
+[source]
+./.gitignore
+----
+*.log
+build/
+temp-*
+----
+
+`git ls-files –other –ignored –exclude-standard`::
+Lists all ignored files in this project.
+
+
+== Save fragments
+`git stash` footnote:[https://git-scm.com/docs/git-stash]::
+Stash the changes in a dirty working directory away
+
+
+== Review history
+`git log` footnote:[https://git-scm.com/docs/git-log]::
+Show commit logs
+`git show` footnote:[https://git-scm.com/docs/git-show]::
+Show various types of objects
+`git bisect` footnote:[https://git-scm.com/docs/git-bisect]::
+Use binary search to find the commit that introduced a bug
+
+
+== Synchronize changes
+`git fetch` footnote:[https://git-scm.com/docs/git-fetch]::
+Download objects and refs from another repository
+`git push` footnote:[https://git-scm.com/docs/git-push]::
+Update remote refs along with associated objects
+`git pull` footnote:[https://git-scm.com/docs/git-pull]::
+Downloads bookmark history and incorporates changes
+`git remote` footnote:[https://git-scm.com/docs/git-remote]::
+Manage set of tracked repositories
+
+
+== Useful snippets
+
+`git bisect start --term-good=unfixed --term-bad=fixed` footnote:[https://www.reddit.com/r/programming/comments/40ln5m/16_awesome_git_aliases_that_you_will_love/cyv9cw0]::
+Use `fixed` and `unfixed` instead of `good` and `bad`

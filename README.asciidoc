@@ -1,0 +1,7 @@
+= sebhoss.github.io
+
+My personal homepage. Updates automatically whenever I push to GitHub.
+
+Uses:
+
+- https://github.com/asciidoctor/jekyll-asciidoc

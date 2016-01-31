@@ -1,0 +1,11 @@
+---
+layout: post
+title: OSS Release Calendar
+tags: [Open Source, Software, Release, Calendar, Schedule]
+---
+
+I'm managing the releases of my open source projects with the help of the following calendar:
+
+pass:[<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showDate=0&amp;showTabs=0&amp;showTz=0&amp;mode=AGENDA&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=d85ikh2a3idf430k6sb8ukaoc0%40group.calendar.google.com&amp;color=%23182C57&amp;ctz=Europe%2FBerlin" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>]
+
+If the above iframe doesn't load, access the HTML version link:https://calendar.google.com/calendar/embed?src=d85ikh2a3idf430k6sb8ukaoc0%40group.calendar.google.com&ctz=Europe/Berlin&showNav=0&showDate=0&showTabs=0&showTz=0&mode=AGENDA[here] or the ICS link:https://calendar.google.com/calendar/ical/d85ikh2a3idf430k6sb8ukaoc0%40group.calendar.google.com/public/basic.ics[here].

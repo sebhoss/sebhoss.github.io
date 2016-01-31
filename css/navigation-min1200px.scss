@@ -1,0 +1,12 @@
+---
+---
+
+@import 'constants';
+
+#navigation {
+  border-width: 0 $separator-width 0 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: $separator-margin;
+  padding-right: $separator-margin;
+}
