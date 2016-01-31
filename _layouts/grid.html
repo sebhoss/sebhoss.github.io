@@ -62,7 +62,7 @@
 
   <nav id="navigation">
     <ul class="latestPosts">
-    {% for post in site.posts limit:10 %}
+    {% for post in site.posts limit:25 %}
       <li>
         <a href="{{ post.url }}">{{ post.title }}</a>
         <span class="tag" rel="tag">{{ post.tags | sort | array_to_sentence_string }}</span>

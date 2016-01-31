@@ -40,7 +40,7 @@ include::/assets/cc-zero-legalcode.txt[]
 
 Use the following link:https://shields.io[shields.io] badge for your project:
 
-image:https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square["CC Zero", link="http://creativecommons.org/publicdomain/zero/1.0/"]
+image:/images/license-cc zero-000000.svg["CC Zero", link="http://creativecommons.org/publicdomain/zero/1.0/"]
 
 Place the following text at the bottom of your `README`:
 
