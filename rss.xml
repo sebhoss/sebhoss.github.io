@@ -4,7 +4,7 @@
 <rss version="2.0">
   <channel>
     <title>{{ site.title | xml_escape }}</title>
-    <link>{{ site.url }}rss.xml</link>
+    <link>{{ site.url }}/rss.xml</link>
     <link>{{ site.url }}</link>
     <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
     <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
