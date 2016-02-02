@@ -3,3 +3,7 @@ layout: post
 title: Resumé
 tags: [curriculum vitae, resumé]
 ---
+
+Work Experience:
+- Software Developer
+- IT Consultant
