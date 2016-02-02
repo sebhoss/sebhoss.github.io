@@ -4,7 +4,7 @@ title: Software Licensing
 tags: [Software, License]
 ---
 
-The Software Freedom Law Centerfootnote:[https://www.softwarefreedom.org/] defines the following common approaches to copyright handling in software projects:footnote:[https://www.softwarefreedom.org/resources/2012/ManagingCopyrightInformation.html]
+The Software Freedom Law Centerfootnote:[https://www.softwarefreedom.org/] defines the following common approaches to copyright handling in software projects:footnoteref:[sflc-ci, https://www.softwarefreedom.org/resources/2012/ManagingCopyrightInformation.html]
 
 1. per file handling
 2. centralized
@@ -15,11 +15,13 @@ FSF suggest to use CC0footnote:[http://www.gnu.org/licenses/license-list.en.html
 
 CC tells something about license headers for files.footnote:[https://wiki.creativecommons.org/wiki/CC0_FAQ#May_I_apply_CC0_to_computer_software.3F_If_so.2C_is_there_a_recommended_implementation.3F]
 
+Atwood suggest to pick any license.footnote:[http://blog.codinghorror.com/pick-a-license-any-license/]
+
 == Recommendation
 
-Follow the suggesting of the FSF and pick the Creative Commons Zero license.footnoteref:[cc0]. Compares to similar licenses like the WTFPLfootnoteref:[wtfpl, http://www.wtfpl.net/] or UNLICENSEfootnoteref:[unlicense, http://unlicense.org/], the CC0 only downside seems to be a missing OSIfootnoteref:[osi, http://opensource.org/] stamp of approvalfootnote:[http://opensource.org/faq#cc-zero]. The problem here is that the CC0 does not grant any trademark or patent rights, thus placing users of your software in a position where they can legally use your software but are forced to pay royalties for using your patent implemented by that software.footnote:[http://opensource.stackexchange.com/questions/133/how-could-using-code-released-under-cc0-infringe-on-the-authors-patents] In order to solve that problem, place all your trademarks and patent rights under the same CC0 license.
+Follow the suggesting of the FSF and pick the Creative Commons Zero license.footnoteref:[cc0]. Compared to similar licenses like the WTFPLfootnoteref:[wtfpl, http://www.wtfpl.net/] or UNLICENSEfootnoteref:[unlicense, http://unlicense.org/], the CC0 only downside seems to be a missing OSIfootnoteref:[osi, http://opensource.org/] stamp of approvalfootnote:[http://opensource.org/faq#cc-zero]. The problem here is that the CC0 does not grant any (implicit) trademark or patent rights, thus placing users of your software in a position where they can legally use your software but are forced to pay royalties for using your patent implemented by that software.footnote:[http://opensource.stackexchange.com/questions/133/how-could-using-code-released-under-cc0-infringe-on-the-authors-patents] In order to solve that problem, place all your trademarks and patent rights under the same CC0 license. If that is not possible, use the CC0 in your advantage and simple re-release the software in question in whatever license, whatever user requires. Cut down on maintenance by using a multi-license approach.footnote:[https://en.wikipedia.org/wiki/Multi-licensing]
 
-On the plus side, you have no ongoing maintenance work to do because of your favorite license, like updating copyright headers.
+On the plus side we have two big organizations working in/on copyright issues that suggest to use the CC0. Without a formal law degree myself, that seems like a good first choice. The following setup is intended to reduce ongoing maintenance work with regards to copyright information in a project while still supporting multiple contributors.
 
 In order to apply the CC0 license to your project, use the following header for all source files, and create a single LICENSE file in the root of the project containing the license information. Replace `$MY_PROJECT` with the name of your project.
 
@@ -31,14 +33,14 @@ this file, may be copied, modified, propagated, or distributed except according 
 LICENSE file.
 ----
 
-Place the following link:http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt[legal code] in a file called `LICENSE` in the root of your project:
+Note that this header does not contain the typical copyright fragments, like the year of publication or the author. The SLFCfootnoteref:[sflc-ci] explains that missing copyright information means that copyright is voided - thus it can be safely removed. Instead the file header simply redirects the reader to the LICENSE file in the root of the project. Add any additional licenses to that same file. As a start, place the following link:http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt[legal code] in a file called `LICENSE` in the root of your project:
 
 [source]
 ----
 include::/assets/cc-zero-legalcode.txt[]
 ----
 
-Use the following link:https://shields.io[shields.io] badge for your project:
+Use the following link:https://shields.io[shields.io] badge for your project to make it link:http://i.imgur.com/41biB.jpg[shiny]:
 
 image:/images/license-cc zero-000000.svg["CC Zero", link="http://creativecommons.org/publicdomain/zero/1.0/"]
 
@@ -52,4 +54,35 @@ worldwide. This software is distributed without any warranty.
 
 You should have received a copy of the CC0 Public Domain Dedication along
 with this software. If not, see http://creativecommons.org/publicdomain/zero/1.0/.
+----
+
+Create a folder called `AUTHORS` and place a file called `WAIVER` with the following content in it:footnote:[http://unlicense.org/WAIVER]
+
+[source]
+----
+# Copyright waiver for <LINK_TO_PROJECT>
+
+I dedicate any and all copyright interest in this software to the
+public domain. I make this dedication for the benefit of the public at
+large and to the detriment of my heirs and successors. I intend this
+dedication to be an overt act of relinquishment in perpetuity of all
+present and future rights to this software under copyright law.
+
+To the best of my knowledge and belief, my contributions are either
+originally authored by me or are derived from prior works which I have
+verified are also in the public domain and are not subject to claims
+of copyright by other parties.
+
+To the best of my knowledge and belief, no individual, business,
+organization, government, or other entity has any copyright interest
+in my contributions, and I affirm that I will not make contributions
+that are otherwise encumbered.
+----
+
+Finally sign the `WAIVER`, commit it, and push everything together with your first contribution to a project.
+
+[source]
+----
+gpg2 --no-version --armor --sign AUTHORS/WAIVER
+mv AUTHORS/WAIVER.asc AUTHORS/WAIVER-signed-by-USERNAME.asc
 ----

@@ -5,7 +5,7 @@ title: Articles
 
 <h1>List of articles</h1>
 
-<p>The navigation only contains the last 25 posts order by their update-date. Here you can find all posts ordered alphabetically.</p>
+<p>The navigation only contains the last {{ site.navitems }} posts order by their update-date. Here you can find all posts ordered alphabetically.</p>
 
 <ul class="latestPosts">
 {% assign sortedPosts = site.posts | sort: 'title' %}
