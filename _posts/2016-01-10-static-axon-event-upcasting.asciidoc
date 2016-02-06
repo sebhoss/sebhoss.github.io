@@ -10,7 +10,3 @@ In order to statically upcast events in an Axonfootnote:[http://www.axonframewor
 ----
 include::/assets/axon-static-upcaster.py[]
 ----
-
-=== References
-[bibliography]
-* [[[axon]]]

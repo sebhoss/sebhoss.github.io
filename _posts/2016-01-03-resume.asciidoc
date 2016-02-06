@@ -4,6 +4,4 @@ title: Resumé
 tags: [curriculum vitae, resumé]
 ---
 
-Work Experience:
-- Software Developer
-- IT Consultant
+Still reordering zeros and ones. Hopefully, I'll get it right one day.
