@@ -2,3 +2,4 @@ _site/
 .settings/
 .sass-cache/
 .project
+.idea/

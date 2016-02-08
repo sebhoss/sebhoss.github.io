@@ -9,8 +9,7 @@ $license-heigth: 100px;
 $navigation-width: 250px;
 
 @mixin border-style {
-  border-style: dotted;
-  border-color: $secondary-color;
+  border: dotted $secondary-color;
 }
 
 @mixin disable-links {
