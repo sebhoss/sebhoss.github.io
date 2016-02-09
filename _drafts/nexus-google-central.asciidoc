@@ -1,0 +1,3 @@
+Google is offering its own copy of Maven Central at https://maven-central.storage.googleapis.com
+
+see announcement at http://takari.io/2015/10/28/google-maven-central.html
