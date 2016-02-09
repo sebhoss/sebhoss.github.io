@@ -1,6 +1,6 @@
 language: ruby
 sudo: false
-script: "./publish.sh"
+script: "./build.sh"
 branches:
   only:
   - source
