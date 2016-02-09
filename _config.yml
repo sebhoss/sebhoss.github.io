@@ -12,9 +12,6 @@ author:
   github: sebhoss
   location: München/Germany
 
-gems:
-  - jekyll-asciidoc
-
 sass:
   sass_dir: _sass
   style: compressed
