@@ -10,10 +10,50 @@ title: Welcome!
       <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/commits/source/{{ site.posts.first.path }}" class="octicon octicon-history"></a>
       <time pubdate datetime="{{ site.posts.first.date }}" id="pubdate" class="dt-published">(published: {{ site.posts.first.date | date_to_string }})</time>
     </h1>
-    <span class="tag" rel="tag">talks about: {{ site.posts.first.tags | sort | array_to_sentence_string }}</span>
+    <span class="tag" rel="tag">talks about: {{ site.posts.first.tags | array_to_sentence_string }}</span>
   </header>
 
   <div class="e-content">
     {{ site.posts.first.content }}
   </div>
-</article>w
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "about": {
+        "@type": "Thing",
+        "name": "{{ site.posts.first.tags | array_to_sentence_string }}"
+      },
+      "accountablePerson": {
+        "@id": "#sebhoss",
+        "@type": "Person",
+        "name": "{{ site.author.name }}",
+        "url": "{{ site.url }}",
+        "email": "{{ site.author.email }}"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "software developers",
+        "name": "monkeys"
+      },
+      "author": {
+        "@id": "#sebhoss"
+      },
+      "creator": {
+        "@id": "#sebhoss"
+      },
+      "dateModified": "{{ site.posts.firstpage.date }}",
+      "datePublished": "2016-01-02",
+      "editor": {
+        "@id": "#sebhoss"
+      },
+      "fileFormat": "text/html",
+      "keywords": "software, development, project, management",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "name": "{{ site.posts.first.title }}",
+      "mainEntityOfPage": "{{ site.posts.first.url }}",
+      "url": "{{ site.posts.first.url }}"
+    }
+  </script>
+</article>

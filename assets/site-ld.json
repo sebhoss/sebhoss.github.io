@@ -1,0 +1,40 @@
+---
+---
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "about": {
+    "@type": "Thing",
+    "name": "Software Development"
+  },
+  "accountablePerson": {
+    "@id": "#sebhoss",
+    "@type": "Person",
+    "name": "{{ site.author.name }}",
+    "url": "{{ site.url }}",
+    "email": "{{ site.author.email }}"
+  },
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "software developers",
+    "name": "monkeys"
+  },
+  "author": {
+    "@id": "#sebhoss"
+  },
+  "creator": {
+    "@id": "#sebhoss"
+  },
+  "dateModified": "{{ site.posts.first.date }}",
+  "datePublished": "2016-01-02",
+  "editor": {
+    "@id": "#sebhoss"
+  },
+  "fileFormat": "text/html",
+  "keywords": "software, development, project, management",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "name": "{{ site.title }}",
+  "description": "{{ site.description }}",
+  "mainEntityOfPage": "{{ site.url }}",
+  "url": "{{ site.url }}"
+}

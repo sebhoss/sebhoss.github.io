@@ -1,0 +1,137 @@
+---
+---
+{
+  "@context": "http://schema.org",
+  "@id": "#sebhoss",
+  "@type": "Person",
+  "name": "{{ site.author.name }}",
+  "jobTitle": "Software Developer",
+  "url": "{{ site.url }}",
+  "email": "{{ site.author.email }}",
+  "gender": "male",
+  "birthDate": "1983-09-15",
+  "birthPlace": {
+    "@type": "Place",
+    "name": "Düsseldorf",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "DE",
+      "addressRegion": "NRW",
+      "addressLocality": "Düsseldorf"
+    }
+  },
+  "nationality": {
+    "@type": "Country",
+    "name": "German"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "DE",
+    "addressRegion": "Bavaria",
+    "addressLocality": "Munich",
+    "contactType": "home address"
+  },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "ysura",
+    "legalName": "ysura GmbH",
+    "url": "http://www.ysura.com/",
+    "email": "info@ysura.com",
+    "telephone": "+49 (89) 6661 6210",
+    "logo": "http://www.ysura.com/wp-content/uploads/2014/04/logo-500-horizontal1.png",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "DE",
+      "addressRegion": "Bavaria",
+      "addressLocality": "Munich",
+      "postalCode": "81667",
+      "streetAddress": "Metzstraße 14b",
+      "contactType": "work address"
+    }
+  },
+  "affiliation": {
+    "@type": "Organization",
+    "name": "metio.wtf",
+    "url": "http://metio.wtf/",
+    "email": "whatsup@metio.wtf",
+    "founder": {
+      "@id": "#sebhoss"
+    }
+  },
+  "alumniOf": [
+    {
+      "@type": "Organization",
+      "name": "viadee",
+      "legalName": "viadee Unternehmensberatung GmbH",
+      "url": "http://www.viadee.de/",
+      "email": "kontakt@viadee.de",
+      "telephone": "+49 (251) 777 770",
+      "logo": "http://www.viadee.de/fileadmin/template/default/img/viadee/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE",
+        "addressRegion": "North Rhine-Westphalia",
+        "addressLocality": "Münster",
+        "postalCode": "48147",
+        "streetAddress": "Anton-Bruchausen-Straße 8",
+        "contactType": "work address"
+      }
+    },
+    {
+      "@type": "Organization",
+      "name": "GSP Finanzkontor",
+      "legalName": "GSP Finanzkontor GmbH",
+      "url": "http://www.gsp-finanzkontor.de/",
+      "email": "info@gsp-finanzkontor.de",
+      "telephone": "+49 (251) 39 77 660",
+      "logo": "http://www.gsp-finanzkontor.de/images/GSP_Logo_RGB.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE",
+        "addressRegion": "North Rhine-Westphalia",
+        "addressLocality": "Münster",
+        "postalCode": "48149",
+        "streetAddress": "Gertrudenstraße 29",
+        "contactType": "work address"
+      }
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Münster",
+      "legalName": "Westfälische Wilhelms-Universität Münster",
+      "url": "https://www.uni-muenster.de/en/",
+      "sameAs": "https://en.wikipedia.org/wiki/University_of_M%C3%BCnster",
+      "email": "verwaltung@uni-muenster.de",
+      "telephone": "+49 (251) 83 0",
+      "logo": "https://en.wikipedia.org/wiki/University_of_M%C3%BCnster#/media/File:Logo_WWU_M%C3%BCnster.svg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE",
+        "addressRegion": "North Rhine-Westphalia",
+        "addressLocality": "Münster",
+        "postalCode": "48149",
+        "streetAddress": "Schlossplatz 2",
+        "contactType": "main administrative address"
+      }
+    },
+    {
+      "@type": "HighSchool",
+      "name": "Marie-Curie-Gymnasium",
+      "legalName": "Marie-Curie-Gymnasium Neuss",
+      "url": "http://www.mcg-neuss.de/",
+      "sameAs": "https://de.wikipedia.org/wiki/Marie-Curie-Gymnasium_Neuss",
+      "email": "mcg@stadt.neuss.de",
+      "telephone": "+49 (2131) 29 57 40",
+      "logo": "http://www.mcg-neuss.de/wp-content/themes/basic/uploads/logo/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE",
+        "addressRegion": "North Rhine-Westphalia",
+        "addressLocality": "Neuss",
+        "postalCode": "41462",
+        "streetAddress": "Jostenallee 49 - 51",
+        "contactType": "main address"
+      }
+    }
+  ]
+}
