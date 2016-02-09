@@ -26,7 +26,5 @@ asciidoctor:
     - source-highlighter=pygments
     - pygments-css=style
 
-# TODO:
-# - https://help.github.com/articles/mentions-on-github-pages/
-# - https://help.github.com/articles/redirects-on-github-pages/
-# - https://help.github.com/articles/sitemaps-for-github-pages/
+exclude: ['README.asciidoc', 'Gemfile.lock', 'Gemfile', 'CNAME', 'Makefile']
+

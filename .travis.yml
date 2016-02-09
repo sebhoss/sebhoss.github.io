@@ -1,0 +1,11 @@
+language: ruby
+sudo: false
+script: "make publish-to-github-pages"
+branches:
+  only:
+  - source
+rvm:
+- 2.2.3
+env:
+  global:
+    secure: SgqNDzUlkRQP6Qgeqn0Es50zwj8Ek5UYw2x3IATZNZubAIZjOBYgCJDV5lh1EG/gx2zvnW85mBIB0OXAWMA79nQ0+whugD/kPc6CMBkZWLkwiRmJEG6DJ0mYeYzkYAmy3wq8kcZzBp8ofTISUlHH36Jgc+NQqYMgIR/pHd2ZXL4=
