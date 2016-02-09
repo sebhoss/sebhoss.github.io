@@ -26,5 +26,5 @@ asciidoctor:
     - source-highlighter=pygments
     - pygments-css=style
 
-exclude: ['README.asciidoc', 'Gemfile.lock', 'Gemfile', 'CNAME', 'Makefile']
+exclude: ['README.asciidoc', 'Gemfile.lock', 'Gemfile', 'Makefile']
 
