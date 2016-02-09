@@ -1,6 +1,6 @@
 language: ruby
 sudo: false
-script: "make publish-to-github-pages"
+script: make publish-to-github-pages
 branches:
   only:
   - source
@@ -8,4 +8,4 @@ rvm:
 - 2.2.3
 env:
   global:
-    secure: SgqNDzUlkRQP6Qgeqn0Es50zwj8Ek5UYw2x3IATZNZubAIZjOBYgCJDV5lh1EG/gx2zvnW85mBIB0OXAWMA79nQ0+whugD/kPc6CMBkZWLkwiRmJEG6DJ0mYeYzkYAmy3wq8kcZzBp8ofTISUlHH36Jgc+NQqYMgIR/pHd2ZXL4=
+    secure: CNBZVlvAs6JP6kqxWg4WbPxvIdz60l3cssxkKBM1SJBepaNY623IFhUss9o6wf2t1y95m2Ycf33jcD+I0j8wMJ6RiKOZdARTKguJup+rkZaG3Y9Sh9H3sqF6zEYkFMOiSS2Sqo4WWd6gm5sYrh+7zi4iTOq711rto5yhEmfC12g=
