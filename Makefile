@@ -1,7 +1,7 @@
 publish-to-github-pages:
 	@rm -rf _site
 	@rm -rf ../distribution
-	@jekyll build
+	@bundle exec jekyll build
 	@mv _site ../distribution
 	@cd ../distribution
 	@git init
