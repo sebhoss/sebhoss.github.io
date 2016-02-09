@@ -1,0 +1,17 @@
+---
+---
+
+@import 'constants';
+
+#site {
+  grid-template-rows: $header-heigth auto auto $license-heigth;
+  grid-template-areas:
+          "header"
+          "content"
+          "navigation"
+          "license";
+}
+
+#header {
+  visibility: visible;
+}

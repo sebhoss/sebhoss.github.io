@@ -5,10 +5,9 @@
 
 #site {
   display: grid;
-  grid-template-rows: $header-heigth auto auto $license-heigth;
-  grid-template-columns: auto;
+  grid-template-rows: auto auto $license-heigth;
+  grid-template-columns: 1fr;
   grid-template-areas:
-    "header"
     "content"
     "navigation"
     "license";
@@ -16,14 +15,15 @@
 
 #header {
   grid-area: header;
+  visibility: hidden;
 }
 #navigation {
   grid-area: navigation;
 }
 #content {
   grid-area: content;
-  padding-left: 15px;
-  padding-right: 30px;
+  padding-left: $separator-margin;
+  padding-right: 2 * $separator-margin;
 }
 #license {
   grid-area: license;

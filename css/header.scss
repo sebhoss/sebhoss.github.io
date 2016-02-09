@@ -11,47 +11,18 @@
   border-width: 0 0 $separator-width 0;
   margin-left: $separator-margin;
   margin-right: $separator-margin;
+  padding-left: $separator-margin;
+  padding-right: $separator-margin;
+  max-width: 100vw;
   a {
-    @include disable-links;
+      @include disable-links;
   }
 }
 
 #authorname {
-  flex: 1;
-  margin-left: 15px;
+  flex-grow: 1;
 }
 
-#googleplus {
-  margin-right: 20px;
-}
-
-#twitter {
-  margin-right: 20px;
-}
-
-#key {
-  margin-right: 20px;
-}
-#email {
-  margin-right: 20px;
-}
-
-#search {
-  margin-right: 15px;
-}
-
-#github {
-  margin-right: 20px;
-}
-
-#resume {
-  margin-right: 20px;
-}
-
-#newsfeed {
-  margin-right: 20px;
-}
-
-#schedule {
-  margin-right: 20px;
+#actions a:not(:last-child) {
+  margin-right: $separator-margin / 2;
 }

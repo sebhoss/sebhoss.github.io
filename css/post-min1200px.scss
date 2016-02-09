@@ -1,11 +1,13 @@
 ---
 ---
 
+@import 'constants';
+
 #post {
   .paragraph {
-    max-width: calc(95vw - 250px);
+    max-width: calc(#{$post-width} - #{$navigation-width});
   }
   .admonitionblock {
-    max-width: calc(95vw - 250px);
+    max-width: calc(#{$post-width} - #{$navigation-width});
   }
 }

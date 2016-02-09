@@ -6,7 +6,7 @@
   <meta name="author" content="{{ site.author.name }}">
   <meta name="generator" content="Jekyll">
   <meta name="keywords" content="Software Engineering">
-  <meta name="description" content="">
+  <meta name="description" content="{{ site.description }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>{{ site.author.name }}: {{ page.title }}</title>
@@ -17,13 +17,16 @@
   <link rel="alternate" type="application/rss+xml" title="{{ site.author.name }}: Latest Posts and Updates" href="/rss.xml">
 
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-  <link rel="meta" type="application/rdf+xml" title="FOAF" href="/foaf.rdf">
   <link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+
+  <script type="application/ld+json" src="/assets/site-ld.json"></script>
+  <script type="application/ld+json" src="/assets/person-ld.json"></script>
 
   <link rel="stylesheet" href="/octicons/octicons.css">
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/font.css">
   <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/layout-min900px.css" media="screen and (min-width: 900px)">
   <link rel="stylesheet" href="/css/layout-min1200px.css" media="screen and (min-width: 1200px)">
   <link rel="stylesheet" href="/css/navigation.css">
   <link rel="stylesheet" href="/css/navigation-min1200px.css" media="screen and (min-width: 1200px)">
@@ -40,23 +43,21 @@
 
   <header id="header">
     <h1 id="authorname">
-      <a href="/" class="h-card" title="get me back to root">{{ site.author.name }}</a>
-      <a href="/articles" class="mega-octicon octicon-book" title="show me all articles"></a>
+      <a href="/" id="rootlink" class="h-card" title="get me back to root">{{ site.author.name }}</a>
+      <a href="/sitemap" class="fa fa-sitemap" title="show me all articles"></a>
     </h1>
 
-    <a href="/public-key" id="key" class="mega-octicon octicon-key" title="show me your keys"></a>
-    <a href="mailto:mail@shoss.de" id="email" class="mega-octicon octicon-mail" title="i want to write you an email"></a>
-    <a href="https://github.com/{{ site.author.github }}/" id="github" class="mega-octicon octicon-mark-github" title="want some code?"></a>
-    <a href="https://www.google.com/+SebastianHo%C3%9F" id="googleplus" title="slightly longer announcements">
-      <img src="/images/gplus.svg" width="42" height="27" />
-    </a>
-    <a href="https://twitter.com/sebhoss" id="twitter" title="peep peep peep">
-      <img src="/images/twitter.svg" width="32" height="30" />
-    </a>
-    <a href="/oss-release-calendar" id="schedule" class="mega-octicon octicon-calendar" title="when is the next release?"></a>
-    <a href="/resume" id="resume" class="mega-octicon octicon-mortar-board" title="need some help?"></a>
-    <a href="/atom.xml" id="newsfeed" class="mega-octicon octicon-rss" title="get notified about updates"></a>
-    <a href="https://www.google.com/cse/publicurl?cx=004384174486689999226:9k2cdrrglds" id="search" class="mega-octicon octicon-search" title="search in this site"></a>
+    <span id="actions">
+      <a href="/public-key" id="key" class="fa fa-key fa-2x fa-flip-horizontal fa-fw" title="show me your keys"></a>
+      <a href="mailto:mail@shoss.de" id="email" class="fa fa-envelope-o fa-2x fa-fw" title="i want to write you an email"></a>
+      <a href="https://github.com/{{ site.author.github }}/" id="github" class="fa fa-github fa-2x fa-fw" title="want some code?"></a>
+      <a href="https://www.google.com/+SebastianHo%C3%9F" id="googleplus" class="fa fa-google-plus fa-2x fa-fw" title="slightly longer announcements"></a>
+      <a href="https://twitter.com/sebhoss" id="twitter" class="fa fa-twitter fa-2x fa-fw" title="peep peep peep"></a>
+      <a href="/oss-release-calendar" id="schedule" class="fa fa-calendar fa-2x fa-fw" title="when is the next release?"></a>
+      <a href="/resume" id="resume" class="fa fa-graduation-cap fa-2x fa-fw" title="need some help?"></a>
+      <a href="/atom.xml" id="newsfeed" class="fa fa-rss fa-2x fa-fw" title="get notified about updates"></a>
+      <a href="https://www.google.com/cse/publicurl?cx=004384174486689999226:9k2cdrrglds" id="search" class="fa fa-search fa-2x fa-fw" title="search in this site"></a>
+    </span>
   </header>
 
   <main id="content">
@@ -68,7 +69,7 @@
     {% for post in site.posts limit: site.navitems %}
       <li>
         <a href="{{ post.url }}">{{ post.title }}</a>
-        <span class="tag" rel="tag">{{ post.tags | sort | array_to_sentence_string }}</span>
+        <span class="tag" rel="tag">{{ post.tags | array_to_sentence_string }}</span>
       </li>
     {% endfor %}
     </ul>
