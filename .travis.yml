@@ -1,6 +1,6 @@
 language: ruby
 sudo: false
-script: "./build.sh"
+script: make publish-to-github-pages
 branches:
   only:
   - source

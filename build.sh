@@ -3,7 +3,7 @@
 # enable error reporting to the console
 set -e
 
-rm -rf ../distribution
+rm -rf ../master
 
 jekyll build
 
