@@ -7,5 +7,5 @@ publish-to-github-pages:
 	git config user.name "Travis-CI for Sebastian Hoß"
 	git add .
 	git commit -a -s -m "Travis #$TRAVIS_BUILD_NUMBER"
-	git remote add github https://${GH_TOKEN}@github.com:sebhoss/sebhoss.github.io.git
-	git push --force github-pags master
+	git remote add github-pages https://${GH_TOKEN}@github.com:sebhoss/sebhoss.github.io.git
+	git push --force github-pages master
