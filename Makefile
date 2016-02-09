@@ -4,7 +4,7 @@ publish-to-github-pages:
 	@bundle exec jekyll build
 	@mv _site ../distribution
 	@cd ../distribution
-	@git init
+	@git init --bare .
 	@git config user.email "travisci@shoss.de"
 	@git config user.name "Travis-CI for Sebastian Hoß"
 	@git add .
