@@ -54,7 +54,7 @@ image:/images/license-cc zero-000000.svg["CC Zero", link="http://creativecommons
 [source]
 ----
 # in asciidoc
-image:https://img.shields.io/badge/license-cc%20zero-000000.svg["CC Zero", link="http://creativecommons.org/publicdomain/zero/1.0/"]
+image:https://img.shields.io/badge/license-cc%20zero-000000.svg["CC Zero", link="https://creativecommons.org/publicdomain/zero/1.0/"]
 ----
 
 **4)** Place the following text at the bottom of your `README`:
