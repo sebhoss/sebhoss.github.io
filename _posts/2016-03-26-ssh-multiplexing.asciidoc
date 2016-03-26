@@ -4,7 +4,7 @@ title: SSH & Multiplexing
 tags: [SSH, Multiplexing]
 ---
 
-In order to run a local development version of some software against a remotely available database or similar infrastructure, consider using SSH multiplexingfootnote:[https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing] and `Makefile`s.
+In order to run a local development version of some software against a remotely available database or similar infrastructure, consider using SSH multiplexingfootnote:[https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing] and a `Makefile`.footnote:[https://en.wikipedia.org/wiki/Makefile]
 
 The following example first opens a SSH tunnel to a server called 'dev-server-01' using a control socket, runs a piece of code (Spring based microservicefootnote:[http://projects.spring.io/spring-boot/]) against it and finally closes the SSH tunnel once the developer has stopped code execution.
 
