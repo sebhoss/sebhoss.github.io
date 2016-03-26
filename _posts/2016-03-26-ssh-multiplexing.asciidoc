@@ -1,0 +1,27 @@
+---
+layout: post
+title: SSH & Multiplexing
+tags: [SSH, Multiplexing]
+---
+
+In order to run a local development version of some software against a remotely available database or similar infrastructure, consider using SSH multiplexingfootnote:[https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing] and `Makefile`s.
+
+The following example first opens a SSH tunnel to a server called 'dev-server-01' using a control socket, runs a piece of code (Spring based microservicefootnote:[http://projects.spring.io/spring-boot/]) against it and finally closes the SSH tunnel once the developer has stopped code execution.
+
+[source]
+----
+run-against-dev-server-01:
+  @ssh -f -N -M -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01
+  @mvn spring-boot:run -Dspring.profiles.active=development,local-with-dev-server-01
+  @ssh -O "exit" -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01
+----
+
+`-f` to put SSH in the background -> required if you want keep using your terminal, like on a CI server.
+
+`-N` to tell SSH not to run anything once the connection is open. Since we only open the connection in order to tunnel ports, we need this to work around the error SSH throws once it connects (complaining that no command was specified to run).
+
+`-M` to tell SHH to open a multiplexed connection controlled by a socket specified with `-S`.
+
+`-O "exit"` tells SSH to exit the master connection controlled by the specified control socket.
+
+In order to run all this, simple execute `make run-against-dev-server-01`.
