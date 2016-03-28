@@ -1,0 +1,78 @@
+---
+layout: post
+title: bliki & updating Jekyll post dates
+tags: [bliki, Jekyll, dates, Git, hooks]
+date: 2016-04-02
+---
+:icons: font
+
+In case you decided to run your blikifootnote:[http://www.martinfowler.com/bliki/WhatIsaBliki.html] using Jekyllfootnote:[http://jekyllrb.com/], consider using a Gitfootnote:[https://git-scm.com/] pre-commit hookfootnote:[https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks] to update the date entries in the front matter of your posts. E.g. you want to modify the following front matter
+
+[source, yaml]
+----
+---
+layout: post
+title: bliki & updating Jekyll post dates
+tags: [bliki, Jekyll, dates, Git, hooks]
+date: 2016-03-28
+---
+----
+
+by updating its *date* entry with the *current date* to get
+
+[source, yaml]
+----
+---
+layout: post
+title: bliki & updating Jekyll post dates
+tags: [bliki, Jekyll, dates, Git, hooks]
+date: 2016-04-02
+---
+----
+
+on *each commit* to the Git repository that contains your Jekyll sources. In order to automate this process, follow these steps:
+
+. Create a file called `pre-commmit` inside the `.git/hooks` directory of your repository
+  * `touch .git/hooks/pre-commit`
+. Mark it as executable
+  * `chmod +x .git/hooks/pre-commit`
+. Place the following code in it:
+
+[source, bash]
+----
+#!/bin/bash
+
+# pattern for any ISO8601 compatible date pattern
+any_iso_date="[0-9][0-9][0-9][0-9]*-[0-9][0-9]*-[0-9][0-9]"
+any_front_matter="date\: $any_iso_date"
+
+# replacement for the above pattern
+today=`date +%Y-%m-%d`
+today_front_matter="date\: $today"
+
+# project relative paths
+modified_files=`git diff-index --name-only HEAD`
+
+for file in $modified_files; do
+    # only modify Jekyll posts
+    if [[ $file == _posts/*.asciidoc ]]; then
+        # extract current date from front matter (first match)
+        existing_date=`grep -m 1 -o "$any_front_matter" "$file" | head -1 | grep -o "$any_iso_date"`
+
+        # only modify posts that are not up-to-date yet
+        if [[ $existing_date != $today ]]; then
+            # update the front matter of the post (first global match)
+            sed -i -e "0,/$any_front_matter/s/$any_front_matter/$today_front_matter/g" "$file"
+            # add the updated file to the git index so it becomes part of the commit
+            git add "$file"
+        fi
+    fi
+done
+exit
+----
+
+CAUTION: This hook only works on posts that have a *date* entry in their front matter.
+
+CAUTION: OSX users have to replace the `sed` call with: `sed -i -e "s/$any_front_matter/$today_front_matter/1" "$file"` footnote:[https://gist.github.com/izimbra/7168469]
+
+Once these steps are completed, every committed update to a post will set its *date* entry to the current date. The file modification will not trigger another commit, instead the change will be part of the soon-to-be-commit that triggered the `pre-commit` hook.
