@@ -100,6 +100,15 @@ Downloads bookmark history and incorporates changes
 `git remote` footnote:[https://git-scm.com/docs/git-remote]::
 Manage set of tracked repositories
 
+== Mirror changes
+
+[source]
+----
+git remote set-url origin --push --add git@example.com/project.git
+git remote set-url origin --push --add git@another.com/project.git
+----
+
+Adds two new remote repositories as targets for `git push`. Every call of `git push` will push changes into both specified repositories.
 
 == Useful snippets
 
