@@ -1,0 +1,6 @@
+How to deploy an Spring-Boot application on Heroku?
+
+Heroku guide:
+* Connect Heroku & GitHub for automatic deployment whenever you push into GitHub
+* Alternative1: Push into the Git repository provided by Heroku
+* Alternative2: Use the heroku-m-p for deployment

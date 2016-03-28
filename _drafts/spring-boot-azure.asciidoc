@@ -1,0 +1,10 @@
+
+Azure guide:
+
+* Upload both `web.config` and the final artifact to azure:
+** `curl -T web.config --user '<SERVICE>\<USER>:<PASSWORD>' ftp://<HOST>.ftp.azurewebsites.windows.net/site/wwwroot
+** `curl -T identifier-http-service-1.0.0-SNAPSHOT.jar --user '<SERVICE>\<USER>:<PASSWORD>' ftp://<HOST>.ftp.azurewebsites.windows.net/site/wwwroot
+* https://azure.microsoft.com/en-us/documentation/articles/web-sites-java-custom-upload/#_springboot
+* https://github.com/chanezon/azure-java-samples
+* https://docs.travis-ci.com/user/deployment/custom/ for FTP upload
+* could enable GitHub integration, place web.config in root or upload w/ FTP as well

@@ -1,0 +1,61 @@
+How to deploy an Spring-Boot application on OpenShift?
+
+* Create OpenShift account
+* Create do-it-yourself cartridge
+* `$ git clone ssh://<TOKEN>@<APPLICATION>-<DOMAIN>.rhcloud.com/~/git/<APPLICATION>.git/`
+** Check that `http://<APPLICATION>-<DOMAIN>.rhcloud.com` can be accessed
+* Add OpenShift repository as remote: `git remote add openshift ssh://<TOKEN>@<APPLICATION>-<DOMAIN>.rhcloud.com/~/git/<APPLICATION>.git/`
+* Add OpenShift action hooksfootnote:[https://docs.spring.io/spring-boot/docs/current/reference/html/cloud-deployment.html#cloud-deployment-openshift]
+** `.openshift/action_hooks/build`
+[source]
+----
+#!/bin/bash
+cd $OPENSHIFT_REPO_DIR
+mvn package -s .openshift/settings.xml -DskipTests=true
+----
+*** Tune your build here by excluding as many plugins from running as possible which will reduce deployment time.
+** `.openshift/action_hooks/start`
+[source]
+----
+#!/bin/bash
+cd $OPENSHIFT_REPO_DIR
+nohup java -jar target/*.jar --server.port=${OPENSHIFT_DIY_PORT} --server.address=${OPENSHIFT_DIY_IP} &
+----
+*** Change `target/*.jar` to match where your final artifact is located, e.g. in a multi-module build.
+** `.openshift/action_hooks/stop`
+[source]
+----
+#!/bin/bash
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+PID=$(ps -ef | grep java.*\.jar | grep -v grep | awk '{ print $2 }')
+if [ -z "$PID" ]
+then
+    client_result "Application is already stopped"
+else
+    kill $PID
+fi
+----
+* Mark those hooks as executable `chmod +x .openshift/action_hooks/`
+* Add Maven settings in order to re-use previously downloaded artifacts. Create a file called `settings.xml` in the `.openshift` folder with the following contents:
+[source]
+----
+<settings>
+    <localRepository>${OPENSHIFT_DATA_DIR}/.m2/repository</localRepository>
+</settings>
+----
+* Commit everything `git commit -a -S -m 'Add OpenShift configuration'`
+* Push it to OpenShift to trigger a deployment: `git push --force openshift master`
+
+
+Another example with a slightly different approach on how to handle git repositories:
+ - https://github.com/kolorobot/openshift-diy-spring-boot-sample
+
+Docker/image based approach:
+ - https://blog.openshift.com/using-openshift-enterprise-grade-spring-boot-deployments/
+
+Additional metadata used by tools like IntelliJ for auto-completion:
+ - https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html#configuration-metadata-additional-metadata
+
+OpenShift guide:
+* Generate SSH keypair with: `ssh-keygen -t rsa -b 4096 -C "you@example.com"`
+* Add public key to OpenShift console
