@@ -2,7 +2,7 @@
 layout: post
 title: Git Cheat Sheet
 tags: [Git]
-date: 2016-03-28
+date: 2016-04-02
 ---
 
 // see http://luisbg.blogalia.com//historias/76017
@@ -115,3 +115,31 @@ Adds two new remote repositories as targets for `git push`. Every call of `git p
 
 `git bisect start --term-good=unfixed --term-bad=fixed` footnote:[https://www.reddit.com/r/programming/comments/40ln5m/16_awesome_git_aliases_that_you_will_love/cyv9cw0]::
 Use `fixed` and `unfixed` instead of `good` and `bad`
+
+=== git-abort
+
+Script to abort running git operations.footnote:[https://github.com/da-x/misc-gitology/blob/master/git-abort]
+
+[source, bash]
+----
+#!/bin/bash
+
+# Abort a rebase, merge, `am`, a cherry-pick or a revert, depending on the situation.
+
+if [[ -e .git/CHERRY_PICK_HEAD ]] ; then
+    exec git cherry-pick --abort "$@"
+elif [[ -e .git/REVERT_HEAD ]] ; then
+    exec git revert --abort "$@"
+elif [[ -e .git/rebase-apply/applying ]] ; then
+    exec git am --abort "$@"
+elif [[ -e .git/rebase-apply ]] ; then
+    exec git rebase --abort "$@"
+elif [[ -e .git/rebase-merge ]] ; then
+    exec git rebase --abort "$@"
+elif [[ -e .git/MERGE_MODE ]] ; then
+    exec git merge --abort "$@"
+else
+    echo git-abort: unknown state
+    exit -1
+fi
+----
