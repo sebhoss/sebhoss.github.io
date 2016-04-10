@@ -23,5 +23,8 @@ asciidoctor:
     - source-highlighter=pygments
     - pygments-css=style
 
-exclude: ['README.asciidoc', 'Gemfile.lock', 'Gemfile', 'Makefile']
+exclude: ['README.asciidoc', 'Gemfile.lock', 'Gemfile', 'Makefile', 'Guardfile']
 
+gems:
+  # required by guard-jekyll-plus
+  - jekyll-asciidoc
