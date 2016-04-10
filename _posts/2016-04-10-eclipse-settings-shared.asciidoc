@@ -17,7 +17,7 @@ The rough idea is this:
 3. Use the same plugin again to `process` (unpack) the newly created bundle from above in every project that wants to use the same settings.
 4. Configure Maven plugins to use the processed settings in your build.
 
-### Creating a settings bundle
+## Creating a settings bundle
 
 The settings bundle contains all the settings that you want to share. Create a simple Mavenfootnote:[https://maven.apache.org/] project and make sure it includes the following plugin configuration:
 
@@ -67,7 +67,7 @@ project/
 
 NOTE: You can find my settings on link:https://github.com/sebhoss/jdt-settings[GitHub] and link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.sebhoss%22%20a%3A%22jdt-settings%22[Maven Central]
 
-### Consuming a settings bundle
+## Consuming a settings bundle
 
 In order to use the bundled settings, declare the maven-remote-resources-plugin in the consuming project like this:
 
@@ -116,7 +116,7 @@ Couple of things are happening here:
 
 Once this configuration is in place, team members just have to run `mvn generate-resources` to get all the settings in place. Since the `generate-resources` phase happens very early in the Maven lifecycle the same configuration will make sure that any future updates to your settings will end up quickly on everyones computer. The often used `mvn clean install` will trigger this as well and thus not only verifies that you can build your project using Maven, it updates your Eclipse settings at the same time, too!
 
-### Sharing compiler settings
+## Sharing compiler settings
 
 OK so we can put Eclipse settings into an Maven artifact, push it into a repository, reference it from other projects and unpack the artifact again - but what about CI servers like Travis-CIfootnote:[https://travis-ci.org/]? Users of NetBeansfootnote:[https://netbeans.org/] or IntelliJfootnote:[https://www.jetbrains.com/idea/]? These tools don't understand Eclipse settings and vice versa. It's kinda sad to see that after all these years of development editors still seem to prefer vendor lock-in over open collaboration. There is hope for solutions like EditorConfigfootnote:[http://editorconfig.org/] however they are still lacking in the advanced feature department.
 
@@ -160,11 +160,11 @@ Again replace link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.
 
 NOTE: There is another plugin called the formatter-maven-pluginfootnote:[https://github.com/revelc/formatter-maven-plugin] which might allow the same for formatter settings in the future.
 
-### Maintenance
+## Maintenance
 
 Update the settings bundle by opening pull/merge requests and let the team discuss those changes. Once merged, push a `-SNAPSHOT` as soon as possible for wider testing. If all is well, perform a release and update the single `${YOUR_VERSION}` property in the above example. 
 
-TIP: You can define that Maven in a company wide parent POM for all of your projects in case you don't want to specify the same version and configuration over and over again. Take a look at my link:https://github.com/sebhoss/java-parent[Java parent] for an example.
+TIP: Employ a company wide parent POM in case you don't want to specify the same version and configuration over and over again. Take a look at my link:https://github.com/sebhoss/java-parent[Java parent] for an example.
 
 NOTE: link:https://projects.eclipse.org/projects/tools.oomph[Eclipse Oomph] can not only help with sharing settings, it applies the same idea to the Eclipse IDE and all its plugins as well and even adds `git clone` operations on top of it.
 
