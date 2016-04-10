@@ -1,0 +1,171 @@
+---
+layout: post
+title: Eclipse & sharing settings with Maven, CI servers and your team
+tags: [Eclipse, settings, Maven, CI]
+date: 2016-04-10
+---
+:icons: font
+
+Most developers will be quick to point out that sharing IDE specific configuration in the source repository of a project is not a good idea. It is way to easy for OS/host/developer specific configuration to slip in and ruin the fun for everyone else. Instead developers have to set up their development environment once and import the untainted code into their own mess.
+
+Development environments become a mess quite easily on their own in case developers do not stay vigilant and constantly keep an eye on how a project should be build and how they are currently doing it. Any successful solution needs to be both easy to use and easy to maintain.
+
+The rough idea is this:
+
+1. Create a single new project which contains your settings
+2. Use the maven-remote-resources-pluginfootnote:[https://maven.apache.org/plugins/maven-remote-resources-plugin/] to `bundle` your settings in an Maven artifact.
+3. Use the same plugin again to `process` (unpack) the newly created bundle from above in every project that wants to use the same settings.
+4. Configure Maven plugins to use the processed settings in your build.
+
+### Creating a settings bundle
+
+The settings bundle contains all the settings that you want to share. Create a simple Mavenfootnote:[https://maven.apache.org/] project and make sure it includes the following plugin configuration:
+
+[source, xml]
+----
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/ -->
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-remote-resources-plugin</artifactId>
+      <version>${version.m-remote-resources-p}</version>
+      <executions>
+        <execution>
+          <goals>
+            <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/bundle-mojo.html -->
+            <goal>bundle</goal>
+          </goals>
+        </execution>
+      </executions>
+      <configuration>
+       <includes>
+         <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/bundle-mojo.html#includes -->
+         <include>**/*.prefs</include>
+       </includes>
+      </configuration>
+    </plugin>
+    ...
+  </plugins>
+</build>
+----
+
+Replace `${version.m-remote-resources-p}` with the link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.maven.plugins%22%20a%3A%22maven-remote-resources-plugin%22["latest version"]. The plugin will look for all files matching the `*.prefs` pattern in all subfolders underneath `src/main/resources`. In case you want to share more than just Eclipsefootnote:[https://www.eclipse.org/] settings files, which end in `.prefs`, adapt the list of inclusions. The easiest way to create those files is to use Eclipse itself and configure it however you like it to be. Once you are done, use the `File > Export.. > General > Preferences` wizard to export your settings and place the files into your newly created Maven artifact. The final result should look like this:
+
+[source]
+----
+project/
+├── pom.xml
+└── src/
+    └── main/
+        ├── org.eclipse.core.resources.prefs
+        ├── org.eclipse.jdt.launching.prefs
+        ├── org.eclipse.jdt.launching.prefs
+        └── org.eclipse.jdt.ui.prefs
+----
+
+NOTE: You can find my settings on link:https://github.com/sebhoss/jdt-settings[GitHub] and link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.sebhoss%22%20a%3A%22jdt-settings%22[Maven Central]
+
+### Consuming a settings bundle
+
+In order to use the bundled settings, declare the maven-remote-resources-plugin in the consuming project like this:
+
+[source, xml]
+----
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/ -->
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-remote-resources-plugin</artifactId>
+      <version>${version.m-remote-resources-p}</version>
+      <executions>
+        <execution>
+          <id>jdt-settings</id>
+            <goals>
+              <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html -->
+              <goal>process</goal>
+            </goals>
+            <configuration>
+              <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#attachToMain -->
+              <attachToMain>false</attachToMain>
+              <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#attachToTest -->
+              <attachToTest>false</attachToTest>
+              <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#resourceBundles -->
+              <resourceBundles>
+                <resourceBundle>${YOUR_GROUP_ID}:${YOUR_ARTIFACT_ID}:${YOUR_VERSION}</resourceBundle>
+              </resourceBundles>
+              <!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#outputDirectory -->
+            <outputDirectory>${project.basedir}/.settings</outputDirectory>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+    ...
+  </plugins>
+</build>
+----
+
+Couple of things are happening here:
+
+1. We do not attach the settings to any of the consumers artifacts. The final artifact of a project which is using your settings bundle will not include those settings. We achieve that by setting both `attachToMain` and `attachToTest` to `false`.
+2. We specify the remote resource to use with `${YOUR_GROUP_ID}:${YOUR_ARTIFACT_ID}:${YOUR_VERSION}`. Replace those values appropriately. They have to match the coordinates declared by your settings bundle.
+3. In order for Eclipse to pick up those settings, we specify the `outputDirectory` to put the files from your bundle into the `.settings/` folder of the consuming project. Eclipse will recognize these files and use them as project specific configuration. This approach does not change the workspace settings of Eclipse in any way.
+
+Once this configuration is in place, team members just have to run `mvn generate-resources` to get all the settings in place. Since the `generate-resources` phase happens very early in the Maven lifecycle the same configuration will make sure that any future updates to your settings will end up quickly on everyones computer. The often used `mvn clean install` will trigger this as well and thus not only verifies that you can build your project using Maven, it updates your Eclipse settings at the same time, too!
+
+### Sharing compiler settings
+
+OK so we can put Eclipse settings into an Maven artifact, push it into a repository, reference it from other projects and unpack the artifact again - but what about CI servers like Travis-CIfootnote:[https://travis-ci.org/]? Users of NetBeansfootnote:[https://netbeans.org/] or IntelliJfootnote:[https://www.jetbrains.com/idea/]? These tools don't understand Eclipse settings and vice versa. It's kinda sad to see that after all these years of development editors still seem to prefer vendor lock-in over open collaboration. There is hope for solutions like EditorConfigfootnote:[http://editorconfig.org/] however they are still lacking in the advanced feature department.
+
+That said, we can already share compiler settings between Eclipse and Maven quite easily. CI servers usually kick off Maven as well, so we got them covered as well. In order to do that, configure the maven-compiler-pluginfootnote:[https://maven.apache.org/plugins/maven-compiler-plugin/] like this:
+
+[source, xml]
+----
+<build>
+  <plugins>
+    ...
+    <plugin>
+      <!-- https://maven.apache.org/plugins/maven-compiler-plugin/ -->
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>${version.m-compiler-p}</version>
+      <configuration>
+        <!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#compilerId -->
+        <compilerId>jdt</compilerId>
+        <!-- https://eclipse.org/tycho/sitedocs/tycho-compiler-plugin/compile-mojo.html#useProjectSettings -->
+        <useProjectSettings>true</useProjectSettings>
+      </configuration>
+      <dependencies>
+        <!-- This dependency provides the implementation of compiler "jdt" -->
+        <dependency>
+          <!-- https://eclipse.org/tycho/sitedocs/ -->
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-compiler-jdt</artifactId>
+          <version>${version.tycho-compiler-jdt}</version>
+        </dependency>
+      </dependencies>
+    </plugin>
+    ...
+  </plugins>
+</build>
+----
+
+Again replace link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.maven.plugins%22%20a%3A%22maven-compiler-plugin%22[`${version.m-compiler-p}`] and link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.eclipse.tycho%22%20a%3A%22tycho-compiler-jdt%22[`${version.tycho-compiler-jdt}`] with their latest version. Two interesting pieces are happening here:
+
+1. We set the `compilerId` property to the value `jdt` which instructs Maven to use the JDT compilerfootnote:[https://www.eclipse.org/jdt/core/] to compile your sources. Additionally we add a dependency to the plugin which provides the compiler called `jdt`.
+2. We set `useProjectSettings` to `true` which instructs the compiler plugin to pick up the project specific compiler settings from your `.settings/` folder. That's the same folder we used above as an output folder for the maven-remote-resources-plugin.
+
+NOTE: There is another plugin called the formatter-maven-pluginfootnote:[https://github.com/revelc/formatter-maven-plugin] which might allow the same for formatter settings in the future.
+
+### Maintenance
+
+Update the settings bundle by opening pull/merge requests and let the team discuss those changes. Once merged, push a `-SNAPSHOT` as soon as possible for wider testing. If all is well, perform a release and update the single `${YOUR_VERSION}` property in the above example. 
+
+TIP: You can define that Maven in a company wide parent POM for all of your projects in case you don't want to specify the same version and configuration over and over again. Take a look at my link:https://github.com/sebhoss/java-parent[Java parent] for an example.
+
+NOTE: link:https://projects.eclipse.org/projects/tools.oomph[Eclipse Oomph] can not only help with sharing settings, it applies the same idea to the Eclipse IDE and all its plugins as well and even adds `git clone` operations on top of it.
+
+NOTE: Instead of sharing settings between different computers, one can employ web based solutions like link:https://eclipse.org/che/[Eclipse Che] to simplify setup, onboarding, maintenance.
