@@ -120,7 +120,7 @@ Once this configuration is in place, team members just have to run `mvn generate
 
 OK so we can put Eclipse settings into an Maven artifact, push it into a repository, reference it from other projects and unpack the artifact again - but what about CI servers like Travis-CIfootnote:[https://travis-ci.org/]? Users of NetBeansfootnote:[https://netbeans.org/] or IntelliJfootnote:[https://www.jetbrains.com/idea/]? These tools don't understand Eclipse settings and vice versa. It's kinda sad to see that after all these years of development editors still seem to prefer vendor lock-in over open collaboration. There is hope for solutions like EditorConfigfootnote:[http://editorconfig.org/] however they are still lacking in the advanced feature department.
 
-That said, we can already share compiler settings between Eclipse and Maven quite easily. CI servers usually kick off Maven as well, so we got them covered as well. In order to do that, configure the maven-compiler-pluginfootnote:[https://maven.apache.org/plugins/maven-compiler-plugin/] like this:
+That said, we can already share compiler settings between Eclipse and Maven quite easily. CI servers usually kick off Maven, so we got them covered as well. In order to do that, configure the maven-compiler-pluginfootnote:[https://maven.apache.org/plugins/maven-compiler-plugin/] like this:
 
 [source, xml]
 ----
