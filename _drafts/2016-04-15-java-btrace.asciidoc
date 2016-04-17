@@ -1,0 +1,15 @@
+---
+layout: post
+title: Java & Tracing with BTrace
+tags: [Java, tracing, BTrace]
+---
+
+https://dzone.com/articles/btrace-hidden-gem-java
+https://github.com/btraceio/btrace
+https://kenai.com/projects/btrace/pages/UserGuide
+https://blogs.oracle.com/sundararajan/entry/btrace_a_dynamic_tracing_tool
+http://dtrace.org/blogs/ahl/2012/04/24/btrace-dtrace-for-java-ish/
+https://bsmadhu.wordpress.com/2012/07/01/btrace-troubleshooting-tool-for-java-applications/
+http://stackoverflow.com/questions/14194615/how-to-use-btrace
+http://piotrnowicki.com/2012/05/btrace-a-simple-way-to-instrument-running-java-applications/
+http://blog.igorminar.com/2008/06/btrace-dtrace-for-java.html
