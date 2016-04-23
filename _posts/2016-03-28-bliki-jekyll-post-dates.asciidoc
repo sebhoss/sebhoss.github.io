@@ -2,7 +2,7 @@
 layout: post
 title: bliki & updating Jekyll post dates
 tags: [bliki, Jekyll, dates, Git, hooks]
-date: 2016-04-10
+date: 2016-04-23
 ---
 :icons: font
 
@@ -56,7 +56,7 @@ today="date\: $now"
 front_matter="---"
 
 # project relative paths
-modified_files=`git diff-index --name-only HEAD`
+modified_files=`git diff --name-only HEAD`
 
 for file in $modified_files; do
     # only modify Jekyll posts
