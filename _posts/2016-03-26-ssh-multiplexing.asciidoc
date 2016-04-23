@@ -11,9 +11,9 @@ The following example first opens a SSH tunnel to a server called 'dev-server-01
 [source]
 ----
 run-against-dev-server-01:
-  @ssh -f -N -M -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01
-  @mvn spring-boot:run -Dspring.profiles.active=development,local-with-dev-server-01
-  @ssh -O "exit" -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01
+  ssh -f -N -M -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01
+  mvn spring-boot:run -Dspring.profiles.active=development,local-with-dev-server-01
+  -ssh -O "exit" -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01
 ----
 
 `-f` to put SSH in the background -> required if you want keep using your terminal, like on a CI server.
