@@ -2,7 +2,7 @@
 layout: post
 title: Eclipse & sharing settings with Maven, CI servers and your team
 tags: [Eclipse, settings, Maven, CI]
-date: 2016-04-11
+date: 2016-04-23
 ---
 :icons: font
 
@@ -59,10 +59,11 @@ project/
 ├── pom.xml
 └── src/
     └── main/
-        ├── org.eclipse.core.resources.prefs
-        ├── org.eclipse.jdt.launching.prefs
-        ├── org.eclipse.jdt.launching.prefs
-        └── org.eclipse.jdt.ui.prefs
+        └── resources/
+            ├── org.eclipse.core.resources.prefs
+            ├── org.eclipse.jdt.launching.prefs
+            ├── org.eclipse.jdt.launching.prefs
+            └── org.eclipse.jdt.ui.prefs
 ----
 
 NOTE: You can find my settings on link:https://github.com/sebhoss/jdt-settings[GitHub] and link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.sebhoss%22%20a%3A%22jdt-settings%22[Maven Central]
