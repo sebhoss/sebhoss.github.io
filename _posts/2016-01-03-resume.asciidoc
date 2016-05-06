@@ -4,4 +4,72 @@ title: Resumé
 tags: [curriculum vitae, resumé]
 ---
 
-Still reordering zeros and ones. Hopefully, I'll get it right one day.
+== Personal Details
+
+Name: Sebastian Hoß
+Birthday: 1983-09-15
+Nationality: German
+Location: Munich/Germany
+Email: mail@shoss.de
+Web: http://seb.xn--ho-hia.de/
+Phone: +49 172 58 666 39
+
+== Summary Background
+
+Quality oriented software engineer with 3+ years in consulting and almost 3 years in enterprise software development. Strong focus on team play and continuous improvements throughout an entire organization. Best at solving obscure problems in a transparent ways. Enjoys automating his life away.
+
+== Work Experience
+
+=== Software Developer at _ysura GmbH_ (since 2013-11)
+
+http://www.ysura.com/[ysura] is a multi-national startup located in Munich/Germany that develops mobile-first CRM solutions for the life science industry.
+Mostly developing a CQRS based, event-sourced backend using Java. Helping out with the AngularJS application in front of it. Release manager and support champion as well as maintainer of the internal build system. In charge of the technical part of the company's hiring process.
+
+===  IT-Consultant at _viadee GmbH_ (2010-04 until 2013-10)
+
+http://www.viadee.de/[viadee] is a IT-Consulting company with locations in Münster and Cologne, Germany.
+Mostly software development using Java together with various frameworks and libraries at several different customers. A little bit of requirements engineering and writing concepts. Managed both the companies own build system and a few others running at their customers. Helped organize the local Java user groupfootnote:[http://www.jug-muenster.de/] at viadee.
+
+== Education
+
+=== Bachelor of Science in Information Systems (BScIS) at WWU Münster (until 2011-03)
+
+Majored in https://www.wi.uni-muenster.de/department/groups/pi/profile[practical computer science] at the https://www.wiwi.uni-muenster.de/fakultaet/en/faculty/information-systems[department of information systems]
+
+Bachelor Thesis: JavaME based application to learn new languages.
+Master thesis: Business Rule Engine that modifies Android UIs based on user input.footnote:[The engine is open sourced at https://github.com/viadee/viaRules and currently maintained at https://github.com/sebhoss/reguloj]footnote:[Press article (german): http://www.viadee.de/karriere/viadee-im-studium/abschlussarbeiten/nachricht/archiv/2011/juni/artikel/mobile-applikationen-1.html]
+
+
+-------
+Work Performed:
+- Maintain and advance a cohesive and (consistent) release engineering environment using both open source and commercial tools.
+- Lead Eclipse project teams in identifying, documenting, and implementing release engineering best practices.​
+- Lead Eclipse project teams in the training, use and support of the Build and Release system.
+- Assist the community on the infrastructure we offer (Gerrit, Hudson, Nexus, Sonar...)
+- Provide configuration management input and guidance.
+- Manage and monitor the continuous integration system, build systems and Maven repositories.
+
+QUALIFICATIONS
+Education:
+- University degree or technical diploma in an IT-related discipline.​
+- Specific Tools and Experience:
+- Minimum of 5 years of experience building and releasing Java-based software.
+- Expert knowledge and experience with Java-centric build tools (Maven, Ant).
+- Expert knowledge and experience with continuous integration tools (Hudson/Jenkins) and plug-ins.
+- Good knowledge and experience with the Git SCM.
+- Experience with Linux in an administrative capacity.
+- Experience building Windows-based software in a headless environment using Visual Studio.
+- Proven ability to design and implement a release engineering environment.
+- Proficiency using Eclipse-based IDEs.
+- Familiarity with Java development practices, troubleshooting and bug reporting.
+- Familiarity with testing/​automated testing tools (e.​g.​ JUnit).
+- Familiarity with Gerrit, Sonar, Nexus, Tycho, PHP, and OSGi are considered assets.
+- Familiarity with Mac OS and building software on the Mac platform are assets.
+
+Communication:
+Ability to prepare complete, concise, and understandable technical documentation.
+Ability to communicate effectively in English.
+
+
+email:
+Besides the information ini the attached resumé, I'd like to add that...

@@ -2,7 +2,7 @@
 layout: post
 title: bliki & updating Jekyll post dates
 tags: [bliki, Jekyll, dates, Git, hooks]
-date: 2016-04-23
+date: 2016-05-06
 ---
 :icons: font
 

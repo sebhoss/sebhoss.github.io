@@ -2,7 +2,7 @@
 layout: post
 title: Git Cheat Sheet
 tags: [Git]
-date: 2016-04-02
+date: 2016-05-06
 ---
 
 // see http://luisbg.blogalia.com//historias/76017

@@ -2,7 +2,7 @@
 layout: post
 title: SSH & Multiplexing
 tags: [SSH, Multiplexing]
-date: 2016-04-23
+date: 2016-05-06
 ---
 
 In order to run a local development version of some software against a remotely available database or similar infrastructure, consider using SSH multiplexingfootnote:[https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing] and a `Makefile`.footnote:[https://en.wikipedia.org/wiki/Makefile]
