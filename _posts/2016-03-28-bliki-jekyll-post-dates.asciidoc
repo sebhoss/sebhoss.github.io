@@ -78,7 +78,7 @@ exit
 
 CAUTION: This hook only works on posts that have a *date* entry in their front matter.
 
-CAUTION: OSX users have to replace the `sed` call with: `sed -i -e "s/$any_front_matter/$today_front_matter/1" "$file"` footnote:[https://gist.github.com/izimbra/7168469]
+CAUTION: OSX users have to replace the `sed` call with: `sed -i -e "s/$any_date/$today/1" "$file"` footnote:[https://gist.github.com/izimbra/7168469]
 
 Once these steps are completed, every committed update to a post will set its *date* entry to the current date. The file modification will not trigger another commit, instead the change will be part of the soon-to-be-commit that triggered the `pre-commit` hook.
 
