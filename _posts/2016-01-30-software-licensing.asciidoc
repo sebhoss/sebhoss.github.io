@@ -37,11 +37,11 @@ including this file, may be copied, modified, propagated, or distributed except 
 in the LICENSE file.
 ----
 
-NOTE: This header does not contain the typical copyright fragments, like the year of publication or the author. The SLFCfootnoteref:[sflc-ci] explains that missing copyright information does not void your copyright at all - thus it can be safely removed. Instead the file header simply redirects the reader to the LICENSE file in the root of the project.
+This header does not contain the typical copyright fragments, like the year of publication or the author. The SLFCfootnoteref:[sflc-ci] explains that missing copyright information does not void your copyright at all - thus it can be safely removed. Instead the file header simply redirects the reader to the LICENSE file in the root of the project.
 
-**2)** Add a file called `LICENSE` in the root of your project with the following link:http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt[legal code] (link:/assets/cc-zero-legalcode.txt[copy]):
+**2)** Add a file called `LICENSE` in the root of your project which contains the CC0 link:http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt[legal code] (link:/assets/cc-zero-legalcode.txt[copy]).
 
-TIP: Add any additional licenses to that same file if you follow a multi-license approach.
+Add any additional licenses to that same file if you follow a multi-license approach. Creative Commons suggest to call that file `COPYING` in order to highlight why you should be interested in reading the file, however `LICENSE` is more widely used and better supported by various tools.
 
 **3)** Use the following link:https://shields.io[shields.io] badge for your project to make it link:http://i.imgur.com/41biB.jpg[shiny]:
 
@@ -51,6 +51,9 @@ image:/images/license-cc zero-000000.svg["CC Zero", link="http://creativecommons
 ----
 # in asciidoc
 image:https://img.shields.io/badge/license-cc%20zero-000000.svg["CC Zero", link="https://creativecommons.org/publicdomain/zero/1.0/"]
+
+# in markdown
+![CC Zero](https://img.shields.io/badge/license-cc%20zero-000000.svg)
 ----
 
 **4)** Place the following text at the bottom of your `README`:
@@ -64,6 +67,8 @@ worldwide. This software is distributed without any warranty.
 You should have received a copy of the CC0 Public Domain Dedication along
 with this software. If not, see http://creativecommons.org/publicdomain/zero/1.0/.
 ----
+
+Not legally binding in any way, but widely used (and expected) in the software world. Usually placed in the last paragraph with its own (sub-)heading.
 
 **5)** Create a folder called `AUTHORS` and place a file called `WAIVER` with the following content in it:footnote:[http://unlicense.org/WAIVER]
 
@@ -93,16 +98,15 @@ that are otherwise encumbered.
 [source,shell]
 ----
 $ # sign
-$ gpg2 --no-version --armor --sign AUTHORS/WAIVER
-$ mv AUTHORS/WAIVER.asc AUTHORS/WAIVER-signed-by-USERNAME.asc
+$ gpg2 --no-version --armor --sign AUTHORS/WAIVER --output AUTHORS/WAIVER-signed-by-USERNAME.asc
 
 $ # commit
 $ git add AUTHORS/WAIVER-signed-by-USERNAME.asc
 $ git commit -S AUTHORS/WAIVER-signed-by-USERNAME.asc
 ----
 
-NOTE: The signed `WAIVER` replaces other alternatives like contributor license agreements (CLAs). It works without requiring any other software, like a centralized registry of developers.
+The signed `WAIVER` replaces other alternatives like contributor license agreements (CLAs). It works without requiring any other software, like a centralized registry of developers. Whenever any of the developers changes her keys, simply re-run the last step and add a new signed waiver. Don't overwrite the old one, instead prepend the year that the key was active/created or add the key ID.
 
 **7)** Your done, free to do something else with your life now.
 
-Future work will consist of adding the above header to each source file and verifying that GPG signatures are correct and match between signed waiver and signed commit.
+Future work will consist of adding the above header to each source file and verifying that GPG signatures are correct and match between signed waiver and signed commit. No yearly updates to your source files in order to keep headers in shape, no hassle in determining whether or not a single contribution is big enough to mention the contributor by name in the source file, nor anything else.
