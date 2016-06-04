@@ -2,6 +2,7 @@
 layout: post
 title: Software Licensing
 tags: [Software, License]
+date: 2016-06-04
 ---
 :icons: font
 
