@@ -38,14 +38,9 @@ in the LICENSE file.
 
 NOTE: This header does not contain the typical copyright fragments, like the year of publication or the author. The SLFCfootnoteref:[sflc-ci] explains that missing copyright information does not void your copyright at all - thus it can be safely removed. Instead the file header simply redirects the reader to the LICENSE file in the root of the project.
 
-**2)** Add a file called `LICENSE` in the root of your project with the following link:http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt[legal code]:
+**2)** Add a file called `LICENSE` in the root of your project with the following link:http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt[legal code] (link:/assets/cc-zero-legalcode.txt[copy]):
 
-[source]
-----
-include::/assets/cc-zero-legalcode.txt[]
-----
-
-TIP: Add any additional licenses to that same file if you follow a multi license approach.
+TIP: Add any additional licenses to that same file if you follow a multi-license approach.
 
 **3)** Use the following link:https://shields.io[shields.io] badge for your project to make it link:http://i.imgur.com/41biB.jpg[shiny]:
 
