@@ -2,7 +2,7 @@
 layout: post
 title: Eclipse & sharing settings with Maven, CI servers and your team
 tags: [Eclipse, settings, Maven, CI]
-date: 2016-05-06
+date: 2016-06-05
 ---
 :icons: font
 
@@ -136,8 +136,11 @@ That said, we can already share compiler settings between Eclipse and Maven quit
       <configuration>
         <!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#compilerId -->
         <compilerId>jdt</compilerId>
-        <!-- https://eclipse.org/tycho/sitedocs/tycho-compiler-plugin/compile-mojo.html#useProjectSettings -->
-        <useProjectSettings>true</useProjectSettings>
+        <!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#compilerArgs -->
+        <compilerArgs>
+          <!-- https://wiki.eclipse.org/Tycho/FAQ#How_to_configure_warning.2Ferror_settings_of_the_OSGi_compiler.3F -->
+          <arg>-properties ${project.basedir}/.settings/org.eclipse.jdt.core.prefs</arg>
+        </compilerArgs>
       </configuration>
       <dependencies>
         <!-- This dependency provides the implementation of compiler "jdt" -->
@@ -157,7 +160,7 @@ That said, we can already share compiler settings between Eclipse and Maven quit
 Again replace link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.maven.plugins%22%20a%3A%22maven-compiler-plugin%22[`${version.m-compiler-p}`] and link:http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.eclipse.tycho%22%20a%3A%22tycho-compiler-jdt%22[`${version.tycho-compiler-jdt}`] with their latest version. Two interesting pieces are happening here:
 
 1. We set the `compilerId` property to the value `jdt` which instructs Maven to use the JDT compilerfootnote:[https://www.eclipse.org/jdt/core/] to compile your sources. Additionally we add a dependency to the plugin which provides the compiler called `jdt`.
-2. We set `useProjectSettings` to `true` which instructs the compiler plugin to pick up the project specific compiler settings from your `.settings/` folder. That's the same folder we used above as an output folder for the maven-remote-resources-plugin.
+2. We specify the `properties` `compilerArgs` to pick up the project specific compiler settings from your `.settings/` folder. That's the same folder we used above as an output folder for the maven-remote-resources-plugin.
 
 NOTE: There is another plugin called the formatter-maven-pluginfootnote:[https://github.com/revelc/formatter-maven-plugin] which might allow the same for formatter settings in the future.
 
