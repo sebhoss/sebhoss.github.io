@@ -8,6 +8,7 @@ publish-to-github-pages:
 	@(cd _site && git commit -a -s -m "Travis #${TRAVIS_BUILD_NUMBER}")
 	@(cd _site && git remote add github-pages https://${GH_TOKEN}@github.com/sebhoss/sebhoss.github.io.git)
 	@(cd _site && git push --quiet --force github-pages master > /dev/null 2>&1)
+	@rm -rf _site
 
 serve-locally:
 	@bundle exec jekyll serve --watch
