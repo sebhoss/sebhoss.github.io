@@ -2,6 +2,7 @@
 layout: post
 title: Public Key
 tags: [Public Key, Cryptography, Security]
+date: 2016-06-26
 ---
 
 I am currently using the link:/assets/sebhoss-0xB8319BD98B858C82.asc[following public key]:
