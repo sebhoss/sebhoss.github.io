@@ -2,6 +2,7 @@
 layout: post
 title: OSS Release Calendar
 tags: [Open Source, Software, Release, Calendar, Schedule]
+date: 2016-06-27
 ---
 
 I'm managing the releases of my open source projects with the help of the following calendar:
