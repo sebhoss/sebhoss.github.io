@@ -2,6 +2,7 @@
 layout: post
 title: Axon Framework & static event upcasting
 tags: [Axon, Event Sourcing, Upcasting]
+date: 2016-07-01
 ---
 
 In order to statically upcast events in an Axonfootnote:[http://www.axonframework.org/] event store, I've used a variation of the following script in the past:
