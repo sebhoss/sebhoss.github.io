@@ -2,7 +2,7 @@
 layout: post
 title: Software Licensing
 tags: [Software, License]
-date: 2016-06-04
+date: 2016-07-01
 ---
 :icons: font
 
@@ -50,10 +50,10 @@ image:/images/license-cc zero-000000.svg["CC Zero", link="http://creativecommons
 [source]
 ----
 # in asciidoc
-image:https://img.shields.io/badge/license-cc%20zero-000000.svg["CC Zero", link="https://creativecommons.org/publicdomain/zero/1.0/"]
+image:https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square["CC Zero", link="https://creativecommons.org/publicdomain/zero/1.0/"]
 
 # in markdown
-![CC Zero](https://img.shields.io/badge/license-cc%20zero-000000.svg)
+![CC Zero](https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square)
 ----
 
 **4)** Place the following text at the bottom of your `README`:
