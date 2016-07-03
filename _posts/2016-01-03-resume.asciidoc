@@ -2,6 +2,7 @@
 layout: post
 title: Resumé
 tags: [curriculum vitae, resumé]
+date: 2016-07-03
 ---
 
 Still reordering zeros and ones. Hopefully, I’ll get it right one day.
