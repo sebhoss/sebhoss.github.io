@@ -2,7 +2,7 @@
 layout: post
 title: Clojure Java Interoperability
 tags: [Clojure, Java, Interoperability]
-date: 2016-05-06
+date: 2016-07-09
 ---
 
 Clojure has several http://clojure.org/java_interop[forms and macros] to call Java code. However calling Clojure code from Java is not always so straight forward. The following post shows the different options currently available.
@@ -33,8 +33,6 @@ Clojure imposes the notion of immutability. As such Clojure functions are/should
   (increment-range max))
 ----
 
-Note that the above definition could be replaced by `(range start end)`. The example is just used to show some more Clojure functions.
-
 The Java wrapper has to follow the http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.8[standard rules] for method names. Therefore `increment-range` has to be renamed to `incrementRange` (or some similar name without the "-" in it). The "-" prefix for the Java wrapper can be configured inside the `:gen-class` form and will be removed once `gen-class` runs. The usage from Java is thus:
 
 [source, java]
@@ -52,7 +50,7 @@ public class ClojureJavaInteropStatic {
 
 === Adding generics
 
-You may notice that the returned list in the above code is raw, because. the method definition doesn't use generics. To solve this problem declare that the generated class `:implements` a certain interface that exposes the desired method definition(s). You won't be able to declare your methods as static anymore, but get a generified method for all your Java needs.
+The returned list in the above code is raw, because the method definition doesn't use generics. To solve this problem declare that the generated class `:implements` a certain interface that exposes the desired method definition(s). You won't be able to declare your methods as static anymore, but get a generified method for all your Java needs.
 
 The Java interface:
 
