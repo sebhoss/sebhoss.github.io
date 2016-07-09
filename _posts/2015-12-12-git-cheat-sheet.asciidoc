@@ -2,7 +2,7 @@
 layout: post
 title: Git Cheat Sheet
 tags: [Git]
-date: 2016-06-19
+date: 2016-07-09
 ---
 
 The following is a reference of Git commands that I'm using every now and then. For a complete guide take a look at the link:https://git-scm.com/doc[online documentation].
@@ -34,7 +34,7 @@ git remote set-url origin --push --add git@another.com/project.git
 
 Adds two new remote repositories as targets for `git push`. Every call of `git push` will push changes into both specified repositories.
 
-== Useful snippets
+== Bisect changes
 
 `git bisect start --term-good=unfixed --term-bad=fixed` footnote:[https://www.reddit.com/r/programming/comments/40ln5m/16_awesome_git_aliases_that_you_will_love/cyv9cw0]::
 Use `fixed` and `unfixed` instead of `good` and `bad`
