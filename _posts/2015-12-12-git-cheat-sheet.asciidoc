@@ -38,3 +38,26 @@ Adds two new remote repositories as targets for `git push`. Every call of `git p
 
 `git bisect start --term-good=unfixed --term-bad=fixed` footnote:[https://www.reddit.com/r/programming/comments/40ln5m/16_awesome_git_aliases_that_you_will_love/cyv9cw0]::
 Use `fixed` and `unfixed` instead of `good` and `bad`
+
+== Using host aliases
+
+You can configure host aliases by updating your `~/.gitconfig` like this:
+
+[source]
+----
+[url "git@github"]
+    insteadOf = github
+----
+
+Instead of cloning from `git@github.com:ORGANIZATION/PROJECT.git`, you can use `github:ORGANIZATION/PROJECT.git`. Specify which key is used by updating your `~/.ssh/config` like this:
+
+[source]
+----
+Host github
+  Hostname github.com
+  User git
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/key-for-github
+----
+
+Git will resolve `github` into `git@github` and your SSH client will resolve `github` as `github.com` and use the specified key. The same approach can be used to configure different keys on a per project or organization basis.
