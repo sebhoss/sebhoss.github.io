@@ -1,6 +1,6 @@
 = sebhoss.github.io
 
-My personal homepage. Updates by calling `make release`.
+My personal homepage. Updates by calling `make publish-to-github-pages` or just `make`. Watch locally by calling `make serve-locally`.
 
 Uses:
 
