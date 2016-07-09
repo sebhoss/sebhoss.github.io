@@ -1,4 +1,4 @@
-= http://seb.xn--ho-hia.de/
+= pass:[<a href="http://seb.xn--​ho-hia.de/">http://seb.xn--​ho-hia.de/</a>]
 
 My personal homepage. Updates by calling `make publish-to-github-pages` or just `make`. Watch locally by calling `make serve-locally`.
 
