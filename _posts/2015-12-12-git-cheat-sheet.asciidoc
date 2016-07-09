@@ -36,7 +36,7 @@ Adds two new remote repositories as targets for `git push`. Every call of `git p
 
 == Bisect changes
 
-`git bisect start --term-good=unfixed --term-bad=fixed` footnote:[https://www.reddit.com/r/programming/comments/40ln5m/16_awesome_git_aliases_that_you_will_love/cyv9cw0]::
+`git bisect start --term-good=unfixed --term-bad=fixed` footnote:[https://git-scm.com/docs/git-bisect]::
 Use `fixed` and `unfixed` instead of `good` and `bad`
 
 == Using host aliases
