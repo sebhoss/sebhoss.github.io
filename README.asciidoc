@@ -1,4 +1,4 @@
-= sebhoss.github.io
+= http://seb.xn--ho-hia.de/
 
 My personal homepage. Updates by calling `make publish-to-github-pages` or just `make`. Watch locally by calling `make serve-locally`.
 
