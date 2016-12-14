@@ -13,7 +13,7 @@ Clojure code can be http://clojure.org/compilation[compiled] to standard JVM byt
 
 === Adding static modifiers
 
-Clojure imposes the notion of immutability. As such Clojure functions are/should be void of any state or side-effects and only operate on the given input. Therefore exporting Clojure functions as static Java methods makes sense. The following example defines a Clojure function, a corresponding Java-callable function and exports the Java function as a static Method in the class `com.example.Computation`.
+Clojure imposes the notion of immutability. As such Clojure functions are/should be void of any state or side-effects and only operate on the given input. Therefore exporting Clojure functions as static Java methods makes sense. The following example defines a Clojure function, a corresponding Java-callable function and exports the Java function as a static method in the class `com.example.Computation`.
 
 [source, clojure]
 ----
