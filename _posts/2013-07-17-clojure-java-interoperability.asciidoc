@@ -128,7 +128,7 @@ The macro `defn*` replaces `defn` and automatically creates a second function wi
 
 == Using the Clojure Runtime
 
-Using `gen-class` imposes certain limitations on calling Clojure code from Java. One of those are functions which make use of Clojure link:http://clojure.org/special_forms#Special%20Forms--Binding%20Forms%20(Destructuring)[parameter destructuring]. To invoke those functions you have to use the Clojure runtime.
+Using `gen-class` imposes certain limitations on calling Clojure code from Java. One of those are functions which make use of Clojure link:http://clojure.org/reference/special_forms#binding-forms[parameter destructuring]. To invoke those functions you have to use the Clojure runtime.
 
 [source, java]
 ----
