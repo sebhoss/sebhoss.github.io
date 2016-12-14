@@ -4,4 +4,4 @@ _site/
 .project
 .idea/
 Gemfile.lock
-
+.ansible-git-*
