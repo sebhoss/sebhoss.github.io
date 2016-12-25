@@ -5,3 +5,6 @@ tags: [Java, JVM, Heap, Profiler, Debugger, Threads, Monitor]
 ---
 
 Show how to perform heap analysis/profile an application/etc.
+
+Code guidelines:
+- http://lars-lab.jpl.nasa.gov/jpl-java-standard.pdf
