@@ -5,11 +5,15 @@ layout: grid
   <header id="postHeader">
     <h1 class="p-name">
       <a href="{{ page.url }}" class="u-url">{{ page.title }}</a>
-      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/edit/source/{{ page.path }}" class="octicon octicon-pencil" title="edit this page"></a>
-      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/commits/source/{{ page.path }}" class="octicon octicon-history" title="show history"></a>
-      <time pubdate datetime="{{ page.date }}" id="pubdate" class="dt-published">(published: {{ page.date | date_to_string }})</time>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/edit/source/{{ page.path }}" title="edit this page" class="icon">
+        <img src="/images/pencil.svg" alt="Edit article" height="16" width="14" class="icon">
+      </a>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/commits/source/{{ page.path }}" title="show history" class="icon">
+        <img src="/images/history.svg" alt="View article history" height="16" width="14" class="icon">
+      </a>
     </h1>
     <span class="tag" rel="tag"> talks about: {{ page.tags | array_to_sentence_string }}</span>
+    <time pubdate datetime="{{ page.date }}" id="pubdate" class="dt-published">published: {{ page.date | date_to_string }}</time>
   </header>
 
   <div class="e-content">

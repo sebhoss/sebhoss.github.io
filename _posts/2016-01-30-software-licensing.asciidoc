@@ -45,7 +45,13 @@ Add any additional licenses to that same file if you follow a multi-license appr
 
 **3)** Use the following link:https://shields.io[shields.io] badge for your project to make it link:http://i.imgur.com/41biB.jpg[shiny]:
 
-image:/images/license-cc zero-000000.svg["CC Zero", link="http://creativecommons.org/publicdomain/zero/1.0/"]
+++++
+<span class="image">
+  <a class="image" href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="/images/license-cc zero-000000.svg" alt="CC Zero" class="centered">
+  </a>
+</span>
+++++
 
 [source]
 ----

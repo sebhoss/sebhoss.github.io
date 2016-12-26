@@ -7,10 +7,13 @@
   @include disable-links;
 }
 #post {
-  img {
+  img.centered {
     display: block;
     margin: 4px auto;
     max-width: 60%;
+  }
+  img.icon {
+    margin: 0;
   }
   .paragraph {
     max-width: $post-width;
@@ -18,10 +21,14 @@
   .admonitionblock {
     max-width: $post-width;
   }
+  a.icon {
+    margin-right: -5px;
+  }
 }
 #pubdate {
-  font-size: x-small;
+  font-size: small;
   color: $secondary-color;
+  display: block;
 }
 
 .listingblock {

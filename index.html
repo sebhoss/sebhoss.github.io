@@ -6,11 +6,15 @@ title: Welcome!
   <header id="postHeader">
     <h1 class="p-name">
       <a href="{{ site.posts.first.url }}" class="u-url">{{ site.posts.first.title }}</a>
-      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/edit/source/{{ site.posts.first.path }}" class="octicon octicon-pencil"></a>
-      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/commits/source/{{ site.posts.first.path }}" class="octicon octicon-history"></a>
-      <time pubdate datetime="{{ site.posts.first.date }}" id="pubdate" class="dt-published">(published: {{ site.posts.first.date | date_to_string }})</time>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/edit/source/{{ site.posts.first.path }}">
+        <img src="/images/pencil.svg" alt="Edit article" height="16" width="14">
+      </a>
+      <a href="https://github.com/{{ site.author.github }}/{{ site.github }}/commits/source/{{ site.posts.first.path }}">
+        <img src="/images/history.svg" alt="View article history" height="16" width="14">
+      </a>
     </h1>
     <span class="tag" rel="tag">talks about: {{ site.posts.first.tags | array_to_sentence_string }}</span>
+    <time pubdate datetime="{{ site.posts.first.date }}" id="pubdate" class="dt-published">published: {{ site.posts.first.date | date_to_string }}</time>
   </header>
 
   <div class="e-content">
