@@ -5,4 +5,13 @@ tags: [curriculum vitae, resumé]
 date: 2016-07-03
 ---
 
-Still reordering zeros and ones. Hopefully, I’ll get it right one day.
+- Working at a big startupfootnote:[http://www.talend.com/]
+- Worked at a small startupfootnote:[http://www.ysura.com/]
+- Founded my own startup
+- Worked as consultantfootnote:[http://www.viadee.de/]
+- Finished universityfootnote:[https://www.wi.uni-muenster.de/]
+- Finished schoolfootnote:[http://www.mcg-neuss.de/]
+- Subscribed to MSDN
+- Got my first own computer
+- Decided to become a software developer at the age of three
+- Born 1983
