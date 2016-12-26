@@ -2,13 +2,13 @@
 layout: post
 title: Eclipse & sharing settings with Maven, CI servers and your team
 tags: [Eclipse, settings, Maven, CI]
-date: 2016-06-05
+date: 2016-12-26
 ---
 :icons: font
 
 Most developers will be quick to point out that sharing IDE specific configuration in the source repository of a project is not a good idea. It is way to easy for OS/host/developer specific configuration to slip in and ruin the fun for everyone else. Instead developers have to set up their development environment once and import the untainted code into their own mess.
 
-Development environments become a mess quite easily on their own in case developers do not stay vigilant and constantly keep an eye on how a project should be build and how they are currently doing it. Any successful solution needs to be both easy to use and easy to maintain. The simplest solution is to commit your settings along with your project into your version control system such as Gitfootnote:[https://git-scm.com/]. For Eclipse just declare that your settings are project specific and add the `.settings/` folder to Gitfootnote:[http://stackoverflow.com/a/9595503/2014864]. Similar, IntelliJ users can add the `.idea` folder to Gitfootnote:[https://www.jetbrains.com/help/idea/2016.1/synchronizing-and-sharing-settings.html#d1516111e270]. However be aware that this only allows to share settings between developers working on the same source code. Sharing settings across projects is not directly support with that solution. Mavenfootnote:[https://maven.apache.org/] can fix that for us!
+Development environments become a mess quite easily on their own in case developers do not stay vigilant and constantly keep an eye on how a project should be build and how they are currently doing it. Any successful solution needs to be both easy to use and easy to maintain. The simplest solution is to commit your settings along with your project into your version control system (VCS). For Eclipse just declare that your settings are project specific and add the `.settings/` folder to VCSfootnote:[http://stackoverflow.com/a/9595503/2014864]. Similar, IntelliJ users can add the `.idea` folder to VCSfootnote:[https://www.jetbrains.com/help/idea/2016.1/synchronizing-and-sharing-settings.html#d1516111e270]. However be aware that this only allows to share settings between developers working on the same source code. Sharing settings across projects is not directly support with that solution. Mavenfootnote:[https://maven.apache.org/] can fix that for us!
 
 The rough idea is this:
 
