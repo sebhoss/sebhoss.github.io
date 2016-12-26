@@ -8,3 +8,4 @@ Show how to perform heap analysis/profile an application/etc.
 
 Code guidelines:
 - http://lars-lab.jpl.nasa.gov/jpl-java-standard.pdf
+- https://cryptocoding.net/index.php/Cryptography_Coding_Standard
