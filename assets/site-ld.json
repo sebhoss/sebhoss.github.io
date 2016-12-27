@@ -16,7 +16,7 @@
   },
   "audience": {
     "@type": "Audience",
-    "audienceType": "software developers",
+    "audienceType": "software engineers",
     "name": "monkeys"
   },
   "author": {

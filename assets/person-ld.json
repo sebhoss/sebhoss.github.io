@@ -5,7 +5,7 @@
   "@id": "#sebhoss",
   "@type": "Person",
   "name": "{{ site.author.name }}",
-  "jobTitle": "Software Developer",
+  "jobTitle": "Software Engineer",
   "url": "{{ site.url }}",
   "email": "{{ site.author.email }}",
   "gender": "male",
@@ -27,25 +27,25 @@
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "DE",
-    "addressRegion": "Bavaria",
-    "addressLocality": "Munich",
+    "addressRegion": "NRW",
+    "addressLocality": "Bonn",
     "contactType": "home address"
   },
   "worksFor": {
     "@type": "Organization",
-    "name": "ysura",
-    "legalName": "ysura GmbH",
-    "url": "http://www.ysura.com/",
-    "email": "info@ysura.com",
-    "telephone": "+49 (89) 6661 6210",
-    "logo": "http://www.ysura.com/wp-content/uploads/2014/04/logo-500-horizontal1.png",
+    "name": "Talend",
+    "legalName": "Talend Germany GmbH",
+    "url": "http://www.talend.com/",
+    "email": "webmaster@talend.com",
+    "telephone": "+49 228 76 37 76 0",
+    "logo": "https://www.talend.com/sites/all/themes/talend_responsive/images/talend-logo.png",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "DE",
-      "addressRegion": "Bavaria",
-      "addressLocality": "Munich",
-      "postalCode": "81667",
-      "streetAddress": "Metzstraße 14b",
+      "addressRegion": "NRW",
+      "addressLocality": "Bonn",
+      "postalCode": "53175",
+      "streetAddress": "Servatiusstrasse 53",
       "contactType": "work address"
     }
   },
@@ -59,6 +59,24 @@
     }
   },
   "alumniOf": [
+    {
+      "@type": "Organization",
+      "name": "ysura",
+      "legalName": "ysura GmbH",
+      "url": "http://www.ysura.com/",
+      "email": "info@ysura.com",
+      "telephone": "+49 (89) 6661 6210",
+      "logo": "http://www.ysura.com/wp-content/uploads/2014/04/logo-500-horizontal1.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DE",
+        "addressRegion": "Bavaria",
+        "addressLocality": "Munich",
+        "postalCode": "81667",
+        "streetAddress": "Metzstraße 14b",
+        "contactType": "work address"
+      }
+    },
     {
       "@type": "Organization",
       "name": "viadee",
