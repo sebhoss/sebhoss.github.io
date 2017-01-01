@@ -61,7 +61,13 @@ layout: grid
       "headline": "{{ page.title }}",
       "mainEntityOfPage": "{{ site.url }}{{ page.url }}",
       "url": "{{ site.url }}{{ page.url }}",
-      "image": "{{ site.url }}/images/alseki.svg"
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "{{ site.url }}/images/alseki.svg",
+        "author": "{{ site.author.name }}",
+        "datePublished": "2016-01-02",
+        "name": "website logo"
+      }
     }
   </script>
 </article>

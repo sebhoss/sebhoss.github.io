@@ -62,7 +62,13 @@ title: Welcome!
       "headline": "{{ site.posts.first.title }}",
       "mainEntityOfPage": "{{ site.url }}{{ site.posts.first.url }}",
       "url": "{{ site.url }}{{ site.posts.first.url }}",
-      "image": "{{ site.url }}/images/alseki.svg"
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "{{ site.url }}/images/alseki.svg",
+        "author": "{{ site.author.name }}",
+        "datePublished": "2016-01-02",
+        "name": "website logo"
+      }
     }
   </script>
 </article>
