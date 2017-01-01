@@ -56,7 +56,17 @@ layout: grid
         "name": "metio.wtf",
         "url": "http://metio.wtf/",
         "email": "whatsup@metio.wtf",
-        "logo": "{{ site.url }}/images/alseki.png",
+        "logo": {
+          "@type": "ImageObject",
+          "contentUrl": "{{ site.url }}/images/alseki.png",
+          "url": "{{ site.url }}/images/alseki.png",
+          "height": 696,
+          "width": 696,
+          "author": "{{ site.author.name }}",
+          "datePublished": "2016-01-02",
+          "dateModified": "2016-01-02",
+          "name": "website logo"
+        },
         "founder": {
           "@id": "#sebhoss"
         }
