@@ -2,7 +2,7 @@ permalink: /:title
 highlighter: pygments
 
 title: seb.hoß.de
-description: WIP articles about software development
+description: WIP articles about software engineering
 url: http://seb.hoß.de
 github: sebhoss.github.io
 navitems: 25
