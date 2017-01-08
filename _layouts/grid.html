@@ -9,6 +9,12 @@
   <meta name="subject" content="Software Engineering">
   <meta name="description" content="{{ site.description }}">
 
+  <meta property="og:title" content="{{ site.author.name }}: {{ page.title }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+  <meta property="og:image" content="{{ site.url }}images/alseki-logo.jpg" />
+  <meta property="og:description" content="{{ site.description }}" />
+
   <title>{{ site.author.name }}: {{ page.title }}</title>
 
   <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
