@@ -2,7 +2,7 @@
 layout: post
 title: Clojure Java Interoperability
 tags: [Clojure, Java, Interoperability]
-date: 2016-12-14
+date: 2017-01-15
 ---
 
 Clojure has several http://clojure.org/java_interop[forms and macros] to call Java code. However calling Clojure code from Java is not always so straight forward. The following post shows the different options currently available.
@@ -50,7 +50,7 @@ public class ClojureJavaInteropStatic {
 
 === Adding generics
 
-The returned list in the above code is raw, because the method definition doesn't use generics. To solve this problem declare that the generated class `:implements` a certain interface that exposes the desired method definition(s). You won't be able to declare your methods as static anymore, but get a generified method for all your Java needs.
+The returned list in the above code is raw because the method definition doesn't use generics. To solve this problem declare that the generated class `:implements` a certain interface that exposes the desired method definition(s). You won't be able to declare your methods as static anymore, but get a generified method for all your Java needs.
 
 The Java interface:
 
