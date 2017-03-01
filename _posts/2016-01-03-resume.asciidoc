@@ -5,7 +5,8 @@ tags: [curriculum vitae, resumé]
 date: 2016-07-03
 ---
 
-- Working at a big startupfootnote:[http://www.talend.com/]
+- Now a clean coderfootnote:[http://cronn.de/]
+- Worked at a big startupfootnote:[http://www.talend.com/]
 - Worked at a small startupfootnote:[http://www.ysura.com/]
 - Founded my own startup
 - Worked as consultantfootnote:[http://www.viadee.de/]
