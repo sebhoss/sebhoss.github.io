@@ -1,0 +1,52 @@
+https://keybase.io/sebhoss
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://seb.xn--ho-hia.de
+  * I am sebhoss (https://keybase.io/sebhoss) on keybase.
+  * I have a public key ASDOrdRvCiGtu4j4lAw06SXJqG0MU0QhRXlqwCWXUEX2pwo
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0120ceadd46f0a21adbb88f8940c34e925c9a86d0c53442145796ac025975045f6a70a",
+            "host": "keybase.io",
+            "kid": "0120ceadd46f0a21adbb88f8940c34e925c9a86d0c53442145796ac025975045f6a70a",
+            "uid": "825d70e6d89cdf3ea8a64719d7a70819",
+            "username": "sebhoss"
+        },
+        "service": {
+            "hostname": "seb.xn--ho-hia.de",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.14"
+    },
+    "ctime": 1459000146,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1459000040,
+        "hash": "e908d32a7207c74bb06000edc9a8231789ea145d81022b7a9034ce210a0fb2ff2406e807309fe47fa5d9f37d27c1ee07222ae68eb9578a575b98432fe1ea7fc5",
+        "seqno": 422277
+    },
+    "prev": "0adf2ed636f22a042e6ffaa209a741dcb6fd1114ba2f5424d20a35418e6140fa",
+    "seqno": 9,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+g6Rib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgzq3UbwohrbuI+JQMNOklyahtDFNEIUV5asAll1BF9qcKp3BheWxvYWTFAvd7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwY2VhZGQ0NmYwYTIxYWRiYjg4Zjg5NDBjMzRlOTI1YzlhODZkMGM1MzQ0MjE0NTc5NmFjMDI1OTc1MDQ1ZjZhNzBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwY2VhZGQ0NmYwYTIxYWRiYjg4Zjg5NDBjMzRlOTI1YzlhODZkMGM1MzQ0MjE0NTc5NmFjMDI1OTc1MDQ1ZjZhNzBhIiwidWlkIjoiODI1ZDcwZTZkODljZGYzZWE4YTY0NzE5ZDdhNzA4MTkiLCJ1c2VybmFtZSI6InNlYmhvc3MifSwic2VydmljZSI6eyJob3N0bmFtZSI6InNlYi54bi0taG8taGlhLmRlIiwicHJvdG9jb2wiOiJodHRwOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4xNCJ9LCJjdGltZSI6MTQ1OTAwMDE0NiwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsIm1lcmtsZV9yb290Ijp7ImN0aW1lIjoxNDU5MDAwMDQwLCJoYXNoIjoiZTkwOGQzMmE3MjA3Yzc0YmIwNjAwMGVkYzlhODIzMTc4OWVhMTQ1ZDgxMDIyYjdhOTAzNGNlMjEwYTBmYjJmZjI0MDZlODA3MzA5ZmU0N2ZhNWQ5ZjM3ZDI3YzFlZTA3MjIyYWU2OGViOTU3OGE1NzViOTg0MzJmZTFlYTdmYzUiLCJzZXFubyI6NDIyMjc3fSwicHJldiI6IjBhZGYyZWQ2MzZmMjJhMDQyZTZmZmFhMjA5YTc0MWRjYjZmZDExMTRiYTJmNTQyNGQyMGEzNTQxOGU2MTQwZmEiLCJzZXFubyI6OSwidGFnIjoic2lnbmF0dXJlIn2jc2lnxEC/sr0Cf2yMT3eNuOdhDN5MxJJrEWyiUS+wFv1uPgW6dQSKzBZ8hi+2K6qX9p9vV6Bamkv6ydVt6g13Opvs3GoIqHNpZ190eXBlIKN0YWfNAgKndmVyc2lvbgE=
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/sebhoss
+

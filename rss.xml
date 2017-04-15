@@ -1,0 +1,1398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>seb.hoß.de</title>
+    <link>https://seb.hoß.de/rss.xml</link>
+    <link>https://seb.hoß.de</link>
+    <lastBuildDate>Sat, 15 Apr 2017 17:00:46 +0000</lastBuildDate>
+    <pubDate>Sat, 15 Apr 2017 17:00:46 +0000</pubDate>
+
+    
+    <item>
+      <title>Clojure Java Interoperability</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Clojure has several &lt;a href=&quot;http://clojure.org/java_interop&quot;&gt;forms and macros&lt;/a&gt; to call Java code. However calling Clojure code from Java is not always so straight forward. The following post shows the different options currently available.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;using-code-gen-class-code&quot;&gt;Using &lt;code&gt;gen-class&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Clojure code can be &lt;a href=&quot;http://clojure.org/compilation&quot;&gt;compiled&lt;/a&gt; to standard JVM bytecode using &lt;a href=&quot;http://clojure.github.io/clojure/clojure.core-api.html#clojure.core/gen-class&quot;&gt;gen-class&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;adding-static-modifiers&quot;&gt;Adding static modifiers&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Clojure imposes the notion of immutability. As such Clojure functions are/should be void of any state or side-effects and only operate on the given input. Therefore exporting Clojure functions as static Java methods makes sense. The following example defines a Clojure function, a corresponding Java-callable function and exports the Java function as a static method in the class &lt;code&gt;com.example.Computation&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;clojure&quot;&gt;(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;ns &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;com.example.computation&lt;/span&gt;
+  (&lt;span style=&quot;color: #19177C&quot;&gt;:gen-class&lt;/span&gt;
+    &lt;span style=&quot;color: #19177C&quot;&gt;:name&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;com.example.Computation&lt;/span&gt;
+    &lt;span style=&quot;color: #19177C&quot;&gt;:methods&lt;/span&gt; [&lt;span style=&quot;color: #666666&quot;&gt;#^&lt;/span&gt;{&lt;span style=&quot;color: #19177C&quot;&gt;:static&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;true&lt;/span&gt;} [&lt;span style=&quot;color: #19177C&quot;&gt;incrementRange&lt;/span&gt; [&lt;span style=&quot;color: #19177C&quot;&gt;int&lt;/span&gt;] &lt;span style=&quot;color: #19177C&quot;&gt;java.util.List&lt;/span&gt;]]))
+
+(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;increment-range&lt;/span&gt;
+  &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;Creates a sequence of numbers up to max and then increments them.&amp;quot;&lt;/span&gt;
+  [&lt;span style=&quot;color: #19177C&quot;&gt;max&lt;/span&gt;]
+  (&lt;span style=&quot;color: #008000&quot;&gt;map inc &lt;/span&gt;(&lt;span style=&quot;color: #008000&quot;&gt;take max &lt;/span&gt;(&lt;span style=&quot;color: #0000FF&quot;&gt;range&lt;/span&gt;))))
+
+(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;-incrementRange&lt;/span&gt;
+  &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;A Java-callable wrapper around the &amp;#39;increment-range&amp;#39; function.&amp;quot;&lt;/span&gt;
+  [&lt;span style=&quot;color: #19177C&quot;&gt;max&lt;/span&gt;]
+  (&lt;span style=&quot;color: #0000FF&quot;&gt;increment-range&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;max&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The Java wrapper has to follow the &lt;a href=&quot;http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.8&quot;&gt;standard rules&lt;/a&gt; for method names. Therefore &lt;code&gt;increment-range&lt;/code&gt; has to be renamed to &lt;code&gt;incrementRange&lt;/code&gt; (or some similar name without the &quot;-&quot; in it). The &quot;-&quot; prefix for the Java wrapper can be configured inside the &lt;code&gt;:gen-class&lt;/code&gt; form and will be removed once &lt;code&gt;gen-class&lt;/code&gt; runs. The usage from Java is thus:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;package&lt;/span&gt; com&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;example&lt;/span&gt;
+
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;ClojureJavaInteropStatic&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;{&lt;/span&gt;
+
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;static&lt;/span&gt; &lt;span style=&quot;color: #B00040&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #0000FF&quot;&gt;main&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;String&lt;span style=&quot;color: #666666&quot;&gt;[]&lt;/span&gt; args&lt;span style=&quot;color: #666666&quot;&gt;)&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;{&lt;/span&gt;
+        List incrementedRange &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; Computation&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;incrementRange&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(10);&lt;/span&gt;
+    &lt;span style=&quot;color: #666666&quot;&gt;}&lt;/span&gt;
+
+&lt;span style=&quot;color: #666666&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;adding-generics&quot;&gt;Adding generics&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The returned list in the above code is raw because the method definition doesn&amp;#8217;t use generics. To solve this problem declare that the generated class &lt;code&gt;:implements&lt;/code&gt; a certain interface that exposes the desired method definition(s). You won&amp;#8217;t be able to declare your methods as static anymore, but get a generified method for all your Java needs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The Java interface:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;package&lt;/span&gt; com&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;example&lt;/span&gt;
+
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;interface&lt;/span&gt; &lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;RangeIncrementer&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;{&lt;/span&gt;
+  List&lt;span style=&quot;color: #666666&quot;&gt;&amp;lt;&lt;/span&gt;Long&lt;span style=&quot;color: #666666&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&quot;color: #0000FF&quot;&gt;incrementRange&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #B00040&quot;&gt;int&lt;/span&gt; max&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;
+&lt;span style=&quot;color: #666666&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The changed Clojure namespace:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;clojure&quot;&gt;(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;ns &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;com.example.computation&lt;/span&gt;
+  (&lt;span style=&quot;color: #19177C&quot;&gt;:gen-class&lt;/span&gt;
+    &lt;span style=&quot;color: #19177C&quot;&gt;:name&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;com.example.Computation&lt;/span&gt;
+    &lt;span style=&quot;color: #19177C&quot;&gt;:implements&lt;/span&gt; [&lt;span style=&quot;color: #19177C&quot;&gt;com.example.RangeIncrementer&lt;/span&gt;]))
+
+(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;increment-range&lt;/span&gt;
+  &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;Creates a sequence of numbers up to max and then increments them.&amp;quot;&lt;/span&gt;
+  [&lt;span style=&quot;color: #19177C&quot;&gt;max&lt;/span&gt;]
+  (&lt;span style=&quot;color: #008000&quot;&gt;map inc &lt;/span&gt;(&lt;span style=&quot;color: #008000&quot;&gt;take max &lt;/span&gt;(&lt;span style=&quot;color: #0000FF&quot;&gt;range&lt;/span&gt;))))
+
+(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;-incrementRange&lt;/span&gt;
+  &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;A Java-callable wrapper around the &amp;#39;increment-range&amp;#39; function.&amp;quot;&lt;/span&gt;
+  [&lt;span style=&quot;color: #19177C&quot;&gt;this&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;max&lt;/span&gt;]
+  (&lt;span style=&quot;color: #0000FF&quot;&gt;increment-range&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;max&lt;/span&gt;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Finally the generified usage from Java:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;package&lt;/span&gt; com&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;example&lt;/span&gt;
+
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;ClojureJavaInteropGenerics&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;{&lt;/span&gt;
+
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;public&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;static&lt;/span&gt; &lt;span style=&quot;color: #B00040&quot;&gt;void&lt;/span&gt; &lt;span style=&quot;color: #0000FF&quot;&gt;main&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;String&lt;span style=&quot;color: #666666&quot;&gt;[]&lt;/span&gt; args&lt;span style=&quot;color: #666666&quot;&gt;)&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;{&lt;/span&gt;
+        RangeIncrementer incrementer &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;new&lt;/span&gt; &lt;span style=&quot;color: #0000FF&quot;&gt;Computation&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;();&lt;/span&gt;
+        List&lt;span style=&quot;color: #666666&quot;&gt;&amp;lt;&lt;/span&gt;Long&lt;span style=&quot;color: #666666&quot;&gt;&amp;gt;&lt;/span&gt; incrementedRange &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; incrementer&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;incrementRange&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(10);&lt;/span&gt;
+    &lt;span style=&quot;color: #666666&quot;&gt;}&lt;/span&gt;
+
+&lt;span style=&quot;color: #666666&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Couple of notes for this as well: First the generated class still only returns the raw type (&lt;code&gt;List&lt;/code&gt; instead of  &lt;code&gt;List&amp;lt;Integer&amp;gt;&lt;/code&gt;). So instead of using the class, use the interface for the variable declaration (&lt;code&gt;RangeIncrementer incrementer = ..&lt;/code&gt; instead of &lt;code&gt;Computation comp = ..&lt;/code&gt;). The interface will return the non-raw &lt;code&gt;List&lt;/code&gt;. Second the function definition for &lt;code&gt;-incrementRange&lt;/code&gt; is now slightly different. It needs an additional parameter (&lt;code&gt;this&lt;/code&gt;) which exposes the current instance to the generated class/method.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Returning an array of something is also possible with the following construct &lt;code&gt;&quot;[Ljava.lang.Object;&quot;&lt;/code&gt;. Need a 2-dim array? Just use &lt;code&gt;&quot;[[Ljava.lang.Object;&quot;&lt;/code&gt; (notice the extra &lt;code&gt;[&lt;/code&gt;) and so on. However be aware that the method return types have to match, e. g. you can&amp;#8217;t specify a return type of array if your Clojure function doesn&amp;#8217;t return an array. In the example above the call to &lt;code&gt;map&lt;/code&gt; returns &lt;code&gt;LazySeq&lt;/code&gt; which itself is a &lt;code&gt;java.util.List&lt;/code&gt;. Therefore the method declaration is valid and you won&amp;#8217;t get any &lt;code&gt;ClassCastException&lt;/code&gt; when calling &lt;code&gt;incrementRange&lt;/code&gt; from Java.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;make-your-life-easier-with-macros&quot;&gt;Make your life easier with macros&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Instead of defining every Clojure function which should be exported twice (the real function + the Java wrapper), it is possible to use a macro to do that extra work automatically.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;clojure&quot;&gt;(&lt;span style=&quot;color: #0000FF&quot;&gt;require&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;&amp;#39;&lt;/span&gt;[&lt;span style=&quot;color: #19177C&quot;&gt;clojure.string&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;:as&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;string&lt;/span&gt;)
+
+(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;camel-case&lt;/span&gt; [&lt;span style=&quot;color: #19177C&quot;&gt;input&lt;/span&gt;]
+  (&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;let &lt;/span&gt;[&lt;span style=&quot;color: #19177C&quot;&gt;words&lt;/span&gt; (&lt;span style=&quot;color: #0000FF&quot;&gt;string/split&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;input&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;#&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;[\s_-]+&amp;quot;&lt;/span&gt;)]
+    (&lt;span style=&quot;color: #0000FF&quot;&gt;string/join&lt;/span&gt; (&lt;span style=&quot;color: #008000&quot;&gt;cons &lt;/span&gt;(&lt;span style=&quot;color: #0000FF&quot;&gt;string/lower-case&lt;/span&gt; (&lt;span style=&quot;color: #008000&quot;&gt;first &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;words&lt;/span&gt;)) (&lt;span style=&quot;color: #008000&quot;&gt;map &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;string/capitalize&lt;/span&gt; (&lt;span style=&quot;color: #008000&quot;&gt;rest &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;words&lt;/span&gt;))))))
+
+(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;java-name&lt;/span&gt; [&lt;span style=&quot;color: #19177C&quot;&gt;clojure-name&lt;/span&gt;]
+  (&lt;span style=&quot;color: #008000&quot;&gt;symbol &lt;/span&gt;(&lt;span style=&quot;color: #008000&quot;&gt;str &lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;-&amp;quot;&lt;/span&gt; (&lt;span style=&quot;color: #0000FF&quot;&gt;camel-case&lt;/span&gt; (&lt;span style=&quot;color: #008000&quot;&gt;str &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;clojure-name&lt;/span&gt;)))))
+
+(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defmacro &lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;defn*&lt;/span&gt; [&lt;span style=&quot;color: #008000&quot;&gt;name &lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;declarations&lt;/span&gt;]
+  (&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;let &lt;/span&gt;[&lt;span style=&quot;color: #19177C&quot;&gt;java-name&lt;/span&gt; (&lt;span style=&quot;color: #0000FF&quot;&gt;java-name&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;name&lt;/span&gt;)]
+    &lt;span style=&quot;color: #666666&quot;&gt;`&lt;/span&gt;(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;do &lt;/span&gt;(&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;~&lt;/span&gt;&lt;span style=&quot;color: #008000&quot;&gt;name &lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;~&lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;declarations&lt;/span&gt;)
+       (&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;defn &lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;~&lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;java-name&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;~&lt;/span&gt;&lt;span style=&quot;color: #19177C&quot;&gt;declarations&lt;/span&gt;))))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The macro &lt;code&gt;defn*&lt;/code&gt; replaces &lt;code&gt;defn&lt;/code&gt; and automatically creates a second function with a valid camel-cased Java method name. The macro is available as a &lt;a href=&quot;https://github.com/sebhoss/def-clj&quot;&gt;small library&lt;/a&gt; at &lt;a href=&quot;http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.sebhoss%22%20a%3A%22def-clj%22&quot;&gt;Maven Central&lt;/a&gt;. The macro won&amp;#8217;t add the extra parameter mentioned above to Java wrapper, so it is only useful for declaring static methods.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;using-the-clojure-runtime&quot;&gt;Using the Clojure Runtime&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Using &lt;code&gt;gen-class&lt;/code&gt; imposes certain limitations on calling Clojure code from Java. One of those are functions which make use of Clojure &lt;a href=&quot;http://clojure.org/reference/special_forms#binding-forms&quot;&gt;parameter destructuring&lt;/a&gt;. To invoke those functions you have to use the Clojure runtime.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;java&quot;&gt;&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;// The Clojure &amp;#39;require&amp;#39; function from the &amp;#39;clojure.core&amp;#39; namespace.&lt;/span&gt;
+Var require &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; RT&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;var&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;clojure.core&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;,&lt;/span&gt; &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;require&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;// Your namespace&lt;/span&gt;
+Symbol namespace &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; Symbol&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;intern&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;DESIRED.NAMESPACE.HERE&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;// Your function&lt;/span&gt;
+Var function &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; RT&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;var&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;DESIRED.NAMESPACE.HERE&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;,&lt;/span&gt; &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;DESIRED-FUNCTION&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;// The required keyword for the above function&lt;/span&gt;
+Keyword keyword &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; Keyword&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;intern&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;REQUIRED-KEYWORD&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;// Require/Import your namespace&lt;/span&gt;
+require&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;invoke&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;namespace&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;// Invoke your function with the given keyword and its value&lt;/span&gt;
+Object result &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; function&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;invoke&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;keyword&lt;span style=&quot;color: #666666&quot;&gt;,&lt;/span&gt; VALUE&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The desired namespace has to be on the classpath for this to work. Alternatively it is possible to load an entire Clojure script, as shown in the following example:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;java&quot;&gt;RT&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;loadResourceScript&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;DESIRED/NAMESPACE/HERE.clj&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;
+RT&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;var&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;DESIRED.NAMESPACE.HERE&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;,&lt;/span&gt; &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;DESIRED-FUNCTION&amp;quot;&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;).&lt;/span&gt;&lt;span style=&quot;color: #7D9029&quot;&gt;invoke&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;(&lt;/span&gt;PARAMETER&lt;span style=&quot;color: #666666&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;On a big project it is properly wise to move Java&amp;#8594;Clojure interop code into helper classes/methods. Look &lt;a href=&quot;https://github.com/mikera/clojure-utils/blob/master/src/main/java/mikera/cljutils/Clojure.java&quot;&gt;here&lt;/a&gt; for an example.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/clojure-java-interoperability</link>
+      <guid>https://seb.hoß.de/clojure-java-interoperability</guid>
+      <pubDate>Sun, 15 Jan 2017 00:00:00 +0000</pubDate>
+      
+        <category>Clojure</category>
+      
+        <category>Java</category>
+      
+        <category>Interoperability</category>
+      
+    </item>
+    
+    <item>
+      <title>Eclipse &amp; sharing settings with Maven, CI servers and your team</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Most developers will be quick to point out that sharing IDE specific configuration in the source repository of a project is not a good idea. It is way to easy for OS/host/developer specific configuration to slip in and ruin the fun for everyone else. Instead developers have to set up their development environment once and import the untainted code into their own mess.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Development environments become a mess quite easily on their own in case developers do not stay vigilant and constantly keep an eye on how a project should be build and how they are currently doing it. Any successful solution needs to be both easy to use and easy to maintain. The simplest solution is to commit your settings along with your project into your version control system (VCS). For Eclipse just declare that your settings are project specific and add the &lt;code&gt;.settings/&lt;/code&gt; folder to VCS&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_1&quot; class=&quot;footnote&quot; href=&quot;#_footnote_1&quot; title=&quot;View footnote.&quot;&gt;1&lt;/a&gt;]&lt;/sup&gt;. Similar, IntelliJ users can add the &lt;code&gt;.idea&lt;/code&gt; folder to VCS&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_2&quot; class=&quot;footnote&quot; href=&quot;#_footnote_2&quot; title=&quot;View footnote.&quot;&gt;2&lt;/a&gt;]&lt;/sup&gt; or use a settings repository&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_3&quot; class=&quot;footnote&quot; href=&quot;#_footnote_3&quot; title=&quot;View footnote.&quot;&gt;3&lt;/a&gt;]&lt;/sup&gt;. However be aware that this only allows to share settings between developers working on the same source code. Sharing settings across projects is not directly support with that solution. Maven&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_4&quot; class=&quot;footnote&quot; href=&quot;#_footnote_4&quot; title=&quot;View footnote.&quot;&gt;4&lt;/a&gt;]&lt;/sup&gt; can fix that for us!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The rough idea is this:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;Create a single new project which contains your settings&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use the maven-remote-resources-plugin&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_5&quot; class=&quot;footnote&quot; href=&quot;#_footnote_5&quot; title=&quot;View footnote.&quot;&gt;5&lt;/a&gt;]&lt;/sup&gt; to &lt;code&gt;bundle&lt;/code&gt; your settings in an Maven artifact.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use the same plugin again to &lt;code&gt;process&lt;/code&gt; (unpack) the newly created bundle from above in every project that wants to use the same settings.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Configure Maven plugins to use the processed settings in your build.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;creating-a-settings-bundle&quot;&gt;Creating a settings bundle&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The settings bundle contains all the settings that you want to share. Create a simple Maven project and make sure it includes the following plugin configuration:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
+  &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
+    ...
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/ --&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.maven.plugins&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;maven-remote-resources-plugin&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${version.m-remote-resources-p}&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;executions&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;execution&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;goals&amp;gt;&lt;/span&gt;
+            &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/bundle-mojo.html --&amp;gt;&lt;/span&gt;
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;goal&amp;gt;&lt;/span&gt;bundle&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/goal&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/goals&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/execution&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/executions&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+       &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;includes&amp;gt;&lt;/span&gt;
+         &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/bundle-mojo.html#includes --&amp;gt;&lt;/span&gt;
+         &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;include&amp;gt;&lt;/span&gt;**/*.prefs&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/include&amp;gt;&lt;/span&gt;
+       &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/includes&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+    ...
+  &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Replace &lt;code&gt;${version.m-remote-resources-p}&lt;/code&gt; with the &lt;a href=&quot;http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.maven.plugins%22%20a%3A%22maven-remote-resources-plugin%22&quot;&gt;latest version&lt;/a&gt;. The plugin will look for all files matching the &lt;code&gt;*.prefs&lt;/code&gt; pattern in all subfolders underneath &lt;code&gt;src/main/resources&lt;/code&gt;. In case you want to share more than just Eclipse&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_6&quot; class=&quot;footnote&quot; href=&quot;#_footnote_6&quot; title=&quot;View footnote.&quot;&gt;6&lt;/a&gt;]&lt;/sup&gt; settings files, which end in &lt;code&gt;.prefs&lt;/code&gt;, adapt the list of inclusions. The easiest way to create those files is to use Eclipse itself and configure it however you like it to be. Once you are done, use the &lt;code&gt;File &amp;gt; Export.. &amp;gt; General &amp;gt; Preferences&lt;/code&gt; wizard to export your settings and place the files into your newly created Maven artifact. The final result should look like this:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;project/
+├── pom.xml
+└── src/
+    └── main/
+        └── resources/
+            ├── org.eclipse.core.resources.prefs
+            ├── org.eclipse.jdt.launching.prefs
+            ├── org.eclipse.jdt.launching.prefs
+            └── org.eclipse.jdt.ui.prefs&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+You can find my settings on &lt;a href=&quot;https://github.com/sebhoss/jdt-settings&quot;&gt;GitHub&lt;/a&gt; and &lt;a href=&quot;http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.sebhoss%22%20a%3A%22jdt-settings%22&quot;&gt;Maven Central&lt;/a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;consuming-a-settings-bundle&quot;&gt;Consuming a settings bundle&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In order to use the bundled settings, declare the maven-remote-resources-plugin in the consuming project like this:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
+  &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
+    ...
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/ --&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.maven.plugins&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;maven-remote-resources-plugin&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${version.m-remote-resources-p}&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;executions&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;execution&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;id&amp;gt;&lt;/span&gt;jdt-settings&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/id&amp;gt;&lt;/span&gt;
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;goals&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html --&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;goal&amp;gt;&lt;/span&gt;process&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/goal&amp;gt;&lt;/span&gt;
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/goals&amp;gt;&lt;/span&gt;
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#attachToMain --&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;attachToMain&amp;gt;&lt;/span&gt;false&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/attachToMain&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#attachToTest --&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;attachToTest&amp;gt;&lt;/span&gt;false&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/attachToTest&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#resourceBundles --&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;resourceBundles&amp;gt;&lt;/span&gt;
+                &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;resourceBundle&amp;gt;&lt;/span&gt;${YOUR_GROUP_ID}:${YOUR_ARTIFACT_ID}:${YOUR_VERSION}&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/resourceBundle&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/resourceBundles&amp;gt;&lt;/span&gt;
+              &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-remote-resources-plugin/process-mojo.html#outputDirectory --&amp;gt;&lt;/span&gt;
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;outputDirectory&amp;gt;&lt;/span&gt;${project.basedir}/.settings&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/outputDirectory&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/execution&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/executions&amp;gt;&lt;/span&gt;
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+    ...
+  &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Couple of things are happening here:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;We do not attach the settings to any of the consumers artifacts. The final artifact of a project which is using your settings bundle will not include those settings. We achieve that by setting both &lt;code&gt;attachToMain&lt;/code&gt; and &lt;code&gt;attachToTest&lt;/code&gt; to &lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;We specify the remote resource to use with &lt;code&gt;${YOUR_GROUP_ID}:${YOUR_ARTIFACT_ID}:${YOUR_VERSION}&lt;/code&gt;. Replace those values appropriately. They have to match the coordinates declared by your settings bundle.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In order for Eclipse to pick up those settings, we specify the &lt;code&gt;outputDirectory&lt;/code&gt; to put the files from your bundle into the &lt;code&gt;.settings/&lt;/code&gt; folder of the consuming project. Eclipse will recognize these files and use them as project specific configuration. This approach does not change the workspace settings of Eclipse in any way.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Once this configuration is in place, team members just have to run &lt;code&gt;mvn generate-resources&lt;/code&gt; to get all the settings in place. Since the &lt;code&gt;generate-resources&lt;/code&gt; phase happens very early in the Maven lifecycle the same configuration will make sure that any future updates to your settings will end up quickly on everyones computer. The often used &lt;code&gt;mvn clean install&lt;/code&gt; will trigger this as well and thus not only verifies that you can build your project using Maven, it updates your Eclipse settings at the same time, too!&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;sharing-compiler-settings&quot;&gt;Sharing compiler settings&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;OK so we can put Eclipse settings into an Maven artifact, push it into a repository, reference it from other projects and unpack the artifact again - but what about CI servers like Travis-CI&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_7&quot; class=&quot;footnote&quot; href=&quot;#_footnote_7&quot; title=&quot;View footnote.&quot;&gt;7&lt;/a&gt;]&lt;/sup&gt;? Users of NetBeans&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_8&quot; class=&quot;footnote&quot; href=&quot;#_footnote_8&quot; title=&quot;View footnote.&quot;&gt;8&lt;/a&gt;]&lt;/sup&gt; or IntelliJ&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_9&quot; class=&quot;footnote&quot; href=&quot;#_footnote_9&quot; title=&quot;View footnote.&quot;&gt;9&lt;/a&gt;]&lt;/sup&gt;? These tools don&amp;#8217;t understand Eclipse settings and vice versa. It&amp;#8217;s kinda sad to see that after all these years of development editors still seem to prefer vendor lock-in over open collaboration. There is hope for solutions like EditorConfig&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_10&quot; class=&quot;footnote&quot; href=&quot;#_footnote_10&quot; title=&quot;View footnote.&quot;&gt;10&lt;/a&gt;]&lt;/sup&gt; however they are still lacking in the advanced feature department.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;That said, we can already share compiler settings between Eclipse and Maven quite easily. CI servers usually kick off Maven, so we got them covered as well. In order to do that, configure the maven-compiler-plugin&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_11&quot; class=&quot;footnote&quot; href=&quot;#_footnote_11&quot; title=&quot;View footnote.&quot;&gt;11&lt;/a&gt;]&lt;/sup&gt; like this:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
+  &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
+    ...
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;plugin&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-compiler-plugin/ --&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.maven.plugins&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;maven-compiler-plugin&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${version.m-compiler-p}&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#compilerId --&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;compilerId&amp;gt;&lt;/span&gt;jdt&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/compilerId&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html#compilerArguments --&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;compilerArguments&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://wiki.eclipse.org/Tycho/FAQ#How_to_configure_warning.2Ferror_settings_of_the_OSGi_compiler.3F --&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;properties&amp;gt;&lt;/span&gt;${project.basedir}/.settings/org.eclipse.jdt.core.prefs&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/properties&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/compilerArguments&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- This dependency provides the implementation of compiler &amp;quot;jdt&amp;quot; --&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;&amp;lt;!-- https://eclipse.org/tycho/sitedocs/ --&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.eclipse.tycho&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;tycho-compiler-jdt&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
+          &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;${version.tycho-compiler-jdt}&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
+      &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/plugin&amp;gt;&lt;/span&gt;
+    ...
+  &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/plugins&amp;gt;&lt;/span&gt;
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;&amp;lt;/build&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Again replace &lt;a href=&quot;http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.apache.maven.plugins%22%20a%3A%22maven-compiler-plugin%22&quot;&gt;&lt;code&gt;${version.m-compiler-p}&lt;/code&gt;&lt;/a&gt; and &lt;a href=&quot;http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.eclipse.tycho%22%20a%3A%22tycho-compiler-jdt%22&quot;&gt;&lt;code&gt;${version.tycho-compiler-jdt}&lt;/code&gt;&lt;/a&gt; with their latest version. Two interesting pieces are happening here:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;We set the &lt;code&gt;compilerId&lt;/code&gt; property to the value &lt;code&gt;jdt&lt;/code&gt; which instructs Maven to use the JDT compiler&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_12&quot; class=&quot;footnote&quot; href=&quot;#_footnote_12&quot; title=&quot;View footnote.&quot;&gt;12&lt;/a&gt;]&lt;/sup&gt; to compile your sources. Additionally we add a dependency to the plugin which provides the compiler called &lt;code&gt;jdt&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;We specify the &lt;code&gt;properties&lt;/code&gt; compiler argument to pick up the project specific compiler settings from your &lt;code&gt;.settings/&lt;/code&gt; folder. That&amp;#8217;s the same folder we used above as an output folder for the maven-remote-resources-plugin.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+There is another plugin called the formatter-maven-plugin&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_13&quot; class=&quot;footnote&quot; href=&quot;#_footnote_13&quot; title=&quot;View footnote.&quot;&gt;13&lt;/a&gt;]&lt;/sup&gt; which might allow the same for formatter settings in the future.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;maintenance&quot;&gt;Maintenance&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Update the settings bundle by opening pull/merge requests and let the team discuss those changes. Once merged, push a &lt;code&gt;-SNAPSHOT&lt;/code&gt; as soon as possible for wider testing. If all is well, perform a release and update the single &lt;code&gt;${YOUR_VERSION}&lt;/code&gt; property in the above example.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock tip&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-tip&quot; title=&quot;Tip&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+Employ a company wide parent POM in case you don&amp;#8217;t want to specify the same version and configuration over and over again. Take a look at my &lt;a href=&quot;https://github.com/sebhoss/java-parent&quot;&gt;Java parent&lt;/a&gt; for an example.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+&lt;a href=&quot;https://projects.eclipse.org/projects/tools.oomph&quot;&gt;Eclipse Oomph&lt;/a&gt; can not only help with sharing settings, it applies the same idea to the Eclipse IDE and all its plugins as well and even adds &lt;code&gt;git clone&lt;/code&gt; operations on top of it.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+Instead of sharing settings between different computers, one can employ web based solutions like &lt;a href=&quot;https://eclipse.org/che/&quot;&gt;Eclipse Che&lt;/a&gt; to simplify setup, onboarding, maintenance.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_1&quot;&gt;
+&lt;a href=&quot;#_footnoteref_1&quot;&gt;1&lt;/a&gt;. &lt;a href=&quot;http://stackoverflow.com/a/9595503/2014864&quot; class=&quot;bare&quot;&gt;http://stackoverflow.com/a/9595503/2014864&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_2&quot;&gt;
+&lt;a href=&quot;#_footnoteref_2&quot;&gt;2&lt;/a&gt;. &lt;a href=&quot;https://www.jetbrains.com/help/idea/2016.1/synchronizing-and-sharing-settings.html#d1516111e270&quot; class=&quot;bare&quot;&gt;https://www.jetbrains.com/help/idea/2016.1/synchronizing-and-sharing-settings.html#d1516111e270&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_3&quot;&gt;
+&lt;a href=&quot;#_footnoteref_3&quot;&gt;3&lt;/a&gt;. &lt;a href=&quot;https://www.jetbrains.com/help/idea/2016.3/sharing-your-ide-settings.html&quot; class=&quot;bare&quot;&gt;https://www.jetbrains.com/help/idea/2016.3/sharing-your-ide-settings.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_4&quot;&gt;
+&lt;a href=&quot;#_footnoteref_4&quot;&gt;4&lt;/a&gt;. &lt;a href=&quot;https://maven.apache.org/&quot; class=&quot;bare&quot;&gt;https://maven.apache.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_5&quot;&gt;
+&lt;a href=&quot;#_footnoteref_5&quot;&gt;5&lt;/a&gt;. &lt;a href=&quot;https://maven.apache.org/plugins/maven-remote-resources-plugin/&quot; class=&quot;bare&quot;&gt;https://maven.apache.org/plugins/maven-remote-resources-plugin/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_6&quot;&gt;
+&lt;a href=&quot;#_footnoteref_6&quot;&gt;6&lt;/a&gt;. &lt;a href=&quot;https://www.eclipse.org/&quot; class=&quot;bare&quot;&gt;https://www.eclipse.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_7&quot;&gt;
+&lt;a href=&quot;#_footnoteref_7&quot;&gt;7&lt;/a&gt;. &lt;a href=&quot;https://travis-ci.org/&quot; class=&quot;bare&quot;&gt;https://travis-ci.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_8&quot;&gt;
+&lt;a href=&quot;#_footnoteref_8&quot;&gt;8&lt;/a&gt;. &lt;a href=&quot;https://netbeans.org/&quot; class=&quot;bare&quot;&gt;https://netbeans.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_9&quot;&gt;
+&lt;a href=&quot;#_footnoteref_9&quot;&gt;9&lt;/a&gt;. &lt;a href=&quot;https://www.jetbrains.com/idea/&quot; class=&quot;bare&quot;&gt;https://www.jetbrains.com/idea/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_10&quot;&gt;
+&lt;a href=&quot;#_footnoteref_10&quot;&gt;10&lt;/a&gt;. &lt;a href=&quot;http://editorconfig.org/&quot; class=&quot;bare&quot;&gt;http://editorconfig.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_11&quot;&gt;
+&lt;a href=&quot;#_footnoteref_11&quot;&gt;11&lt;/a&gt;. &lt;a href=&quot;https://maven.apache.org/plugins/maven-compiler-plugin/&quot; class=&quot;bare&quot;&gt;https://maven.apache.org/plugins/maven-compiler-plugin/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_12&quot;&gt;
+&lt;a href=&quot;#_footnoteref_12&quot;&gt;12&lt;/a&gt;. &lt;a href=&quot;https://www.eclipse.org/jdt/core/&quot; class=&quot;bare&quot;&gt;https://www.eclipse.org/jdt/core/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_13&quot;&gt;
+&lt;a href=&quot;#_footnoteref_13&quot;&gt;13&lt;/a&gt;. &lt;a href=&quot;https://github.com/revelc/formatter-maven-plugin&quot; class=&quot;bare&quot;&gt;https://github.com/revelc/formatter-maven-plugin&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/eclipse-settings-shared</link>
+      <guid>https://seb.hoß.de/eclipse-settings-shared</guid>
+      <pubDate>Mon, 26 Dec 2016 00:00:00 +0000</pubDate>
+      
+        <category>Eclipse</category>
+      
+        <category>settings</category>
+      
+        <category>Maven</category>
+      
+        <category>CI</category>
+      
+    </item>
+    
+    <item>
+      <title>Git Cheat Sheet</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The following is a reference of Git commands that I&amp;#8217;m using every now and then. For a complete guide take a look at the &lt;a href=&quot;https://git-scm.com/doc&quot;&gt;online documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;suppress-tracking&quot;&gt;Suppress tracking&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;A text file named .gitignore suppresses accidental versioning of files and paths matching the specified patterns. GitHub can &lt;a href=&quot;https://help.github.com/articles/ignoring-files/&quot;&gt;help you&lt;/a&gt; set up your &lt;code&gt;.gitignore&lt;/code&gt; files.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;/.gitignore&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;*.log
+build/
+temp-*&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;dlist&quot;&gt;
+&lt;dl&gt;
+&lt;dt class=&quot;hdlist1&quot;&gt;&lt;code&gt;git ls-files –other –ignored –exclude-standard&lt;/code&gt;&lt;/dt&gt;
+&lt;dd&gt;
+&lt;p&gt;Lists all ignored files in this project.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;mirror-changes&quot;&gt;Mirror changes&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;git remote set-url origin --push --add git@example.com/project.git
+git remote set-url origin --push --add git@another.com/project.git&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Adds two new remote repositories as targets for &lt;code&gt;git push&lt;/code&gt;. Every call of &lt;code&gt;git push&lt;/code&gt; will push changes into both specified repositories.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;bisect-changes&quot;&gt;Bisect changes&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;dlist&quot;&gt;
+&lt;dl&gt;
+&lt;dt class=&quot;hdlist1&quot;&gt;&lt;code&gt;git bisect start --term-good=unfixed --term-bad=fixed&lt;/code&gt; &lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_1&quot; class=&quot;footnote&quot; href=&quot;#_footnote_1&quot; title=&quot;View footnote.&quot;&gt;1&lt;/a&gt;]&lt;/sup&gt;&lt;/dt&gt;
+&lt;dd&gt;
+&lt;p&gt;Use &lt;code&gt;fixed&lt;/code&gt; and &lt;code&gt;unfixed&lt;/code&gt; instead of &lt;code&gt;good&lt;/code&gt; and &lt;code&gt;bad&lt;/code&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;using-host-aliases&quot;&gt;Using host aliases&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;You can configure host aliases by updating your &lt;code&gt;~/.gitconfig&lt;/code&gt; like this:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;[url &quot;git@github&quot;]
+    insteadOf = github&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Instead of cloning from &lt;code&gt;git@github.com:ORGANIZATION/PROJECT.git&lt;/code&gt;, you can use &lt;code&gt;github:ORGANIZATION/PROJECT.git&lt;/code&gt;. Specify which key is used by updating your &lt;code&gt;~/.ssh/config&lt;/code&gt; like this:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;Host github
+  Hostname github.com
+  User git
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/key-for-github&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Git will resolve &lt;code&gt;github&lt;/code&gt; into &lt;code&gt;git@github&lt;/code&gt; and your SSH client will resolve &lt;code&gt;github&lt;/code&gt; as &lt;code&gt;github.com&lt;/code&gt; and use the specified key. The same approach can be used to configure different keys on a per project or organization basis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_1&quot;&gt;
+&lt;a href=&quot;#_footnoteref_1&quot;&gt;1&lt;/a&gt;. &lt;a href=&quot;https://git-scm.com/docs/git-bisect&quot; class=&quot;bare&quot;&gt;https://git-scm.com/docs/git-bisect&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/git-cheat-sheet</link>
+      <guid>https://seb.hoß.de/git-cheat-sheet</guid>
+      <pubDate>Sat, 09 Jul 2016 00:00:00 +0000</pubDate>
+      
+        <category>Git</category>
+      
+    </item>
+    
+    <item>
+      <title>Resumé</title>
+      <description>&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Now a clean coder&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_1&quot; class=&quot;footnote&quot; href=&quot;#_footnote_1&quot; title=&quot;View footnote.&quot;&gt;1&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Worked at a big startup&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_2&quot; class=&quot;footnote&quot; href=&quot;#_footnote_2&quot; title=&quot;View footnote.&quot;&gt;2&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Worked at a small startup&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_3&quot; class=&quot;footnote&quot; href=&quot;#_footnote_3&quot; title=&quot;View footnote.&quot;&gt;3&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Founded my own startup&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Worked as consultant&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_4&quot; class=&quot;footnote&quot; href=&quot;#_footnote_4&quot; title=&quot;View footnote.&quot;&gt;4&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Finished university&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_5&quot; class=&quot;footnote&quot; href=&quot;#_footnote_5&quot; title=&quot;View footnote.&quot;&gt;5&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Finished school&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_6&quot; class=&quot;footnote&quot; href=&quot;#_footnote_6&quot; title=&quot;View footnote.&quot;&gt;6&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Subscribed to MSDN&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Got my first own computer&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Decided to become a software developer at the age of three&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Born 1983&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_1&quot;&gt;
+&lt;a href=&quot;#_footnoteref_1&quot;&gt;1&lt;/a&gt;. &lt;a href=&quot;http://cronn.de/&quot; class=&quot;bare&quot;&gt;http://cronn.de/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_2&quot;&gt;
+&lt;a href=&quot;#_footnoteref_2&quot;&gt;2&lt;/a&gt;. &lt;a href=&quot;http://www.talend.com/&quot; class=&quot;bare&quot;&gt;http://www.talend.com/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_3&quot;&gt;
+&lt;a href=&quot;#_footnoteref_3&quot;&gt;3&lt;/a&gt;. &lt;a href=&quot;http://www.ysura.com/&quot; class=&quot;bare&quot;&gt;http://www.ysura.com/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_4&quot;&gt;
+&lt;a href=&quot;#_footnoteref_4&quot;&gt;4&lt;/a&gt;. &lt;a href=&quot;http://www.viadee.de/&quot; class=&quot;bare&quot;&gt;http://www.viadee.de/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_5&quot;&gt;
+&lt;a href=&quot;#_footnoteref_5&quot;&gt;5&lt;/a&gt;. &lt;a href=&quot;https://www.wi.uni-muenster.de/&quot; class=&quot;bare&quot;&gt;https://www.wi.uni-muenster.de/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_6&quot;&gt;
+&lt;a href=&quot;#_footnoteref_6&quot;&gt;6&lt;/a&gt;. &lt;a href=&quot;http://www.mcg-neuss.de/&quot; class=&quot;bare&quot;&gt;http://www.mcg-neuss.de/&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/resume</link>
+      <guid>https://seb.hoß.de/resume</guid>
+      <pubDate>Sun, 03 Jul 2016 00:00:00 +0000</pubDate>
+      
+        <category>curriculum vitae</category>
+      
+        <category>resumé</category>
+      
+    </item>
+    
+    <item>
+      <title>SSH &amp; Multiplexing</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In order to run a local development version of some software against a remotely available database or similar infrastructure, consider using SSH multiplexing&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_1&quot; class=&quot;footnote&quot; href=&quot;#_footnote_1&quot; title=&quot;View footnote.&quot;&gt;1&lt;/a&gt;]&lt;/sup&gt; and a &lt;code&gt;Makefile&lt;/code&gt;.&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_2&quot; class=&quot;footnote&quot; href=&quot;#_footnote_2&quot; title=&quot;View footnote.&quot;&gt;2&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The following example first opens a SSH tunnel to a server called &#39;dev-server-01&#39; using a control socket, runs a piece of code (Spring based microservice&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_3&quot; class=&quot;footnote&quot; href=&quot;#_footnote_3&quot; title=&quot;View footnote.&quot;&gt;3&lt;/a&gt;]&lt;/sup&gt;) against it and finally closes the SSH tunnel once the developer has stopped code execution.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;run-against-dev-server-01:
+  ssh -f -N -M -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01
+  -mvn spring-boot:run -Dspring.profiles.active=development,local-with-dev-server-01
+  ssh -O &quot;exit&quot; -S ~/.ssh/controlmasters/run-against-dev-server-01 dev-server-01&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;-f&lt;/code&gt; to put SSH in the background &amp;#8594; required if you want keep using your terminal, like on a CI server.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;-N&lt;/code&gt; to tell SSH not to run anything once the connection is open. Since we only open the connection in order to tunnel ports, we need this to work around the error SSH throws once it connects (complaining that no command was specified to run).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;-M&lt;/code&gt; to tell SHH to open a multiplexed connection controlled by a socket specified with &lt;code&gt;-S&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;-O &quot;exit&quot;&lt;/code&gt; tells SSH to exit the master connection controlled by the specified control socket.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In order to run all this, simple execute &lt;code&gt;make run-against-dev-server-01&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_1&quot;&gt;
+&lt;a href=&quot;#_footnoteref_1&quot;&gt;1&lt;/a&gt;. &lt;a href=&quot;https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing&quot; class=&quot;bare&quot;&gt;https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Multiplexing&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_2&quot;&gt;
+&lt;a href=&quot;#_footnoteref_2&quot;&gt;2&lt;/a&gt;. &lt;a href=&quot;https://en.wikipedia.org/wiki/Makefile&quot; class=&quot;bare&quot;&gt;https://en.wikipedia.org/wiki/Makefile&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_3&quot;&gt;
+&lt;a href=&quot;#_footnoteref_3&quot;&gt;3&lt;/a&gt;. &lt;a href=&quot;http://projects.spring.io/spring-boot/&quot; class=&quot;bare&quot;&gt;http://projects.spring.io/spring-boot/&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/ssh-multiplexing</link>
+      <guid>https://seb.hoß.de/ssh-multiplexing</guid>
+      <pubDate>Sat, 02 Jul 2016 00:00:00 +0000</pubDate>
+      
+        <category>SSH</category>
+      
+        <category>Multiplexing</category>
+      
+    </item>
+    
+    <item>
+      <title>Axon Framework &amp; static event upcasting</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In order to statically upcast events in an Axon&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_1&quot; class=&quot;footnote&quot; href=&quot;#_footnote_1&quot; title=&quot;View footnote.&quot;&gt;1&lt;/a&gt;]&lt;/sup&gt; event store, I&amp;#8217;ve used a variation of the following script in the past:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# coding: utf-8&lt;/span&gt;
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;from&lt;/span&gt; &lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;pymongo&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;import&lt;/span&gt; MongoClient
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;import&lt;/span&gt; &lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;semantic_version&lt;/span&gt; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;as&lt;/span&gt; &lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;SEMVER&lt;/span&gt;
+
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# Required steps for installation/usage:&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# 1.) sudo pip install semantic_version&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# Static-Upcaster&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;#&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# Iterates over the event store and selects all events that match the given&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# &amp;#39;event_type&amp;#39; and are below the given &amp;#39;target_version&amp;#39;. The supplied&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# &amp;#39;upcast&amp;#39; function is allowed to change the event itself.&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;#&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# Use the &amp;#39;dry_run&amp;#39; and &amp;#39;dry_run_max&amp;#39; parameters to try things out first&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# Set &amp;#39;event_type&amp;#39; to None in order to iterate over all events&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;class&lt;/span&gt; &lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;StaticUpcaster&lt;/span&gt;:
+    _db &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+    _event_to_upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+    _versions_to_upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+    _upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+    _dry_run &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+    _dry_run_max &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;def&lt;/span&gt; &lt;span style=&quot;color: #0000FF&quot;&gt;__init__&lt;/span&gt;(&lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;, db, event_type, target_version, upcast, dry_run &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;False&lt;/span&gt;, dry_run_max &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;-1&lt;/span&gt;):
+        &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_db &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; db
+        &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_event_to_upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; event_type
+        &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_versions_to_upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; SEMVER&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;Spec(&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;&amp;lt;&lt;/span&gt;&lt;span style=&quot;color: #BB6688; font-weight: bold&quot;&gt;%s&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;%&lt;/span&gt; target_version)
+        &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; upcast
+        &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_dry_run &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; dry_run
+        &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_dry_run_max &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; dry_run_max
+
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;def&lt;/span&gt; &lt;span style=&quot;color: #0000FF&quot;&gt;upcast&lt;/span&gt;(&lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;):
+        cursor &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;if&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_event_to_upcast:
+            cursor &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_db&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;domainEvents&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;find({&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;events.payloadType&amp;quot;&lt;/span&gt;: &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_event_to_upcast})
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;else&lt;/span&gt;:
+            cursor &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_db&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;domainEvents&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;find()
+        counter &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;1&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;for&lt;/span&gt; domain_event &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;in&lt;/span&gt; cursor:
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;if&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_dry_run &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;and&lt;/span&gt; counter &lt;span style=&quot;color: #666666&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_dry_run_max &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;and&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_dry_run_max &lt;span style=&quot;color: #666666&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;0&lt;/span&gt;:
+                &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;break&lt;/span&gt;
+            identity &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; domain_event[&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;_id&amp;quot;&lt;/span&gt;]
+            updated_events &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; []
+            requires_update &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;False&lt;/span&gt;
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;for&lt;/span&gt; event &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;in&lt;/span&gt; domain_event[&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;events&amp;quot;&lt;/span&gt;]:
+                &lt;span style=&quot;color: #008000&quot;&gt;type&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; event[&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;payloadType&amp;quot;&lt;/span&gt;]
+                revision &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; event[&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;payloadRevision&amp;quot;&lt;/span&gt;]
+                version &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+                &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;if&lt;/span&gt; revision &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;is&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;:
+                  version &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; SEMVER&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;Version(&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;0.0.0&amp;quot;&lt;/span&gt;, partial &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;True&lt;/span&gt;)
+                &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;else&lt;/span&gt;:
+                  version &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; SEMVER&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;Version(revision, partial &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;True&lt;/span&gt;)
+                &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;if&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_event_to_upcast &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;is&lt;/span&gt; &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;not&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt; &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;and&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_event_to_upcast &lt;span style=&quot;color: #666666&quot;&gt;==&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;type&lt;/span&gt; &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;and&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_versions_to_upcast&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;match(version):
+                    upcasted_event &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_upcast(event)
+                    updated_events&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;append(upcasted_event)
+                    requires_update &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;True&lt;/span&gt;
+                    counter &lt;span style=&quot;color: #666666&quot;&gt;+=&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;1&lt;/span&gt;
+                &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;elif&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_event_to_upcast &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;is&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt; &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;and&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_versions_to_upcast&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;match(version):
+                    upcasted_event &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_upcast(event)
+                    updated_events&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;append(upcasted_event)
+                    requires_update &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;True&lt;/span&gt;
+                    counter &lt;span style=&quot;color: #666666&quot;&gt;+=&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;1&lt;/span&gt;
+                &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;else&lt;/span&gt;:
+                    updated_events&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;append(event)
+            &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;if&lt;/span&gt; requires_update &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;and&lt;/span&gt; &lt;span style=&quot;color: #AA22FF; font-weight: bold&quot;&gt;not&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_dry_run:
+                &lt;span style=&quot;color: #008000&quot;&gt;self&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;_db&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;domainEvents&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;update({&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;_id&amp;quot;&lt;/span&gt;: identity}, {&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;$set&amp;quot;&lt;/span&gt;: {&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;events&amp;quot;&lt;/span&gt;: updated_events}})
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# UPCASTER SETTINGS&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;#&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# Change the following lines while keeping the rest as it is&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# The event type to upcast; Validate against the &amp;#39;payloadType&amp;#39; property of your&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# domain events.&lt;/span&gt;
+event_to_upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;fully.qualified.class.name&amp;quot;&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# The target version to set. All events below that version will be upcasted and&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# will receive this new version number.&lt;/span&gt;
+target_version &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;1.2.3&amp;quot;&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# The function used for upcasting - change accordingly&lt;/span&gt;
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;def&lt;/span&gt; &lt;span style=&quot;color: #0000FF&quot;&gt;upcasting_function&lt;/span&gt;(event):
+    &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# change event here&lt;/span&gt;
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;return&lt;/span&gt; event
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# create upcaster instance&lt;/span&gt;
+upcaster &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; StaticUpcaster(
+    db &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; MongoClient()&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;my_mongo_database
+    ,event_type &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;None&lt;/span&gt;
+    ,target_version &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; target_version
+    ,upcast &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; upcasting_function
+    ,dry_run &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #008000&quot;&gt;True&lt;/span&gt;
+    ,dry_run_max &lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;5&lt;/span&gt;
+    )
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;################################################################################&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# upcast all matching events permanently, or use &amp;#39;dry_run = True&amp;#39;&lt;/span&gt;
+upcaster&lt;span style=&quot;color: #666666&quot;&gt;.&lt;/span&gt;upcast()&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_1&quot;&gt;
+&lt;a href=&quot;#_footnoteref_1&quot;&gt;1&lt;/a&gt;. &lt;a href=&quot;http://www.axonframework.org/&quot; class=&quot;bare&quot;&gt;http://www.axonframework.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/static-axon-event-upcasting</link>
+      <guid>https://seb.hoß.de/static-axon-event-upcasting</guid>
+      <pubDate>Fri, 01 Jul 2016 00:00:00 +0000</pubDate>
+      
+        <category>Axon</category>
+      
+        <category>Event Sourcing</category>
+      
+        <category>Upcasting</category>
+      
+    </item>
+    
+    <item>
+      <title>Software Licensing</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The Software Freedom Law Center&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_1&quot; class=&quot;footnote&quot; href=&quot;#_footnote_1&quot; title=&quot;View footnote.&quot;&gt;1&lt;/a&gt;]&lt;/sup&gt; defines the following common approaches to copyright handling in software projects:&lt;sup class=&quot;footnote&quot; id=&quot;_footnote_sflc-ci&quot;&gt;[&lt;a id=&quot;_footnoteref_2&quot; class=&quot;footnote&quot; href=&quot;#_footnote_2&quot; title=&quot;View footnote.&quot;&gt;2&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;per file handling&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;centralized&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;SFLC explains that no copyright information does not yield copyright. Thus no copyright header is preferred way to go since it minimizes maintenance work. No yearly updates have to be performed. Future contributors do not have to be added manually, your &lt;a href=&quot;/git-cheat-sheet&quot;&gt;version control system&lt;/a&gt; handles that way better than you anyway.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;FSF suggest to use CC0&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_3&quot; class=&quot;footnote&quot; href=&quot;#_footnote_3&quot; title=&quot;View footnote.&quot;&gt;3&lt;/a&gt;]&lt;/sup&gt;&lt;sup class=&quot;footnote&quot; id=&quot;_footnote_cc0&quot;&gt;[&lt;a id=&quot;_footnoteref_4&quot; class=&quot;footnote&quot; href=&quot;#_footnote_4&quot; title=&quot;View footnote.&quot;&gt;4&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;CC tells something about license headers for files.&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_5&quot; class=&quot;footnote&quot; href=&quot;#_footnote_5&quot; title=&quot;View footnote.&quot;&gt;5&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Atwood suggest to pick any license.&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_6&quot; class=&quot;footnote&quot; href=&quot;#_footnote_6&quot; title=&quot;View footnote.&quot;&gt;6&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;recommendation&quot;&gt;Recommendation&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Follow the suggesting of the FSF and pick the Creative Commons Zero license.&lt;sup class=&quot;footnoteref&quot;&gt;[&lt;a class=&quot;footnote&quot; href=&quot;#_footnote_4&quot; title=&quot;View footnote.&quot;&gt;4&lt;/a&gt;]&lt;/sup&gt;. Compared to similar licenses like the WTFPL&lt;sup class=&quot;footnote&quot; id=&quot;_footnote_wtfpl&quot;&gt;[&lt;a id=&quot;_footnoteref_7&quot; class=&quot;footnote&quot; href=&quot;#_footnote_7&quot; title=&quot;View footnote.&quot;&gt;7&lt;/a&gt;]&lt;/sup&gt; or UNLICENSE&lt;sup class=&quot;footnote&quot; id=&quot;_footnote_unlicense&quot;&gt;[&lt;a id=&quot;_footnoteref_8&quot; class=&quot;footnote&quot; href=&quot;#_footnote_8&quot; title=&quot;View footnote.&quot;&gt;8&lt;/a&gt;]&lt;/sup&gt; which are often critized for their lack of legal language, the CC0&amp;#8217;s only downside seems to be a missing OSI&lt;sup class=&quot;footnote&quot; id=&quot;_footnote_osi&quot;&gt;[&lt;a id=&quot;_footnoteref_9&quot; class=&quot;footnote&quot; href=&quot;#_footnote_9&quot; title=&quot;View footnote.&quot;&gt;9&lt;/a&gt;]&lt;/sup&gt; stamp of approval&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_10&quot; class=&quot;footnote&quot; href=&quot;#_footnote_10&quot; title=&quot;View footnote.&quot;&gt;10&lt;/a&gt;]&lt;/sup&gt;. The problem here is that the CC0 does not grant any (implicit) trademark or patent rights, thus placing users of your software in a position where they can legally use your software but are forced to pay royalties for using your patent implemented by that software.&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_11&quot; class=&quot;footnote&quot; href=&quot;#_footnote_11&quot; title=&quot;View footnote.&quot;&gt;11&lt;/a&gt;]&lt;/sup&gt; In order to solve that problem, place all your trademarks and patent rights under the same CC0 license. If that is not possible, use the CC0 in your advantage and simple fork the software and re-release it in whatever license, whatever user requires. Cut down on maintenance by using a multi-license approach.&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_12&quot; class=&quot;footnote&quot; href=&quot;#_footnote_12&quot; title=&quot;View footnote.&quot;&gt;12&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock warning&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-warning&quot; title=&quot;Warning&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+The CC0 license is probably not DFSG&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_13&quot; class=&quot;footnote&quot; href=&quot;#_footnote_13&quot; title=&quot;View footnote.&quot;&gt;13&lt;/a&gt;]&lt;/sup&gt; compatible because of the above issue. If you plan on release software into Debian repositories, use the mentioned multi-license approach. A short license like the ISC&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_14&quot; class=&quot;footnote&quot; href=&quot;#_footnote_14&quot; title=&quot;View footnote.&quot;&gt;14&lt;/a&gt;]&lt;/sup&gt; is DFSG compatible and won&amp;#8217;t clutter your &lt;code&gt;LICENSE&lt;/code&gt; file.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Apply the following setup to your project in order to use the CC0 license. The setup is intended to reduce ongoing maintenance work with regards to copyright information while still supporting multiple contributors.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;1)&lt;/strong&gt; Use the following header for all source files. Replace &lt;code&gt;$MY_PROJECT&lt;/code&gt; with the name of your project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;This file is part of $MY_PROJECT. It is subject to the license terms in the LICENSE file found in the top-level
+directory of this distribution and at http://creativecommons.org/publicdomain/zero/1.0/. No part of $MY_PROJECT,
+including this file, may be copied, modified, propagated, or distributed except according to the terms contained
+in the LICENSE file.&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;This header does not contain the typical copyright fragments, like the year of publication or the author. The SLFC&lt;sup class=&quot;footnoteref&quot;&gt;[&lt;a class=&quot;footnote&quot; href=&quot;#_footnote_2&quot; title=&quot;View footnote.&quot;&gt;2&lt;/a&gt;]&lt;/sup&gt; explains that missing copyright information does not void your copyright at all - thus it can be safely removed. Instead the file header simply redirects the reader to the LICENSE file in the root of the project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;2)&lt;/strong&gt; Add a file called &lt;code&gt;LICENSE&lt;/code&gt; in the root of your project which contains the CC0 &lt;a href=&quot;http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt&quot;&gt;legal code&lt;/a&gt; (&lt;a href=&quot;/assets/cc-zero-legalcode.txt&quot;&gt;copy&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Add any additional licenses to that same file if you follow a multi-license approach. Creative Commons suggest to call that file &lt;code&gt;COPYING&lt;/code&gt; in order to highlight why you should be interested in reading the file, however &lt;code&gt;LICENSE&lt;/code&gt; is more widely used and better supported by various tools.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;3)&lt;/strong&gt; Use the following &lt;a href=&quot;https://shields.io&quot;&gt;shields.io&lt;/a&gt; badge for your project to make it &lt;a href=&quot;http://i.imgur.com/41biB.jpg&quot;&gt;shiny&lt;/a&gt;:&lt;/p&gt;
+&lt;/div&gt;
+&lt;span class=&quot;image&quot;&gt;
+  &lt;a class=&quot;image&quot; href=&quot;http://creativecommons.org/publicdomain/zero/1.0/&quot;&gt;
+    &lt;img src=&quot;/images/license-cc zero-000000.svg&quot; alt=&quot;CC Zero&quot; class=&quot;centered&quot;&gt;
+  &lt;/a&gt;
+&lt;/span&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;# in asciidoc
+image:https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square[&quot;CC Zero&quot;, link=&quot;https://creativecommons.org/publicdomain/zero/1.0/&quot;]
+
+# in markdown
+![CC Zero](https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;4)&lt;/strong&gt; Place the following text at the bottom of your &lt;code&gt;README&lt;/code&gt;:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;To the extent possible under law, the author(s) have dedicated all copyright
+and related and neighboring rights to this software to the public domain
+worldwide. This software is distributed without any warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication along
+with this software. If not, see http://creativecommons.org/publicdomain/zero/1.0/.&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Not legally binding in any way, but widely used (and expected) in the software world. Usually placed in the last paragraph with its own (sub-)heading.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;5)&lt;/strong&gt; Create a folder called &lt;code&gt;AUTHORS&lt;/code&gt; and place a file called &lt;code&gt;WAIVER&lt;/code&gt; with the following content in it:&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_15&quot; class=&quot;footnote&quot; href=&quot;#_footnote_15&quot; title=&quot;View footnote.&quot;&gt;15&lt;/a&gt;]&lt;/sup&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;# Copyright waiver for &amp;lt;NAME_OF_PROJECT&amp;gt;
+
+I dedicate any and all copyright interest in this software to the
+public domain. I make this dedication for the benefit of the public at
+large and to the detriment of my heirs and successors. I intend this
+dedication to be an overt act of relinquishment in perpetuity of all
+present and future rights to this software under copyright law.
+
+To the best of my knowledge and belief, my contributions are either
+originally authored by me or are derived from prior works which I have
+verified are also in the public domain and are not subject to claims
+of copyright by other parties.
+
+To the best of my knowledge and belief, no individual, business,
+organization, government, or other entity has any copyright interest
+in my contributions, and I affirm that I will not make contributions
+that are otherwise encumbered.&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;6)&lt;/strong&gt; Finally sign the &lt;code&gt;WAIVER&lt;/code&gt;, commit it, and push everything together with your first contribution to a project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;shell&quot;&gt;$ # sign
+$ gpg2 --no-version --armor --sign AUTHORS/WAIVER --output AUTHORS/WAIVER-signed-by-USERNAME.asc
+
+$ # commit
+$ git add AUTHORS/WAIVER-signed-by-USERNAME.asc
+$ git commit -S AUTHORS/WAIVER-signed-by-USERNAME.asc&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The signed &lt;code&gt;WAIVER&lt;/code&gt; replaces other alternatives like contributor license agreements (CLAs). It works without requiring any other software, like a centralized registry of developers. Whenever any of the developers changes her keys, simply re-run the last step and add a new signed waiver. Don&amp;#8217;t overwrite the old one, instead prepend the year that the key was active/created or add the key ID.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;7)&lt;/strong&gt; Your done, free to do something else with your life now.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Future work will consist of adding the above header to each source file and verifying that GPG signatures are correct and match between signed waiver and signed commit. No yearly updates to your source files in order to keep headers in shape, no hassle in determining whether or not a single contribution is big enough to mention the contributor by name in the source file, nor anything else.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_1&quot;&gt;
+&lt;a href=&quot;#_footnoteref_1&quot;&gt;1&lt;/a&gt;. &lt;a href=&quot;https://www.softwarefreedom.org/&quot; class=&quot;bare&quot;&gt;https://www.softwarefreedom.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_2&quot;&gt;
+&lt;a href=&quot;#_footnoteref_2&quot;&gt;2&lt;/a&gt;. &lt;a href=&quot;https://www.softwarefreedom.org/resources/2012/ManagingCopyrightInformation.html&quot; class=&quot;bare&quot;&gt;https://www.softwarefreedom.org/resources/2012/ManagingCopyrightInformation.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_3&quot;&gt;
+&lt;a href=&quot;#_footnoteref_3&quot;&gt;3&lt;/a&gt;. &lt;a href=&quot;http://www.gnu.org/licenses/license-list.en.html#CC0&quot; class=&quot;bare&quot;&gt;http://www.gnu.org/licenses/license-list.en.html#CC0&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_4&quot;&gt;
+&lt;a href=&quot;#_footnoteref_4&quot;&gt;4&lt;/a&gt;. &lt;a href=&quot;http://creativecommons.org/publicdomain/zero/1.0/&quot; class=&quot;bare&quot;&gt;http://creativecommons.org/publicdomain/zero/1.0/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_5&quot;&gt;
+&lt;a href=&quot;#_footnoteref_5&quot;&gt;5&lt;/a&gt;. &lt;a href=&quot;https://wiki.creativecommons.org/wiki/CC0_FAQ#May_I_apply_CC0_to_computer_software.3F_If_so.2C_is_there_a_recommended_implementation.3F&quot; class=&quot;bare&quot;&gt;https://wiki.creativecommons.org/wiki/CC0_FAQ#May_I_apply_CC0_to_computer_software.3F_If_so.2C_is_there_a_recommended_implementation.3F&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_6&quot;&gt;
+&lt;a href=&quot;#_footnoteref_6&quot;&gt;6&lt;/a&gt;. &lt;a href=&quot;http://blog.codinghorror.com/pick-a-license-any-license/&quot; class=&quot;bare&quot;&gt;http://blog.codinghorror.com/pick-a-license-any-license/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_7&quot;&gt;
+&lt;a href=&quot;#_footnoteref_7&quot;&gt;7&lt;/a&gt;. &lt;a href=&quot;http://www.wtfpl.net/&quot; class=&quot;bare&quot;&gt;http://www.wtfpl.net/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_8&quot;&gt;
+&lt;a href=&quot;#_footnoteref_8&quot;&gt;8&lt;/a&gt;. &lt;a href=&quot;http://unlicense.org/&quot; class=&quot;bare&quot;&gt;http://unlicense.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_9&quot;&gt;
+&lt;a href=&quot;#_footnoteref_9&quot;&gt;9&lt;/a&gt;. &lt;a href=&quot;http://opensource.org/&quot; class=&quot;bare&quot;&gt;http://opensource.org/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_10&quot;&gt;
+&lt;a href=&quot;#_footnoteref_10&quot;&gt;10&lt;/a&gt;. &lt;a href=&quot;http://opensource.org/faq#cc-zero&quot; class=&quot;bare&quot;&gt;http://opensource.org/faq#cc-zero&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_11&quot;&gt;
+&lt;a href=&quot;#_footnoteref_11&quot;&gt;11&lt;/a&gt;. &lt;a href=&quot;http://opensource.stackexchange.com/questions/133/how-could-using-code-released-under-cc0-infringe-on-the-authors-patents&quot; class=&quot;bare&quot;&gt;http://opensource.stackexchange.com/questions/133/how-could-using-code-released-under-cc0-infringe-on-the-authors-patents&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_12&quot;&gt;
+&lt;a href=&quot;#_footnoteref_12&quot;&gt;12&lt;/a&gt;. &lt;a href=&quot;https://en.wikipedia.org/wiki/Multi-licensing&quot; class=&quot;bare&quot;&gt;https://en.wikipedia.org/wiki/Multi-licensing&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_13&quot;&gt;
+&lt;a href=&quot;#_footnoteref_13&quot;&gt;13&lt;/a&gt;. &lt;a href=&quot;https://en.wikipedia.org/wiki/Debian_Free_Software_Guidelines&quot; class=&quot;bare&quot;&gt;https://en.wikipedia.org/wiki/Debian_Free_Software_Guidelines&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_14&quot;&gt;
+&lt;a href=&quot;#_footnoteref_14&quot;&gt;14&lt;/a&gt;. &lt;a href=&quot;https://en.wikipedia.org/wiki/ISC_license&quot; class=&quot;bare&quot;&gt;https://en.wikipedia.org/wiki/ISC_license&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_15&quot;&gt;
+&lt;a href=&quot;#_footnoteref_15&quot;&gt;15&lt;/a&gt;. &lt;a href=&quot;http://unlicense.org/WAIVER&quot; class=&quot;bare&quot;&gt;http://unlicense.org/WAIVER&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/software-licensing</link>
+      <guid>https://seb.hoß.de/software-licensing</guid>
+      <pubDate>Fri, 01 Jul 2016 00:00:00 +0000</pubDate>
+      
+        <category>Software</category>
+      
+        <category>License</category>
+      
+    </item>
+    
+    <item>
+      <title>OSS Release Calendar</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I&amp;#8217;m managing the releases of my open source projects with the help of the following calendar:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;iframe src=&quot;https://calendar.google.com/calendar/embed?showTitle=0&amp;amp;showNav=0&amp;amp;showDate=0&amp;amp;showTabs=0&amp;amp;showTz=0&amp;amp;mode=AGENDA&amp;amp;height=600&amp;amp;wkst=1&amp;amp;bgcolor=%23FFFFFF&amp;amp;src=d85ikh2a3idf430k6sb8ukaoc0%40group.calendar.google.com&amp;amp;color=%23182C57&amp;amp;ctz=Europe%2FBerlin&quot; style=&quot;border-width:0&quot; width=&quot;800&quot; height=&quot;600&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;If the above iframe doesn&amp;#8217;t load, access the HTML version &lt;a href=&quot;https://calendar.google.com/calendar/embed?src=d85ikh2a3idf430k6sb8ukaoc0%40group.calendar.google.com&amp;amp;ctz=Europe/Berlin&amp;amp;showNav=0&amp;amp;showDate=0&amp;amp;showTabs=0&amp;amp;showTz=0&amp;amp;mode=AGENDA&quot;&gt;here&lt;/a&gt; or the ICS &lt;a href=&quot;https://calendar.google.com/calendar/ical/d85ikh2a3idf430k6sb8ukaoc0%40group.calendar.google.com/public/basic.ics&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/oss-release-calendar</link>
+      <guid>https://seb.hoß.de/oss-release-calendar</guid>
+      <pubDate>Mon, 27 Jun 2016 00:00:00 +0000</pubDate>
+      
+        <category>Open Source</category>
+      
+        <category>Software</category>
+      
+        <category>Release</category>
+      
+        <category>Calendar</category>
+      
+        <category>Schedule</category>
+      
+    </item>
+    
+    <item>
+      <title>Public Key</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;I am currently using the &lt;a href=&quot;/assets/sebhoss-0xB8319BD98B858C82.asc&quot;&gt;following public key&lt;/a&gt;:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code&gt;-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mQINBFaAVKgBEADAUi9Ob+1Sohgu2Mm/ZI5m1j3M0/OJngtLk6c0ftJ7MtSAWmkq
+zY3j0wBsSPgpd3EfpbnulC7p60Ab7hIQ2kOfSALCoejA60+Sxd9vnWQWo17KihBf
+5OxEahACdSVJnD91VMuRNrUMZ5LYdPUt0Cf87PA2bAOWlIhLRydAxRxU/Mhnq2qm
+8OflL4rKGg34iVcHpHKc+r8ANPtSZaijk9XW/8C3OuTBk0wmeZmzb1lclyptn3SQ
+nKCwl/msigKASbRc3xLRl2Pmh6Y5prSI3P1YghkYLLMI5sBwf9digWNe3NmviafO
+c8vaSBjC8UsggdQvGjeaHCTzFp9ehCvzbt57EdhWQQ2lUqpZMlQXN5oNEvUyfLZ7
+Kb/3bwGUpCdiyruLTrTzCyzSq2Pl8UawRp3h/hGp3nMj9HWRrYppbGXw6r9jWz4c
+5Eg0cdpexVxpJNGovLou2OdlBoImSg7t8/qdpaAuHRoS6ZYtmxquRLya+uW9YSml
+GsXGrc3V7R2tLbcNHyW8bYD85LBKxQyzn5+Zm+703BPnx7ECe9KPf73klEdA01n8
+6kqwzgWVRGegczqLsQhxwKD9NK9Sn7I24q4Se1oaVtcHZCtHHbcvJWnEZpNjUFBM
+P9MjvnnWp6Q2rIsuRMOXgh6zKg9SlFNVqMl1U6RgoSuUEsEt6mloy97o3QARAQAB
+tClTZWJhc3RpYW4gSG/DnyAoTWFzdGVyIEtleSkgPHNlYkBob8OfLmRlPokCNgQT
+AQoAIAUCVoBUqAIbAwULCQgHAwUVCgkICwQWAgEAAh4BAheAAAoJENngbEyHD9R+
+fwsP/05SPMkYvqhgEZgGg90UzVVt1HJyVDPYs6+T0gdIsan/gTLLcyA12gmoKCLa
+ScKkPKRstld1pJI+s0DeTD8j5NF4RZQ+DBzSuoNvGjn1n3Vh7cdpEEReTK5ZIwF7
+pryqMBNw/IzhDtfd1xnNWemDlQBEnw0bZrU65zTs484qMLxv4wUAo2B3zukYQxaY
+m+p5zIBFAvnL6/4nr4sTMXQhDcdWE4QeRAJy9+sePFbUd4pvVFJK7MzeaQ0fR2eg
+eFsJK3ULJQbztdaf1hIFbKRbIyXbi0b7dgFKmbreFEdd32JQArBDyXv4l4dPpl/7
+So48MZ9gSA5D8Fj41msm6dAJ8zXi4S9Kf2rgqQK8YJEK9j1D1ePO35Vws/nK4yRg
+eO8x+RZdjU5i7Dl8um+t3fG6f1w0B/A4EHjH/uaSANS79IQ8B1hvQ1jPoZyI92BO
+cgjrWkXV5PcV2Lx1WhQMn0y8CGrX5cSHj/Hx/zrkhMlDoLMmxtR1/stsqFGVT605
+sLv9fM8OKtI6S3tycZRjpQIg/ABbLBB5kRzCgz3J8W75fxAW5DIWFnuKwKyTNysq
+6eGOlLvl2DlIL7LwTroCysJaMhTvd0d/BuuHflbabcpOAp3/foZvYWexMoX14U/u
+lr1W7nTg70bydMMhy+ZUXnY98AJoIaTCLcVhpczXVPPbZmESuQINBFaAVKgBEADY
+uDNnEqJff7XLrT0vcjXxWBEwh9Fk34+NKpd0hLKkCJ61W1jfaiODC8nVM4giekU8
+Z6cPbJKBCzYZPqIwfYtrB1jfrnGPtwz6T5gNLOZD17pXqfTsUqypMwH8SZvGVnHS
+ZNC8JqDJ83EUcn87EVRkqEF9vFt/4iyxGG7iVVZE9uWmTqyga/hXUSZj40ZnV8G1
+TqD+WkdzS0zvRxES3JfoT6GQKJnmUtIdy8yU7XvRmkgzCmpZ7UEgwmITOz3rcAOG
+HLA/bjExbRvM+npOHpY2udNGlVzmR6Rj93KnsMhyFdcyzd/e3hSwn7XF4+885doO
+Ikvb8vzrzZ18+gzoXr1egjIORH8oGzxADZI9Cx/5kdJZ7fwJgHbIBRRvNrujKAUj
+leHurkhU7Lg2lt40Gk2CWRztPvt7atCVTOEP9crbhpDxqbBHFyZfgND2TKo56IFe
+M57W3X7pwx+Lvt8e+D3hY/e26mk5fYfVH8G9Gp89rY7DNk+j1ev6gng9PTUJQeeW
+Bkw2MEW81OQZDqYkY/7A0E8tvBxNTrb6xIRQUaXbnDs5Y2pp2x1V2ViuZ8MfUipr
+sj8h6rDq+StO1CS6HmaLVb4Sz0Q/lxaozg5uuF7DISo/+lNkjIdm+QY4op+diZ4K
+RBRJsnq/9QuzE/eM2u43Yo7P/JvQlU4u3idC92dJuQARAQABiQIfBBgBCgAJBQJW
+gFSoAhsMAAoJENngbEyHD9R+h7QQAJHs1V22iW2JeZArebjwM9pvj+KwhDNj7F4D
+o75ojDo2wxFd4sEwRuDMInNTk9TbASb4Yv8pBcBE6PRMf3la4BTvWQbW7MGPZ5x5
+fXpVtFSoRPpnJlfz2cdpUq3712eboWd4b06Ys2MghM9J+/Q6K6iVIeb6xibXP1aE
+wmNoEF/CGP/T90V2T3IrlzhKZ4kjjTRp+AYI+rorNYVKVd+ye0A1RPdp56fneVro
+zEd+w2w0FGXMfMlAPUf2cEDu5xsDrBKI6TZwdUhTneSsMQVhNGFO9p5KIwwsuku0
+M9p7b/NDuLfqCbrwBzMtqIIR4xYpyJV4v3GyK0WOsyD9v+vAELeoE5KVzhuBMN7z
+GIuW08VvErIn7pZbKiNkw6VClc6ixAasJh8iD18kSdsfmp8wEpyAeO4kY52knObv
+mErZBVm2UysLtxsvWc7N6ftkDVg3NEzTApgJxESYXAh7fG8fW+q1U3iKp4FLRb3k
+5DILFWzNRqD0vkCje+pRlBMS3e1Xmw0ETYMWcOdHkVjQyTva0Pr9wwSKV4VHyfqC
+L27tIuqh5baMCyOi8Jz0GQEC4EeFtYI5AlIVaaZxYiOZzuXglMklexVN9YkyVY1v
+0KGZWPJ7e5yVALC2cwAR4AsKrI6vgzahjHeYeNuFMwiTwpWw1fBw3yEm4xmVV1ae
+AE/8YiAiuQINBFaAVkoBEACsWA2rU+CAp46o7RyNnVavntgjDryVnq6F6REH/egb
+AffjxywjqwjUcrVx6NVgCFSr5ue5YMsebXorBpsH1ISsBMQxxk4ctLKirdPqJpmZ
+P023qbj0bC/uev6Kmn0BSQAHaMaYZUxC9w2P9+LwqJFmNaxYRbQSefCSoUjLHaky
+N3zKtgoide0xlyaWpFdNt2Ps7f4LUtA6mppU1+0SFQIjskCRkcuUore5J/+50q57
+Dn1R9XcEC5tqNJYJY3a2jIfE748P/nGnodD/TXTZwuxKd+kIDkBZLBGj0F3H3b/e
+9mRuCbtwlQ90f5MYy+ci1/BlXgmuFeeupyg8AQ6yhRGAxyVDrf73A7cHDjPoj67T
+q+V1OOsF8QuJNApVdmna+r7CFtokBnrY72eHRIS9fcC7h7WiqCPuY5pYu9QGiYgt
++L/UldqSEgyzJsWvHXPnTy1zyZVGjmOe1sWyz8FyoNixD7jKlpkjphUc6aCAifRV
+UThmPfGsZ7geaVMJonkDVTmCS1YAK8V6YgmVRFWRaiwDHQwyTwFfSy93MkkR7B3C
+yzdl58Z97kro9tbYSzWM2jugJGuvfNzUyFpn77vYngrDmUoJCvQUeCgUlWYgDAuf
+xENug7fYbgD1BI7vDhu63Lpzywr60Q+yqtS3dDBbG8j69lGKzq5Ir3cK2OiRZDzT
+JQARAQABiQREBBgBCgAPBQJWgFZKAhsCBQkB58sAAikJENngbEyHD9R+wV0gBBkB
+CgAGBQJWgFZKAAoJELgxm9mLhYyCSv0P+wbBKyGl0JaesMrcqAfXgqwkFw9ZsZ2I
+bG+MkWet6SlVmh2oFLkJDbcRr8DvR4LHBbVxXkS69GxWveccJIEO0EDVuB9JOf0W
+YiJKfmLobDdwWvP0gDJxL7Fo3CsVURqtZt0mhv4m7khYIVCYqUzxoVTJzEJH9ME0
+TOXjD8uzMl8cChvKPCRq7cJf3TqrEISBP80dY7+VCvHxsW+DNJG/wnh1pt5gRCYE
+DdijNMnYTGIPdZi5cXbskxCGWoWcD0un48MXxiiI8PdkbAHIYjpZZbj/biiYl6ck
+v0Eu6lWIttI4fts1z5tOSRxnE4/qzWZKTbxBWY5KEyXiJ6H5SqJWiYlFcemiUwhU
+SmztUkZ6iMh+T9GsT7ZsQQNK5xfWq/fnOSAYi9o6go3WhAPnr1hSLR2mqaRyvttP
+QWFtV/J+seVx0CSYa5z185/RAqJqZkPP89J5g0dDdZuxrRhUMyUJacHpJLHN45h9
+E+wIRO8gquXH36LXhAQGWvYWr/0DfBp0cfGz3gS8hi/rRB3cGpwTA6Wsuj75omEf
+X/0D3IDs2+GsnywDYXswvu7CzPl120K+we9HEQTIY9D1afCa9U85mUemeaEOiezw
+4+UefaXMgRWOclNFSj85OxN4QuaXPNErxdSyRoYM1gzhGiU6aFXVzKsAOuD+5uR7
+wpUUggC41ex1nXQP/RTkPGakzfvFGzFjsEdKvn3+11Pp0kBi5ZYQNRR+o28ykgCK
+XCmPt8ds/HJMAF4dzCyk632dTZvYbnH4oNNq12dLkP+N1XKk5TI4AN4HLHbPbgvc
+2B+A8BpYzjPnyxeFX8N6Px3Okc8ZCEZ1upSHdhYdWrqY1Xw5nREW6zZOdCnokttr
+Xz2XsUszwGk+UCIsdntGD4A+Wbw3RwM9x8JNV46sDIWcsBbwW8lVSc4XUUuYRY/a
+qAUSfBdjX2hqpt8CD2TZYIS5q68ZsdS1AbC4Q3JtM2vmPeQ+L9k3YcQ7i3Nxf3+J
+Ac/Tq9o4VNlEW+SV97P2TDbNOsvX/GQOVgQ5WQXygXqtpmYSdCofRvoLlPSlRq38
+kOvdS6h9quxscwQ+1hLyCjNDAIkQUMbMz24B/keoEJwfcN1JaGMK2ic6+9lx+1y8
+zh4cNf2SCeEtfAZR0xtYr549icwrYInTDHtaoBuEhvMFe5cLhYiMpdhXTBc4dvBZ
+ztLGs/pruaEI6E86hx4t6UMNwDZiTlGepQvTYvGsmk5d0hk1uGLylyzP/2oVv7lo
+tL/h+u4msY1aWhinp64oQnVGjkw0ivp/63M11YNb9JIXHnGn+VktBxwj1kCluvBg
+YnfCYN1ujlyNvdUfuej7AHmqnBSHQXNWK65FXFIapQo/mf6tZIOb8GT0dL8f
+=NG9j
+-----END PGP PUBLIC KEY BLOCK-----&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The key was generated by running:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;gpg2 --export --armor 0xB8319BD98B858C82 &amp;gt; sebhoss-0xB8319BD98B858C82.asc&lt;/code&gt;&lt;/p&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/public-key</link>
+      <guid>https://seb.hoß.de/public-key</guid>
+      <pubDate>Sun, 26 Jun 2016 00:00:00 +0000</pubDate>
+      
+        <category>Public Key</category>
+      
+        <category>Cryptography</category>
+      
+        <category>Security</category>
+      
+    </item>
+    
+    <item>
+      <title>bliki &amp; updating Jekyll post dates</title>
+      <description>&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In case you decided to run your bliki&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_1&quot; class=&quot;footnote&quot; href=&quot;#_footnote_1&quot; title=&quot;View footnote.&quot;&gt;1&lt;/a&gt;]&lt;/sup&gt; using Jekyll&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_2&quot; class=&quot;footnote&quot; href=&quot;#_footnote_2&quot; title=&quot;View footnote.&quot;&gt;2&lt;/a&gt;]&lt;/sup&gt;, consider using a Git&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_3&quot; class=&quot;footnote&quot; href=&quot;#_footnote_3&quot; title=&quot;View footnote.&quot;&gt;3&lt;/a&gt;]&lt;/sup&gt; pre-commit hook&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_4&quot; class=&quot;footnote&quot; href=&quot;#_footnote_4&quot; title=&quot;View footnote.&quot;&gt;4&lt;/a&gt;]&lt;/sup&gt; to update the date entries in the front matter of your posts. E.g. you want to modify the following front matter&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;---&lt;/span&gt;
+layout: post
+title: bliki &amp;amp; updating Jekyll post dates
+tags: [&lt;span style=&quot;color: #19177C&quot;&gt;bliki&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;Jekyll&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;dates&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;Git&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;hooks&lt;/span&gt;]
+date: 2016-03-28
+&lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;---&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;by updating its &lt;strong&gt;date&lt;/strong&gt; entry with the &lt;strong&gt;current date&lt;/strong&gt; to get&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;---&lt;/span&gt;
+layout: post
+title: bliki &amp;amp; updating Jekyll post dates
+tags: [&lt;span style=&quot;color: #19177C&quot;&gt;bliki&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;Jekyll&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;dates&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;Git&lt;/span&gt;, &lt;span style=&quot;color: #19177C&quot;&gt;hooks&lt;/span&gt;]
+date: 2016-04-02
+&lt;span style=&quot;color: #0000FF; font-weight: bold&quot;&gt;---&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;on &lt;strong&gt;each commit&lt;/strong&gt; to the Git repository that contains your Jekyll sources. In order to automate this process, follow these steps:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;Create a file called &lt;code&gt;pre-commmit&lt;/code&gt; inside the &lt;code&gt;.git/hooks&lt;/code&gt; directory of your repository&lt;/p&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;touch .git/hooks/pre-commit&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Mark it as executable&lt;/p&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;chmod +x .git/hooks/pre-commit&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Place the following code in it:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;pygments highlight&quot;&gt;&lt;code data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# pattern for any ISO8601 compatible date pattern&lt;/span&gt;
+&lt;span style=&quot;color: #19177C&quot;&gt;iso_date&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;[0-9][0-9][0-9][0-9]*-[0-9][0-9]*-[0-9][0-9]&amp;quot;&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# pattern for any date in the front matter of a post&lt;/span&gt;
+&lt;span style=&quot;color: #19177C&quot;&gt;any_date&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;date\: $iso_date&amp;quot;&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# Current date in ISO8601&lt;/span&gt;
+&lt;span style=&quot;color: #19177C&quot;&gt;now&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;`&lt;/span&gt;date +%Y-%m-%d&lt;span style=&quot;color: #BA2121&quot;&gt;`&lt;/span&gt;
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# today&amp;#39;s replacement for the above pattern&lt;/span&gt;
+&lt;span style=&quot;color: #19177C&quot;&gt;today&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;date\: $now&amp;quot;&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# start- and end-delimiters of a post front matter&lt;/span&gt;
+&lt;span style=&quot;color: #19177C&quot;&gt;front_matter&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;---&amp;quot;&lt;/span&gt;
+
+&lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# project relative paths&lt;/span&gt;
+&lt;span style=&quot;color: #19177C&quot;&gt;modified_files&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;`&lt;/span&gt;git diff --name-only HEAD&lt;span style=&quot;color: #BA2121&quot;&gt;`&lt;/span&gt;
+
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;for&lt;/span&gt; file in &lt;span style=&quot;color: #19177C&quot;&gt;$modified_files&lt;/span&gt;; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;do&lt;/span&gt;
+    &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# only modify Jekyll posts&lt;/span&gt;
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;if&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;[[&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;$file&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;==&lt;/span&gt; _posts/*.asciidoc &lt;span style=&quot;color: #666666&quot;&gt;]]&lt;/span&gt;; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;then&lt;/span&gt;
+        &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# extract current post date from front matter (first match)&lt;/span&gt;
+        &lt;span style=&quot;color: #19177C&quot;&gt;post_date&lt;/span&gt;&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: #BA2121&quot;&gt;`&lt;/span&gt;grep -m &lt;span style=&quot;color: #666666&quot;&gt;1&lt;/span&gt; -o &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;$any_date&amp;quot;&lt;/span&gt; &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;$file&amp;quot;&lt;/span&gt; | head -1 | grep -o &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;$iso_date&amp;quot;`&lt;/span&gt;
+
+        &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# only modify posts that are not up-to-date yet&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;if&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;[[&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;$post_date&lt;/span&gt; !&lt;span style=&quot;color: #666666&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color: #19177C&quot;&gt;$today&lt;/span&gt; &lt;span style=&quot;color: #666666&quot;&gt;]]&lt;/span&gt;; &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;then&lt;/span&gt;
+            &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# update the front matter of the post with today&amp;#39;s date&lt;/span&gt;
+            sed -i -e &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;/$front_matter/,/$front_matter/s/$any_date/$today/&amp;quot;&lt;/span&gt; &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;$file&amp;quot;&lt;/span&gt;
+            &lt;span style=&quot;color: #408080; font-style: italic&quot;&gt;# add the updated file to the git index so it becomes part of the current commit&lt;/span&gt;
+            git add &lt;span style=&quot;color: #BA2121&quot;&gt;&amp;quot;$file&amp;quot;&lt;/span&gt;
+        &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;fi&lt;/span&gt;
+    &lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;fi&lt;/span&gt;
+&lt;span style=&quot;color: #008000; font-weight: bold&quot;&gt;done&lt;/span&gt;
+&lt;span style=&quot;color: #008000&quot;&gt;exit&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock caution&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-caution&quot; title=&quot;Caution&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+This hook only works on posts that have a &lt;strong&gt;date&lt;/strong&gt; entry in their front matter.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock caution&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-caution&quot; title=&quot;Caution&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+OSX users have to replace the &lt;code&gt;sed&lt;/code&gt; call with: &lt;code&gt;sed -i -e &quot;s/$any_date/$today/1&quot; &quot;$file&quot;&lt;/code&gt; &lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_5&quot; class=&quot;footnote&quot; href=&quot;#_footnote_5&quot; title=&quot;View footnote.&quot;&gt;5&lt;/a&gt;]&lt;/sup&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Once these steps are completed, every committed update to a post will set its &lt;strong&gt;date&lt;/strong&gt; entry to the current date. The file modification will not trigger another commit, instead the change will be part of the soon-to-be-commit that triggered the &lt;code&gt;pre-commit&lt;/code&gt; hook.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Others came up with similar&lt;sup class=&quot;footnote&quot;&gt;[&lt;a id=&quot;_footnoteref_6&quot; class=&quot;footnote&quot; href=&quot;#_footnote_6&quot; title=&quot;View footnote.&quot;&gt;6&lt;/a&gt;]&lt;/sup&gt; solutions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&quot;footnotes&quot;&gt;
+&lt;hr&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_1&quot;&gt;
+&lt;a href=&quot;#_footnoteref_1&quot;&gt;1&lt;/a&gt;. &lt;a href=&quot;http://www.martinfowler.com/bliki/WhatIsaBliki.html&quot; class=&quot;bare&quot;&gt;http://www.martinfowler.com/bliki/WhatIsaBliki.html&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_2&quot;&gt;
+&lt;a href=&quot;#_footnoteref_2&quot;&gt;2&lt;/a&gt;. &lt;a href=&quot;http://jekyllrb.com/&quot; class=&quot;bare&quot;&gt;http://jekyllrb.com/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_3&quot;&gt;
+&lt;a href=&quot;#_footnoteref_3&quot;&gt;3&lt;/a&gt;. &lt;a href=&quot;https://git-scm.com/&quot; class=&quot;bare&quot;&gt;https://git-scm.com/&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_4&quot;&gt;
+&lt;a href=&quot;#_footnoteref_4&quot;&gt;4&lt;/a&gt;. &lt;a href=&quot;https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks&quot; class=&quot;bare&quot;&gt;https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_5&quot;&gt;
+&lt;a href=&quot;#_footnoteref_5&quot;&gt;5&lt;/a&gt;. &lt;a href=&quot;https://gist.github.com/izimbra/7168469&quot; class=&quot;bare&quot;&gt;https://gist.github.com/izimbra/7168469&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnote&quot; id=&quot;_footnote_6&quot;&gt;
+&lt;a href=&quot;#_footnoteref_6&quot;&gt;6&lt;/a&gt;. &lt;a href=&quot;http://stackoverflow.com/questions/14978474/how-to-show-the-modification-date-of-a-file-in-jekyll&quot; class=&quot;bare&quot;&gt;http://stackoverflow.com/questions/14978474/how-to-show-the-modification-date-of-a-file-in-jekyll&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      <link>https://seb.hoß.de/bliki-jekyll-post-dates</link>
+      <guid>https://seb.hoß.de/bliki-jekyll-post-dates</guid>
+      <pubDate>Fri, 06 May 2016 00:00:00 +0000</pubDate>
+      
+        <category>bliki</category>
+      
+        <category>Jekyll</category>
+      
+        <category>dates</category>
+      
+        <category>Git</category>
+      
+        <category>hooks</category>
+      
+    </item>
+    
+  </channel>
+</rss>

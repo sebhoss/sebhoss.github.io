@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="author" content="Sebastian Hoß">
+  <meta name="subject" content="Software Engineering">
+  <meta name="description" content="WIP articles about software engineering">
+
+  <meta property="og:title" content="Sebastian Hoß: bliki & updating Jekyll post dates" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://seb.hoß.de/bliki-jekyll-post-dates" />
+  <meta property="og:image" content="https://seb.hoß.deimages/alseki-logo.jpg" />
+  <meta property="og:description" content="WIP articles about software engineering" />
+
+  <title>Sebastian Hoß: bliki & updating Jekyll post dates</title>
+
+  <link rel="canonical" href="https://seb.hoß.de/bliki-jekyll-post-dates" />
+
+  <link rel="alternate" type="application/atom+xml" title="Sebastian Hoß: Latest Posts and Updates" href="/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Sebastian Hoß: Latest Posts and Updates" href="/rss.xml">
+
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  <link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/font.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/layout-min900px.css" media="screen and (min-width: 900px)">
+  <link rel="stylesheet" href="/css/layout-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/navigation.css">
+  <link rel="stylesheet" href="/css/navigation-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/license.css">
+  <link rel="stylesheet" href="/css/license-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/post.css">
+  <link rel="stylesheet" href="/css/post-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/syntax.css">
+</head>
+<body id="site">
+
+  <header id="header">
+    <h1 id="authorname">
+      <a href="/" id="rootlink" class="h-card" title="get me back to root">Sebastian Hoß</a>
+      <a href="/sitemap" title="show me all articles" class="sitemap">
+        <img src="/images/sitemap.svg" alt="sitemap" height="30" width="30">
+      </a>
+    </h1>
+
+    <span id="actions">
+      <a href="/public-key" id="key" title="show me your keys">
+        <img src="/images/key.svg" alt="key" height="30" width="32" style="transform:rotate(90deg);">
+      </a>
+      <a href="mailto:mail@shoss.de" id="email" title="i want to write you an email">
+        <img src="/images/envelope-o.svg" alt="envelope" height="32" width="32">
+      </a>
+      <a href="https://github.com/sebhoss/" id="github" title="want some code?">
+        <img src="/images/github.svg" alt="github" height="32" width="32">
+      </a>
+      <a href="https://twitter.com/sebhoss" id="twitter" title="peep peep peep">
+        <img src="/images/twitter.svg" alt="twitter" height="32" width="32">
+      </a>
+      <a href="/oss-release-calendar" id="schedule" title="when is the next release?">
+        <img src="/images/calendar.svg" alt="twitter" height="32" width="32">
+      </a>
+      <a href="/resume" id="resume" title="need some help?">
+        <img src="/images/graduation-cap.svg" alt="graduation-cap" height="32" width="32">
+      </a>
+      <a href="/atom.xml" id="newsfeed" title="get notified about updates">
+        <img src="/images/rss.svg" alt="newsfeed" height="32" width="32">
+      </a>
+      <a href="https://www.google.com/cse/publicurl?cx=004384174486689999226:9k2cdrrglds" id="search" title="search on this site">
+        <img src="/images/search.svg" alt="newsfeed" height="32" width="32">
+      </a>
+    </span>
+  </header>
+
+  <main id="content">
+    <article id="post" class="h-entry">
+  <header id="postHeader">
+    <h1 class="p-name">
+      <a href="/bliki-jekyll-post-dates" class="u-url">bliki & updating Jekyll post dates</a>
+      <a href="https://github.com/sebhoss/sebhoss.github.io/edit/source/_posts/2016-03-28-bliki-jekyll-post-dates.asciidoc" title="edit article" class="icon">
+        <img src="/images/pencil.svg" alt="Edit article" height="16" width="14" class="icon">
+      </a>
+      <a href="https://github.com/sebhoss/sebhoss.github.io/commits/source/_posts/2016-03-28-bliki-jekyll-post-dates.asciidoc" title="view history" class="icon">
+        <img src="/images/history.svg" alt="View article history" height="16" width="14" class="icon">
+      </a>
+    </h1>
+    <span class="tag" rel="tag"> talks about: bliki, Jekyll, dates, Git, and hooks</span>
+    <time pubdate datetime="2016-05-06 00:00:00 +0000" id="pubdate" class="dt-published">published: 06 May 2016</time>
+  </header>
+
+  <div class="e-content">
+    <div class="paragraph">
+<p>In case you decided to run your bliki<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup> using Jekyll<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup>, consider using a Git<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup> pre-commit hook<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup> to update the date entries in the front matter of your posts. E.g. you want to modify the following front matter</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="yaml"><span style="color: #0000FF; font-weight: bold">---</span>
+layout: post
+title: bliki &amp; updating Jekyll post dates
+tags: [<span style="color: #19177C">bliki</span>, <span style="color: #19177C">Jekyll</span>, <span style="color: #19177C">dates</span>, <span style="color: #19177C">Git</span>, <span style="color: #19177C">hooks</span>]
+date: 2016-03-28
+<span style="color: #0000FF; font-weight: bold">---</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>by updating its <strong>date</strong> entry with the <strong>current date</strong> to get</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="yaml"><span style="color: #0000FF; font-weight: bold">---</span>
+layout: post
+title: bliki &amp; updating Jekyll post dates
+tags: [<span style="color: #19177C">bliki</span>, <span style="color: #19177C">Jekyll</span>, <span style="color: #19177C">dates</span>, <span style="color: #19177C">Git</span>, <span style="color: #19177C">hooks</span>]
+date: 2016-04-02
+<span style="color: #0000FF; font-weight: bold">---</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>on <strong>each commit</strong> to the Git repository that contains your Jekyll sources. In order to automate this process, follow these steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a file called <code>pre-commmit</code> inside the <code>.git/hooks</code> directory of your repository</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>touch .git/hooks/pre-commit</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Mark it as executable</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>chmod +x .git/hooks/pre-commit</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Place the following code in it:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span style="color: #408080; font-style: italic">#!/bin/bash</span>
+
+<span style="color: #408080; font-style: italic"># pattern for any ISO8601 compatible date pattern</span>
+<span style="color: #19177C">iso_date</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;[0-9][0-9][0-9][0-9]*-[0-9][0-9]*-[0-9][0-9]&quot;</span>
+<span style="color: #408080; font-style: italic"># pattern for any date in the front matter of a post</span>
+<span style="color: #19177C">any_date</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;date\: $iso_date&quot;</span>
+
+<span style="color: #408080; font-style: italic"># Current date in ISO8601</span>
+<span style="color: #19177C">now</span><span style="color: #666666">=</span><span style="color: #BA2121">`</span>date +%Y-%m-%d<span style="color: #BA2121">`</span>
+<span style="color: #408080; font-style: italic"># today&#39;s replacement for the above pattern</span>
+<span style="color: #19177C">today</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;date\: $now&quot;</span>
+
+<span style="color: #408080; font-style: italic"># start- and end-delimiters of a post front matter</span>
+<span style="color: #19177C">front_matter</span><span style="color: #666666">=</span><span style="color: #BA2121">&quot;---&quot;</span>
+
+<span style="color: #408080; font-style: italic"># project relative paths</span>
+<span style="color: #19177C">modified_files</span><span style="color: #666666">=</span><span style="color: #BA2121">`</span>git diff --name-only HEAD<span style="color: #BA2121">`</span>
+
+<span style="color: #008000; font-weight: bold">for</span> file in <span style="color: #19177C">$modified_files</span>; <span style="color: #008000; font-weight: bold">do</span>
+    <span style="color: #408080; font-style: italic"># only modify Jekyll posts</span>
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">[[</span> <span style="color: #19177C">$file</span> <span style="color: #666666">==</span> _posts/*.asciidoc <span style="color: #666666">]]</span>; <span style="color: #008000; font-weight: bold">then</span>
+        <span style="color: #408080; font-style: italic"># extract current post date from front matter (first match)</span>
+        <span style="color: #19177C">post_date</span><span style="color: #666666">=</span><span style="color: #BA2121">`</span>grep -m <span style="color: #666666">1</span> -o <span style="color: #BA2121">&quot;$any_date&quot;</span> <span style="color: #BA2121">&quot;$file&quot;</span> | head -1 | grep -o <span style="color: #BA2121">&quot;$iso_date&quot;`</span>
+
+        <span style="color: #408080; font-style: italic"># only modify posts that are not up-to-date yet</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #666666">[[</span> <span style="color: #19177C">$post_date</span> !<span style="color: #666666">=</span> <span style="color: #19177C">$today</span> <span style="color: #666666">]]</span>; <span style="color: #008000; font-weight: bold">then</span>
+            <span style="color: #408080; font-style: italic"># update the front matter of the post with today&#39;s date</span>
+            sed -i -e <span style="color: #BA2121">&quot;/$front_matter/,/$front_matter/s/$any_date/$today/&quot;</span> <span style="color: #BA2121">&quot;$file&quot;</span>
+            <span style="color: #408080; font-style: italic"># add the updated file to the git index so it becomes part of the current commit</span>
+            git add <span style="color: #BA2121">&quot;$file&quot;</span>
+        <span style="color: #008000; font-weight: bold">fi</span>
+    <span style="color: #008000; font-weight: bold">fi</span>
+<span style="color: #008000; font-weight: bold">done</span>
+<span style="color: #008000">exit</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+This hook only works on posts that have a <strong>date</strong> entry in their front matter.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+OSX users have to replace the <code>sed</code> call with: <code>sed -i -e "s/$any_date/$today/1" "$file"</code> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</sup>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Once these steps are completed, every committed update to a post will set its <strong>date</strong> entry to the current date. The file modification will not trigger another commit, instead the change will be part of the soon-to-be-commit that triggered the <code>pre-commit</code> hook.</p>
+</div>
+<div class="paragraph">
+<p>Others came up with similar<sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</sup> solutions.</p>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. <a href="http://www.martinfowler.com/bliki/WhatIsaBliki.html" class="bare">http://www.martinfowler.com/bliki/WhatIsaBliki.html</a>
+</div>
+<div class="footnote" id="_footnote_2">
+<a href="#_footnoteref_2">2</a>. <a href="http://jekyllrb.com/" class="bare">http://jekyllrb.com/</a>
+</div>
+<div class="footnote" id="_footnote_3">
+<a href="#_footnoteref_3">3</a>. <a href="https://git-scm.com/" class="bare">https://git-scm.com/</a>
+</div>
+<div class="footnote" id="_footnote_4">
+<a href="#_footnoteref_4">4</a>. <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks" class="bare">https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks</a>
+</div>
+<div class="footnote" id="_footnote_5">
+<a href="#_footnoteref_5">5</a>. <a href="https://gist.github.com/izimbra/7168469" class="bare">https://gist.github.com/izimbra/7168469</a>
+</div>
+<div class="footnote" id="_footnote_6">
+<a href="#_footnoteref_6">6</a>. <a href="http://stackoverflow.com/questions/14978474/how-to-show-the-modification-date-of-a-file-in-jekyll" class="bare">http://stackoverflow.com/questions/14978474/how-to-show-the-modification-date-of-a-file-in-jekyll</a>
+</div>
+</div>
+  </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "about": {
+        "@type": "Thing",
+        "name": "bliki, Jekyll, dates, Git, and hooks"
+      },
+      "accountablePerson": {
+        "@id": "#sebhoss",
+        "@type": "Person",
+        "name": "Sebastian Hoß",
+        "url": "https://seb.hoß.de",
+        "email": "mail@shoss.de"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "software developers",
+        "name": "monkeys"
+      },
+      "author": {
+        "@id": "#sebhoss"
+      },
+      "creator": {
+        "@id": "#sebhoss"
+      },
+      "dateModified": "2016-05-06 00:00:00 +0000",
+      "datePublished": "2016-01-02",
+      "editor": {
+        "@id": "#sebhoss"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "metio.wtf",
+        "url": "http://metio.wtf/",
+        "email": "whatsup@metio.wtf",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://seb.hoß.de/images/alseki-logo.png",
+          "height": 60,
+          "width": 60
+        },
+        "founder": {
+          "@id": "#sebhoss"
+        }
+      },
+      "fileFormat": "text/html",
+      "keywords": "software, development, project, management",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "name": "bliki & updating Jekyll post dates",
+      "headline": "bliki & updating Jekyll post dates",
+      "mainEntityOfPage": "https://seb.hoß.de/bliki-jekyll-post-dates",
+      "url": "https://seb.hoß.de/bliki-jekyll-post-dates",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://seb.hoß.de/images/alseki.png",
+        "url": "https://seb.hoß.de/images/alseki.png",
+        "height": 696,
+        "width": 696,
+        "author": "Sebastian Hoß",
+        "datePublished": "2016-01-02",
+        "dateModified": "2016-01-02",
+        "name": "website logo"
+      }
+    }
+  </script>
+</article>
+
+  </main>
+
+  <nav id="navigation">
+    <ul class="latestPosts">
+    
+      <li>
+        <a href="/clojure-java-interoperability">Clojure Java Interoperability</a>
+        <span class="tag" rel="tag">Clojure, Java, and Interoperability</span>
+      </li>
+    
+      <li>
+        <a href="/eclipse-settings-shared">Eclipse & sharing settings with Maven, CI servers and your team</a>
+        <span class="tag" rel="tag">Eclipse, settings, Maven, and CI</span>
+      </li>
+    
+      <li>
+        <a href="/git-cheat-sheet">Git Cheat Sheet</a>
+        <span class="tag" rel="tag">Git</span>
+      </li>
+    
+      <li>
+        <a href="/resume">Resumé</a>
+        <span class="tag" rel="tag">curriculum vitae and resumé</span>
+      </li>
+    
+      <li>
+        <a href="/ssh-multiplexing">SSH & Multiplexing</a>
+        <span class="tag" rel="tag">SSH and Multiplexing</span>
+      </li>
+    
+      <li>
+        <a href="/static-axon-event-upcasting">Axon Framework & static event upcasting</a>
+        <span class="tag" rel="tag">Axon, Event Sourcing, and Upcasting</span>
+      </li>
+    
+      <li>
+        <a href="/software-licensing">Software Licensing</a>
+        <span class="tag" rel="tag">Software and License</span>
+      </li>
+    
+      <li>
+        <a href="/oss-release-calendar">OSS Release Calendar</a>
+        <span class="tag" rel="tag">Open Source, Software, Release, Calendar, and Schedule</span>
+      </li>
+    
+      <li>
+        <a href="/public-key">Public Key</a>
+        <span class="tag" rel="tag">Public Key, Cryptography, and Security</span>
+      </li>
+    
+      <li>
+        <a href="/bliki-jekyll-post-dates">bliki & updating Jekyll post dates</a>
+        <span class="tag" rel="tag">bliki, Jekyll, dates, Git, and hooks</span>
+      </li>
+    
+    </ul>
+  </nav>
+
+  <footer id="license">
+    <div class="license">
+      <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+        <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+          <img src="/images/cc0.png" style="border-style: none;" alt="CC0" width="88px" height="31px" />
+        </a><br />
+        To the extent possible under law,
+        <a rel="dct:publisher" href="https://seb.hoß.de">
+          <span property="dct:title">Sebastian Hoß</span>
+        </a>
+        has waived all copyright and related or neighboring rights to
+        <span property="dct:title">seb.hoß.de</span>.
+        This work is published from:
+        <span property="vcard:Country" datatype="dct:ISO3166" content="EN" about="https://seb.hoß.de">
+          Germany
+        </span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="application/ld+json" src="/assets/person-ld.json"></script>
+  <script type="application/ld+json" src="/assets/site-ld.json"></script>
+
+</body>
+</html>

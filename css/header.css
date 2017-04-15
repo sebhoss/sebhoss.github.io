@@ -1,0 +1,1 @@
+#header{display:flex;align-items:center;align-self:center;border:dotted gray;border-width:0 0 2px 0;margin-left:15px;margin-right:15px;padding-left:15px;padding-right:15px;max-width:100vw}#header a{text-decoration:none;color:black}#authorname{flex-grow:1;display:flex}#authorname .sitemap{margin-top:4px;margin-left:10px}#actions a:not(:last-child){margin-right:15px}

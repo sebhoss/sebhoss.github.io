@@ -1,0 +1,38 @@
+{
+  "@context": "http://schema.org",
+  "@type": "Blog",
+  "about": {
+    "@type": "Thing",
+    "name": "Software Development"
+  },
+  "accountablePerson": {
+    "@id": "#sebhoss",
+    "@type": "Person",
+    "name": "Sebastian Hoß",
+    "url": "https://seb.hoß.de",
+    "email": "mail@shoss.de"
+  },
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "software engineers",
+    "name": "monkeys"
+  },
+  "author": {
+    "@id": "#sebhoss"
+  },
+  "creator": {
+    "@id": "#sebhoss"
+  },
+  "dateModified": "2017-01-15 00:00:00 +0000",
+  "datePublished": "2016-01-02",
+  "editor": {
+    "@id": "#sebhoss"
+  },
+  "fileFormat": "text/html",
+  "keywords": "software, development, project, management",
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "name": "seb.hoß.de",
+  "description": "WIP articles about software engineering",
+  "mainEntityOfPage": "https://seb.hoß.de",
+  "url": "https://seb.hoß.de"
+}

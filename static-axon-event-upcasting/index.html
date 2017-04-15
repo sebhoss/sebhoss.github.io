@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="author" content="Sebastian Hoß">
+  <meta name="subject" content="Software Engineering">
+  <meta name="description" content="WIP articles about software engineering">
+
+  <meta property="og:title" content="Sebastian Hoß: Axon Framework & static event upcasting" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://seb.hoß.de/static-axon-event-upcasting" />
+  <meta property="og:image" content="https://seb.hoß.deimages/alseki-logo.jpg" />
+  <meta property="og:description" content="WIP articles about software engineering" />
+
+  <title>Sebastian Hoß: Axon Framework & static event upcasting</title>
+
+  <link rel="canonical" href="https://seb.hoß.de/static-axon-event-upcasting" />
+
+  <link rel="alternate" type="application/atom+xml" title="Sebastian Hoß: Latest Posts and Updates" href="/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Sebastian Hoß: Latest Posts and Updates" href="/rss.xml">
+
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  <link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/font.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/layout-min900px.css" media="screen and (min-width: 900px)">
+  <link rel="stylesheet" href="/css/layout-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/navigation.css">
+  <link rel="stylesheet" href="/css/navigation-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/license.css">
+  <link rel="stylesheet" href="/css/license-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/post.css">
+  <link rel="stylesheet" href="/css/post-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/syntax.css">
+</head>
+<body id="site">
+
+  <header id="header">
+    <h1 id="authorname">
+      <a href="/" id="rootlink" class="h-card" title="get me back to root">Sebastian Hoß</a>
+      <a href="/sitemap" title="show me all articles" class="sitemap">
+        <img src="/images/sitemap.svg" alt="sitemap" height="30" width="30">
+      </a>
+    </h1>
+
+    <span id="actions">
+      <a href="/public-key" id="key" title="show me your keys">
+        <img src="/images/key.svg" alt="key" height="30" width="32" style="transform:rotate(90deg);">
+      </a>
+      <a href="mailto:mail@shoss.de" id="email" title="i want to write you an email">
+        <img src="/images/envelope-o.svg" alt="envelope" height="32" width="32">
+      </a>
+      <a href="https://github.com/sebhoss/" id="github" title="want some code?">
+        <img src="/images/github.svg" alt="github" height="32" width="32">
+      </a>
+      <a href="https://twitter.com/sebhoss" id="twitter" title="peep peep peep">
+        <img src="/images/twitter.svg" alt="twitter" height="32" width="32">
+      </a>
+      <a href="/oss-release-calendar" id="schedule" title="when is the next release?">
+        <img src="/images/calendar.svg" alt="twitter" height="32" width="32">
+      </a>
+      <a href="/resume" id="resume" title="need some help?">
+        <img src="/images/graduation-cap.svg" alt="graduation-cap" height="32" width="32">
+      </a>
+      <a href="/atom.xml" id="newsfeed" title="get notified about updates">
+        <img src="/images/rss.svg" alt="newsfeed" height="32" width="32">
+      </a>
+      <a href="https://www.google.com/cse/publicurl?cx=004384174486689999226:9k2cdrrglds" id="search" title="search on this site">
+        <img src="/images/search.svg" alt="newsfeed" height="32" width="32">
+      </a>
+    </span>
+  </header>
+
+  <main id="content">
+    <article id="post" class="h-entry">
+  <header id="postHeader">
+    <h1 class="p-name">
+      <a href="/static-axon-event-upcasting" class="u-url">Axon Framework & static event upcasting</a>
+      <a href="https://github.com/sebhoss/sebhoss.github.io/edit/source/_posts/2016-01-10-static-axon-event-upcasting.asciidoc" title="edit article" class="icon">
+        <img src="/images/pencil.svg" alt="Edit article" height="16" width="14" class="icon">
+      </a>
+      <a href="https://github.com/sebhoss/sebhoss.github.io/commits/source/_posts/2016-01-10-static-axon-event-upcasting.asciidoc" title="view history" class="icon">
+        <img src="/images/history.svg" alt="View article history" height="16" width="14" class="icon">
+      </a>
+    </h1>
+    <span class="tag" rel="tag"> talks about: Axon, Event Sourcing, and Upcasting</span>
+    <time pubdate datetime="2016-07-01 00:00:00 +0000" id="pubdate" class="dt-published">published: 01 Jul 2016</time>
+  </header>
+
+  <div class="e-content">
+    <div class="paragraph">
+<p>In order to statically upcast events in an Axon<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup> event store, I&#8217;ve used a variation of the following script in the past:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="python"><span style="color: #408080; font-style: italic">#!/usr/bin/env python</span>
+<span style="color: #408080; font-style: italic"># coding: utf-8</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pymongo</span> <span style="color: #008000; font-weight: bold">import</span> MongoClient
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">semantic_version</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">SEMVER</span>
+
+
+<span style="color: #408080; font-style: italic">################################################################################</span>
+<span style="color: #408080; font-style: italic"># Required steps for installation/usage:</span>
+<span style="color: #408080; font-style: italic"># 1.) sudo pip install semantic_version</span>
+<span style="color: #408080; font-style: italic">################################################################################</span>
+
+
+<span style="color: #408080; font-style: italic">################################################################################</span>
+<span style="color: #408080; font-style: italic"># Static-Upcaster</span>
+<span style="color: #408080; font-style: italic">#</span>
+<span style="color: #408080; font-style: italic"># Iterates over the event store and selects all events that match the given</span>
+<span style="color: #408080; font-style: italic"># &#39;event_type&#39; and are below the given &#39;target_version&#39;. The supplied</span>
+<span style="color: #408080; font-style: italic"># &#39;upcast&#39; function is allowed to change the event itself.</span>
+<span style="color: #408080; font-style: italic">#</span>
+<span style="color: #408080; font-style: italic"># Use the &#39;dry_run&#39; and &#39;dry_run_max&#39; parameters to try things out first</span>
+<span style="color: #408080; font-style: italic"># Set &#39;event_type&#39; to None in order to iterate over all events</span>
+<span style="color: #408080; font-style: italic">################################################################################</span>
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">StaticUpcaster</span>:
+    _db <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    _event_to_upcast <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    _versions_to_upcast <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    _upcast <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    _dry_run <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    _dry_run_max <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, db, event_type, target_version, upcast, dry_run <span style="color: #666666">=</span> <span style="color: #008000">False</span>, dry_run_max <span style="color: #666666">=</span> <span style="color: #666666">-1</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_db <span style="color: #666666">=</span> db
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_event_to_upcast <span style="color: #666666">=</span> event_type
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_versions_to_upcast <span style="color: #666666">=</span> SEMVER<span style="color: #666666">.</span>Spec(<span style="color: #BA2121">&quot;&lt;</span><span style="color: #BB6688; font-weight: bold">%s</span><span style="color: #BA2121">&quot;</span> <span style="color: #666666">%</span> target_version)
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_upcast <span style="color: #666666">=</span> upcast
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_dry_run <span style="color: #666666">=</span> dry_run
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>_dry_run_max <span style="color: #666666">=</span> dry_run_max
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">upcast</span>(<span style="color: #008000">self</span>):
+        cursor <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_event_to_upcast:
+            cursor <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_db<span style="color: #666666">.</span>domainEvents<span style="color: #666666">.</span>find({<span style="color: #BA2121">&quot;events.payloadType&quot;</span>: <span style="color: #008000">self</span><span style="color: #666666">.</span>_event_to_upcast})
+        <span style="color: #008000; font-weight: bold">else</span>:
+            cursor <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_db<span style="color: #666666">.</span>domainEvents<span style="color: #666666">.</span>find()
+        counter <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+        <span style="color: #008000; font-weight: bold">for</span> domain_event <span style="color: #AA22FF; font-weight: bold">in</span> cursor:
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_dry_run <span style="color: #AA22FF; font-weight: bold">and</span> counter <span style="color: #666666">&gt;</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_dry_run_max <span style="color: #AA22FF; font-weight: bold">and</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_dry_run_max <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>:
+                <span style="color: #008000; font-weight: bold">break</span>
+            identity <span style="color: #666666">=</span> domain_event[<span style="color: #BA2121">&quot;_id&quot;</span>]
+            updated_events <span style="color: #666666">=</span> []
+            requires_update <span style="color: #666666">=</span> <span style="color: #008000">False</span>
+            <span style="color: #008000; font-weight: bold">for</span> event <span style="color: #AA22FF; font-weight: bold">in</span> domain_event[<span style="color: #BA2121">&quot;events&quot;</span>]:
+                <span style="color: #008000">type</span> <span style="color: #666666">=</span> event[<span style="color: #BA2121">&quot;payloadType&quot;</span>]
+                revision <span style="color: #666666">=</span> event[<span style="color: #BA2121">&quot;payloadRevision&quot;</span>]
+                version <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+                <span style="color: #008000; font-weight: bold">if</span> revision <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #008000">None</span>:
+                  version <span style="color: #666666">=</span> SEMVER<span style="color: #666666">.</span>Version(<span style="color: #BA2121">&quot;0.0.0&quot;</span>, partial <span style="color: #666666">=</span> <span style="color: #008000">True</span>)
+                <span style="color: #008000; font-weight: bold">else</span>:
+                  version <span style="color: #666666">=</span> SEMVER<span style="color: #666666">.</span>Version(revision, partial <span style="color: #666666">=</span> <span style="color: #008000">True</span>)
+                <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_event_to_upcast <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">None</span> <span style="color: #AA22FF; font-weight: bold">and</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_event_to_upcast <span style="color: #666666">==</span> <span style="color: #008000">type</span> <span style="color: #AA22FF; font-weight: bold">and</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_versions_to_upcast<span style="color: #666666">.</span>match(version):
+                    upcasted_event <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_upcast(event)
+                    updated_events<span style="color: #666666">.</span>append(upcasted_event)
+                    requires_update <span style="color: #666666">=</span> <span style="color: #008000">True</span>
+                    counter <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
+                <span style="color: #008000; font-weight: bold">elif</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_event_to_upcast <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #008000">None</span> <span style="color: #AA22FF; font-weight: bold">and</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_versions_to_upcast<span style="color: #666666">.</span>match(version):
+                    upcasted_event <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_upcast(event)
+                    updated_events<span style="color: #666666">.</span>append(upcasted_event)
+                    requires_update <span style="color: #666666">=</span> <span style="color: #008000">True</span>
+                    counter <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
+                <span style="color: #008000; font-weight: bold">else</span>:
+                    updated_events<span style="color: #666666">.</span>append(event)
+            <span style="color: #008000; font-weight: bold">if</span> requires_update <span style="color: #AA22FF; font-weight: bold">and</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>_dry_run:
+                <span style="color: #008000">self</span><span style="color: #666666">.</span>_db<span style="color: #666666">.</span>domainEvents<span style="color: #666666">.</span>update({<span style="color: #BA2121">&quot;_id&quot;</span>: identity}, {<span style="color: #BA2121">&quot;$set&quot;</span>: {<span style="color: #BA2121">&quot;events&quot;</span>: updated_events}})
+<span style="color: #408080; font-style: italic">################################################################################</span>
+
+
+<span style="color: #408080; font-style: italic">################################################################################</span>
+<span style="color: #408080; font-style: italic"># UPCASTER SETTINGS</span>
+<span style="color: #408080; font-style: italic">#</span>
+<span style="color: #408080; font-style: italic"># Change the following lines while keeping the rest as it is</span>
+<span style="color: #408080; font-style: italic">################################################################################</span>
+<span style="color: #408080; font-style: italic"># The event type to upcast; Validate against the &#39;payloadType&#39; property of your</span>
+<span style="color: #408080; font-style: italic"># domain events.</span>
+event_to_upcast <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;fully.qualified.class.name&quot;</span>
+<span style="color: #408080; font-style: italic"># The target version to set. All events below that version will be upcasted and</span>
+<span style="color: #408080; font-style: italic"># will receive this new version number.</span>
+target_version <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;1.2.3&quot;</span>
+
+<span style="color: #408080; font-style: italic"># The function used for upcasting - change accordingly</span>
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">upcasting_function</span>(event):
+    <span style="color: #408080; font-style: italic"># change event here</span>
+    <span style="color: #008000; font-weight: bold">return</span> event
+
+<span style="color: #408080; font-style: italic"># create upcaster instance</span>
+upcaster <span style="color: #666666">=</span> StaticUpcaster(
+    db <span style="color: #666666">=</span> MongoClient()<span style="color: #666666">.</span>my_mongo_database
+    ,event_type <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    ,target_version <span style="color: #666666">=</span> target_version
+    ,upcast <span style="color: #666666">=</span> upcasting_function
+    ,dry_run <span style="color: #666666">=</span> <span style="color: #008000">True</span>
+    ,dry_run_max <span style="color: #666666">=</span> <span style="color: #666666">5</span>
+    )
+<span style="color: #408080; font-style: italic">################################################################################</span>
+
+
+<span style="color: #408080; font-style: italic">################################################################################</span>
+<span style="color: #408080; font-style: italic"># upcast all matching events permanently, or use &#39;dry_run = True&#39;</span>
+upcaster<span style="color: #666666">.</span>upcast()</code></pre>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. <a href="http://www.axonframework.org/" class="bare">http://www.axonframework.org/</a>
+</div>
+</div>
+  </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "about": {
+        "@type": "Thing",
+        "name": "Axon, Event Sourcing, and Upcasting"
+      },
+      "accountablePerson": {
+        "@id": "#sebhoss",
+        "@type": "Person",
+        "name": "Sebastian Hoß",
+        "url": "https://seb.hoß.de",
+        "email": "mail@shoss.de"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "software developers",
+        "name": "monkeys"
+      },
+      "author": {
+        "@id": "#sebhoss"
+      },
+      "creator": {
+        "@id": "#sebhoss"
+      },
+      "dateModified": "2016-07-01 00:00:00 +0000",
+      "datePublished": "2016-01-02",
+      "editor": {
+        "@id": "#sebhoss"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "metio.wtf",
+        "url": "http://metio.wtf/",
+        "email": "whatsup@metio.wtf",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://seb.hoß.de/images/alseki-logo.png",
+          "height": 60,
+          "width": 60
+        },
+        "founder": {
+          "@id": "#sebhoss"
+        }
+      },
+      "fileFormat": "text/html",
+      "keywords": "software, development, project, management",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "name": "Axon Framework & static event upcasting",
+      "headline": "Axon Framework & static event upcasting",
+      "mainEntityOfPage": "https://seb.hoß.de/static-axon-event-upcasting",
+      "url": "https://seb.hoß.de/static-axon-event-upcasting",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://seb.hoß.de/images/alseki.png",
+        "url": "https://seb.hoß.de/images/alseki.png",
+        "height": 696,
+        "width": 696,
+        "author": "Sebastian Hoß",
+        "datePublished": "2016-01-02",
+        "dateModified": "2016-01-02",
+        "name": "website logo"
+      }
+    }
+  </script>
+</article>
+
+  </main>
+
+  <nav id="navigation">
+    <ul class="latestPosts">
+    
+      <li>
+        <a href="/clojure-java-interoperability">Clojure Java Interoperability</a>
+        <span class="tag" rel="tag">Clojure, Java, and Interoperability</span>
+      </li>
+    
+      <li>
+        <a href="/eclipse-settings-shared">Eclipse & sharing settings with Maven, CI servers and your team</a>
+        <span class="tag" rel="tag">Eclipse, settings, Maven, and CI</span>
+      </li>
+    
+      <li>
+        <a href="/git-cheat-sheet">Git Cheat Sheet</a>
+        <span class="tag" rel="tag">Git</span>
+      </li>
+    
+      <li>
+        <a href="/resume">Resumé</a>
+        <span class="tag" rel="tag">curriculum vitae and resumé</span>
+      </li>
+    
+      <li>
+        <a href="/ssh-multiplexing">SSH & Multiplexing</a>
+        <span class="tag" rel="tag">SSH and Multiplexing</span>
+      </li>
+    
+      <li>
+        <a href="/static-axon-event-upcasting">Axon Framework & static event upcasting</a>
+        <span class="tag" rel="tag">Axon, Event Sourcing, and Upcasting</span>
+      </li>
+    
+      <li>
+        <a href="/software-licensing">Software Licensing</a>
+        <span class="tag" rel="tag">Software and License</span>
+      </li>
+    
+      <li>
+        <a href="/oss-release-calendar">OSS Release Calendar</a>
+        <span class="tag" rel="tag">Open Source, Software, Release, Calendar, and Schedule</span>
+      </li>
+    
+      <li>
+        <a href="/public-key">Public Key</a>
+        <span class="tag" rel="tag">Public Key, Cryptography, and Security</span>
+      </li>
+    
+      <li>
+        <a href="/bliki-jekyll-post-dates">bliki & updating Jekyll post dates</a>
+        <span class="tag" rel="tag">bliki, Jekyll, dates, Git, and hooks</span>
+      </li>
+    
+    </ul>
+  </nav>
+
+  <footer id="license">
+    <div class="license">
+      <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+        <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+          <img src="/images/cc0.png" style="border-style: none;" alt="CC0" width="88px" height="31px" />
+        </a><br />
+        To the extent possible under law,
+        <a rel="dct:publisher" href="https://seb.hoß.de">
+          <span property="dct:title">Sebastian Hoß</span>
+        </a>
+        has waived all copyright and related or neighboring rights to
+        <span property="dct:title">seb.hoß.de</span>.
+        This work is published from:
+        <span property="vcard:Country" datatype="dct:ISO3166" content="EN" about="https://seb.hoß.de">
+          Germany
+        </span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="application/ld+json" src="/assets/person-ld.json"></script>
+  <script type="application/ld+json" src="/assets/site-ld.json"></script>
+
+</body>
+</html>

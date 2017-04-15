@@ -1,0 +1,1 @@
+#site{display:grid;grid-template-rows:auto auto 100px;grid-template-columns:1fr;grid-template-areas:"content" "navigation" "license"}#header{grid-area:header;visibility:hidden}#navigation{grid-area:navigation}#content{grid-area:content;padding-left:15px;padding-right:30px}#license{grid-area:license}

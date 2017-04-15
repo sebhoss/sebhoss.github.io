@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="author" content="Sebastian Hoß">
+  <meta name="subject" content="Software Engineering">
+  <meta name="description" content="WIP articles about software engineering">
+
+  <meta property="og:title" content="Sebastian Hoß: Software Licensing" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://seb.hoß.de/software-licensing" />
+  <meta property="og:image" content="https://seb.hoß.deimages/alseki-logo.jpg" />
+  <meta property="og:description" content="WIP articles about software engineering" />
+
+  <title>Sebastian Hoß: Software Licensing</title>
+
+  <link rel="canonical" href="https://seb.hoß.de/software-licensing" />
+
+  <link rel="alternate" type="application/atom+xml" title="Sebastian Hoß: Latest Posts and Updates" href="/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Sebastian Hoß: Latest Posts and Updates" href="/rss.xml">
+
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+  <link rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/font.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/layout-min900px.css" media="screen and (min-width: 900px)">
+  <link rel="stylesheet" href="/css/layout-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/navigation.css">
+  <link rel="stylesheet" href="/css/navigation-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/header.css">
+  <link rel="stylesheet" href="/css/license.css">
+  <link rel="stylesheet" href="/css/license-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/post.css">
+  <link rel="stylesheet" href="/css/post-min1200px.css" media="screen and (min-width: 1200px)">
+  <link rel="stylesheet" href="/css/syntax.css">
+</head>
+<body id="site">
+
+  <header id="header">
+    <h1 id="authorname">
+      <a href="/" id="rootlink" class="h-card" title="get me back to root">Sebastian Hoß</a>
+      <a href="/sitemap" title="show me all articles" class="sitemap">
+        <img src="/images/sitemap.svg" alt="sitemap" height="30" width="30">
+      </a>
+    </h1>
+
+    <span id="actions">
+      <a href="/public-key" id="key" title="show me your keys">
+        <img src="/images/key.svg" alt="key" height="30" width="32" style="transform:rotate(90deg);">
+      </a>
+      <a href="mailto:mail@shoss.de" id="email" title="i want to write you an email">
+        <img src="/images/envelope-o.svg" alt="envelope" height="32" width="32">
+      </a>
+      <a href="https://github.com/sebhoss/" id="github" title="want some code?">
+        <img src="/images/github.svg" alt="github" height="32" width="32">
+      </a>
+      <a href="https://twitter.com/sebhoss" id="twitter" title="peep peep peep">
+        <img src="/images/twitter.svg" alt="twitter" height="32" width="32">
+      </a>
+      <a href="/oss-release-calendar" id="schedule" title="when is the next release?">
+        <img src="/images/calendar.svg" alt="twitter" height="32" width="32">
+      </a>
+      <a href="/resume" id="resume" title="need some help?">
+        <img src="/images/graduation-cap.svg" alt="graduation-cap" height="32" width="32">
+      </a>
+      <a href="/atom.xml" id="newsfeed" title="get notified about updates">
+        <img src="/images/rss.svg" alt="newsfeed" height="32" width="32">
+      </a>
+      <a href="https://www.google.com/cse/publicurl?cx=004384174486689999226:9k2cdrrglds" id="search" title="search on this site">
+        <img src="/images/search.svg" alt="newsfeed" height="32" width="32">
+      </a>
+    </span>
+  </header>
+
+  <main id="content">
+    <article id="post" class="h-entry">
+  <header id="postHeader">
+    <h1 class="p-name">
+      <a href="/software-licensing" class="u-url">Software Licensing</a>
+      <a href="https://github.com/sebhoss/sebhoss.github.io/edit/source/_posts/2016-01-30-software-licensing.asciidoc" title="edit article" class="icon">
+        <img src="/images/pencil.svg" alt="Edit article" height="16" width="14" class="icon">
+      </a>
+      <a href="https://github.com/sebhoss/sebhoss.github.io/commits/source/_posts/2016-01-30-software-licensing.asciidoc" title="view history" class="icon">
+        <img src="/images/history.svg" alt="View article history" height="16" width="14" class="icon">
+      </a>
+    </h1>
+    <span class="tag" rel="tag"> talks about: Software and License</span>
+    <time pubdate datetime="2016-07-01 00:00:00 +0000" id="pubdate" class="dt-published">published: 01 Jul 2016</time>
+  </header>
+
+  <div class="e-content">
+    <div class="paragraph">
+<p>The Software Freedom Law Center<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup> defines the following common approaches to copyright handling in software projects:<sup class="footnote" id="_footnote_sflc-ci">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>per file handling</p>
+</li>
+<li>
+<p>centralized</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>SFLC explains that no copyright information does not yield copyright. Thus no copyright header is preferred way to go since it minimizes maintenance work. No yearly updates have to be performed. Future contributors do not have to be added manually, your <a href="/git-cheat-sheet">version control system</a> handles that way better than you anyway.</p>
+</div>
+<div class="paragraph">
+<p>FSF suggest to use CC0<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup><sup class="footnote" id="_footnote_cc0">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>CC tells something about license headers for files.<sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>Atwood suggest to pick any license.<sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</sup></p>
+</div>
+<div class="sect1">
+<h2 id="recommendation">Recommendation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Follow the suggesting of the FSF and pick the Creative Commons Zero license.<sup class="footnoteref">[<a class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup>. Compared to similar licenses like the WTFPL<sup class="footnote" id="_footnote_wtfpl">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</sup> or UNLICENSE<sup class="footnote" id="_footnote_unlicense">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup> which are often critized for their lack of legal language, the CC0&#8217;s only downside seems to be a missing OSI<sup class="footnote" id="_footnote_osi">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup> stamp of approval<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnote_10" title="View footnote.">10</a>]</sup>. The problem here is that the CC0 does not grant any (implicit) trademark or patent rights, thus placing users of your software in a position where they can legally use your software but are forced to pay royalties for using your patent implemented by that software.<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnote_11" title="View footnote.">11</a>]</sup> In order to solve that problem, place all your trademarks and patent rights under the same CC0 license. If that is not possible, use the CC0 in your advantage and simple fork the software and re-release it in whatever license, whatever user requires. Cut down on maintenance by using a multi-license approach.<sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnote_12" title="View footnote.">12</a>]</sup></p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The CC0 license is probably not DFSG<sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnote_13" title="View footnote.">13</a>]</sup> compatible because of the above issue. If you plan on release software into Debian repositories, use the mentioned multi-license approach. A short license like the ISC<sup class="footnote">[<a id="_footnoteref_14" class="footnote" href="#_footnote_14" title="View footnote.">14</a>]</sup> is DFSG compatible and won&#8217;t clutter your <code>LICENSE</code> file.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Apply the following setup to your project in order to use the CC0 license. The setup is intended to reduce ongoing maintenance work with regards to copyright information while still supporting multiple contributors.</p>
+</div>
+<div class="paragraph">
+<p><strong>1)</strong> Use the following header for all source files. Replace <code>$MY_PROJECT</code> with the name of your project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>This file is part of $MY_PROJECT. It is subject to the license terms in the LICENSE file found in the top-level
+directory of this distribution and at http://creativecommons.org/publicdomain/zero/1.0/. No part of $MY_PROJECT,
+including this file, may be copied, modified, propagated, or distributed except according to the terms contained
+in the LICENSE file.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This header does not contain the typical copyright fragments, like the year of publication or the author. The SLFC<sup class="footnoteref">[<a class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup> explains that missing copyright information does not void your copyright at all - thus it can be safely removed. Instead the file header simply redirects the reader to the LICENSE file in the root of the project.</p>
+</div>
+<div class="paragraph">
+<p><strong>2)</strong> Add a file called <code>LICENSE</code> in the root of your project which contains the CC0 <a href="http://creativecommons.org/publicdomain/zero/1.0/legalcode.txt">legal code</a> (<a href="/assets/cc-zero-legalcode.txt">copy</a>).</p>
+</div>
+<div class="paragraph">
+<p>Add any additional licenses to that same file if you follow a multi-license approach. Creative Commons suggest to call that file <code>COPYING</code> in order to highlight why you should be interested in reading the file, however <code>LICENSE</code> is more widely used and better supported by various tools.</p>
+</div>
+<div class="paragraph">
+<p><strong>3)</strong> Use the following <a href="https://shields.io">shields.io</a> badge for your project to make it <a href="http://i.imgur.com/41biB.jpg">shiny</a>:</p>
+</div>
+<span class="image">
+  <a class="image" href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="/images/license-cc zero-000000.svg" alt="CC Zero" class="centered">
+  </a>
+</span>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code># in asciidoc
+image:https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square["CC Zero", link="https://creativecommons.org/publicdomain/zero/1.0/"]
+
+# in markdown
+![CC Zero](https://img.shields.io/badge/license-cc%20zero-000000.svg?style=flat-square)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>4)</strong> Place the following text at the bottom of your <code>README</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code>To the extent possible under law, the author(s) have dedicated all copyright
+and related and neighboring rights to this software to the public domain
+worldwide. This software is distributed without any warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication along
+with this software. If not, see http://creativecommons.org/publicdomain/zero/1.0/.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Not legally binding in any way, but widely used (and expected) in the software world. Usually placed in the last paragraph with its own (sub-)heading.</p>
+</div>
+<div class="paragraph">
+<p><strong>5)</strong> Create a folder called <code>AUTHORS</code> and place a file called <code>WAIVER</code> with the following content in it:<sup class="footnote">[<a id="_footnoteref_15" class="footnote" href="#_footnote_15" title="View footnote.">15</a>]</sup></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code># Copyright waiver for &lt;NAME_OF_PROJECT&gt;
+
+I dedicate any and all copyright interest in this software to the
+public domain. I make this dedication for the benefit of the public at
+large and to the detriment of my heirs and successors. I intend this
+dedication to be an overt act of relinquishment in perpetuity of all
+present and future rights to this software under copyright law.
+
+To the best of my knowledge and belief, my contributions are either
+originally authored by me or are derived from prior works which I have
+verified are also in the public domain and are not subject to claims
+of copyright by other parties.
+
+To the best of my knowledge and belief, no individual, business,
+organization, government, or other entity has any copyright interest
+in my contributions, and I affirm that I will not make contributions
+that are otherwise encumbered.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>6)</strong> Finally sign the <code>WAIVER</code>, commit it, and push everything together with your first contribution to a project.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="shell">$ # sign
+$ gpg2 --no-version --armor --sign AUTHORS/WAIVER --output AUTHORS/WAIVER-signed-by-USERNAME.asc
+
+$ # commit
+$ git add AUTHORS/WAIVER-signed-by-USERNAME.asc
+$ git commit -S AUTHORS/WAIVER-signed-by-USERNAME.asc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The signed <code>WAIVER</code> replaces other alternatives like contributor license agreements (CLAs). It works without requiring any other software, like a centralized registry of developers. Whenever any of the developers changes her keys, simply re-run the last step and add a new signed waiver. Don&#8217;t overwrite the old one, instead prepend the year that the key was active/created or add the key ID.</p>
+</div>
+<div class="paragraph">
+<p><strong>7)</strong> Your done, free to do something else with your life now.</p>
+</div>
+<div class="paragraph">
+<p>Future work will consist of adding the above header to each source file and verifying that GPG signatures are correct and match between signed waiver and signed commit. No yearly updates to your source files in order to keep headers in shape, no hassle in determining whether or not a single contribution is big enough to mention the contributor by name in the source file, nor anything else.</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnote_1">
+<a href="#_footnoteref_1">1</a>. <a href="https://www.softwarefreedom.org/" class="bare">https://www.softwarefreedom.org/</a>
+</div>
+<div class="footnote" id="_footnote_2">
+<a href="#_footnoteref_2">2</a>. <a href="https://www.softwarefreedom.org/resources/2012/ManagingCopyrightInformation.html" class="bare">https://www.softwarefreedom.org/resources/2012/ManagingCopyrightInformation.html</a>
+</div>
+<div class="footnote" id="_footnote_3">
+<a href="#_footnoteref_3">3</a>. <a href="http://www.gnu.org/licenses/license-list.en.html#CC0" class="bare">http://www.gnu.org/licenses/license-list.en.html#CC0</a>
+</div>
+<div class="footnote" id="_footnote_4">
+<a href="#_footnoteref_4">4</a>. <a href="http://creativecommons.org/publicdomain/zero/1.0/" class="bare">http://creativecommons.org/publicdomain/zero/1.0/</a>
+</div>
+<div class="footnote" id="_footnote_5">
+<a href="#_footnoteref_5">5</a>. <a href="https://wiki.creativecommons.org/wiki/CC0_FAQ#May_I_apply_CC0_to_computer_software.3F_If_so.2C_is_there_a_recommended_implementation.3F" class="bare">https://wiki.creativecommons.org/wiki/CC0_FAQ#May_I_apply_CC0_to_computer_software.3F_If_so.2C_is_there_a_recommended_implementation.3F</a>
+</div>
+<div class="footnote" id="_footnote_6">
+<a href="#_footnoteref_6">6</a>. <a href="http://blog.codinghorror.com/pick-a-license-any-license/" class="bare">http://blog.codinghorror.com/pick-a-license-any-license/</a>
+</div>
+<div class="footnote" id="_footnote_7">
+<a href="#_footnoteref_7">7</a>. <a href="http://www.wtfpl.net/" class="bare">http://www.wtfpl.net/</a>
+</div>
+<div class="footnote" id="_footnote_8">
+<a href="#_footnoteref_8">8</a>. <a href="http://unlicense.org/" class="bare">http://unlicense.org/</a>
+</div>
+<div class="footnote" id="_footnote_9">
+<a href="#_footnoteref_9">9</a>. <a href="http://opensource.org/" class="bare">http://opensource.org/</a>
+</div>
+<div class="footnote" id="_footnote_10">
+<a href="#_footnoteref_10">10</a>. <a href="http://opensource.org/faq#cc-zero" class="bare">http://opensource.org/faq#cc-zero</a>
+</div>
+<div class="footnote" id="_footnote_11">
+<a href="#_footnoteref_11">11</a>. <a href="http://opensource.stackexchange.com/questions/133/how-could-using-code-released-under-cc0-infringe-on-the-authors-patents" class="bare">http://opensource.stackexchange.com/questions/133/how-could-using-code-released-under-cc0-infringe-on-the-authors-patents</a>
+</div>
+<div class="footnote" id="_footnote_12">
+<a href="#_footnoteref_12">12</a>. <a href="https://en.wikipedia.org/wiki/Multi-licensing" class="bare">https://en.wikipedia.org/wiki/Multi-licensing</a>
+</div>
+<div class="footnote" id="_footnote_13">
+<a href="#_footnoteref_13">13</a>. <a href="https://en.wikipedia.org/wiki/Debian_Free_Software_Guidelines" class="bare">https://en.wikipedia.org/wiki/Debian_Free_Software_Guidelines</a>
+</div>
+<div class="footnote" id="_footnote_14">
+<a href="#_footnoteref_14">14</a>. <a href="https://en.wikipedia.org/wiki/ISC_license" class="bare">https://en.wikipedia.org/wiki/ISC_license</a>
+</div>
+<div class="footnote" id="_footnote_15">
+<a href="#_footnoteref_15">15</a>. <a href="http://unlicense.org/WAIVER" class="bare">http://unlicense.org/WAIVER</a>
+</div>
+</div>
+  </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "BlogPosting",
+      "about": {
+        "@type": "Thing",
+        "name": "Software and License"
+      },
+      "accountablePerson": {
+        "@id": "#sebhoss",
+        "@type": "Person",
+        "name": "Sebastian Hoß",
+        "url": "https://seb.hoß.de",
+        "email": "mail@shoss.de"
+      },
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "software developers",
+        "name": "monkeys"
+      },
+      "author": {
+        "@id": "#sebhoss"
+      },
+      "creator": {
+        "@id": "#sebhoss"
+      },
+      "dateModified": "2016-07-01 00:00:00 +0000",
+      "datePublished": "2016-01-02",
+      "editor": {
+        "@id": "#sebhoss"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "metio.wtf",
+        "url": "http://metio.wtf/",
+        "email": "whatsup@metio.wtf",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://seb.hoß.de/images/alseki-logo.png",
+          "height": 60,
+          "width": 60
+        },
+        "founder": {
+          "@id": "#sebhoss"
+        }
+      },
+      "fileFormat": "text/html",
+      "keywords": "software, development, project, management",
+      "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "name": "Software Licensing",
+      "headline": "Software Licensing",
+      "mainEntityOfPage": "https://seb.hoß.de/software-licensing",
+      "url": "https://seb.hoß.de/software-licensing",
+      "image": {
+        "@type": "ImageObject",
+        "contentUrl": "https://seb.hoß.de/images/alseki.png",
+        "url": "https://seb.hoß.de/images/alseki.png",
+        "height": 696,
+        "width": 696,
+        "author": "Sebastian Hoß",
+        "datePublished": "2016-01-02",
+        "dateModified": "2016-01-02",
+        "name": "website logo"
+      }
+    }
+  </script>
+</article>
+
+  </main>
+
+  <nav id="navigation">
+    <ul class="latestPosts">
+    
+      <li>
+        <a href="/clojure-java-interoperability">Clojure Java Interoperability</a>
+        <span class="tag" rel="tag">Clojure, Java, and Interoperability</span>
+      </li>
+    
+      <li>
+        <a href="/eclipse-settings-shared">Eclipse & sharing settings with Maven, CI servers and your team</a>
+        <span class="tag" rel="tag">Eclipse, settings, Maven, and CI</span>
+      </li>
+    
+      <li>
+        <a href="/git-cheat-sheet">Git Cheat Sheet</a>
+        <span class="tag" rel="tag">Git</span>
+      </li>
+    
+      <li>
+        <a href="/resume">Resumé</a>
+        <span class="tag" rel="tag">curriculum vitae and resumé</span>
+      </li>
+    
+      <li>
+        <a href="/ssh-multiplexing">SSH & Multiplexing</a>
+        <span class="tag" rel="tag">SSH and Multiplexing</span>
+      </li>
+    
+      <li>
+        <a href="/static-axon-event-upcasting">Axon Framework & static event upcasting</a>
+        <span class="tag" rel="tag">Axon, Event Sourcing, and Upcasting</span>
+      </li>
+    
+      <li>
+        <a href="/software-licensing">Software Licensing</a>
+        <span class="tag" rel="tag">Software and License</span>
+      </li>
+    
+      <li>
+        <a href="/oss-release-calendar">OSS Release Calendar</a>
+        <span class="tag" rel="tag">Open Source, Software, Release, Calendar, and Schedule</span>
+      </li>
+    
+      <li>
+        <a href="/public-key">Public Key</a>
+        <span class="tag" rel="tag">Public Key, Cryptography, and Security</span>
+      </li>
+    
+      <li>
+        <a href="/bliki-jekyll-post-dates">bliki & updating Jekyll post dates</a>
+        <span class="tag" rel="tag">bliki, Jekyll, dates, Git, and hooks</span>
+      </li>
+    
+    </ul>
+  </nav>
+
+  <footer id="license">
+    <div class="license">
+      <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+        <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/">
+          <img src="/images/cc0.png" style="border-style: none;" alt="CC0" width="88px" height="31px" />
+        </a><br />
+        To the extent possible under law,
+        <a rel="dct:publisher" href="https://seb.hoß.de">
+          <span property="dct:title">Sebastian Hoß</span>
+        </a>
+        has waived all copyright and related or neighboring rights to
+        <span property="dct:title">seb.hoß.de</span>.
+        This work is published from:
+        <span property="vcard:Country" datatype="dct:ISO3166" content="EN" about="https://seb.hoß.de">
+          Germany
+        </span>
+      </p>
+    </div>
+  </footer>
+
+  <script type="application/ld+json" src="/assets/person-ld.json"></script>
+  <script type="application/ld+json" src="/assets/site-ld.json"></script>
+
+</body>
+</html>
